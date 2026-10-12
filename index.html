@@ -133,6 +133,12 @@
   .btn-ventana:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
   .admin-bar{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-bottom:14px}
   .admin-bar .actions{margin-top:0}
+  .firma-caja{position:relative;background:#fff;border:1.5px dashed var(--brand-3);border-radius:10px;overflow:hidden;height:140px;margin-top:6px}
+  .firma-caja canvas{display:block;width:100%;height:140px;touch-action:none;cursor:crosshair}
+  .firma-caja img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+  .firma-barra{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+  .vista-firma{max-height:70px;max-width:260px;object-fit:contain;background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:2px;display:block;margin-top:4px}
+  .vista-firma.texto{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;border-style:dashed;padding:8px 12px;white-space:pre-wrap}
   .folio-caja{text-align:center;margin:16px 0}
   .folio-caja span{display:inline-block;background:var(--brand-50);border:2px dashed var(--brand-3);color:var(--brand);
     font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;padding:14px 34px;border-radius:12px;letter-spacing:1px}
@@ -352,14 +358,45 @@
 
       <fieldset>
         <legend>Firmas</legend>
-        <div class="grid g2">
+        <div class="grid g2" style="margin-bottom:6px">
           <label class="row-inline" style="font-size:14px;font-weight:600">
             <input type="checkbox" id="f-firma-func"> Firma registrada (funcionario/a de matrícula)
           </label>
-          <label class="row-inline" style="font-size:14px;font-weight:600">
-            <input type="checkbox" id="f-firma-enc"> Firma del padre, madre o encargado legal: recibida
-          </label>
+          <p class="small" style="margin:0">Firma del padre, madre o encargado legal: dibuje, suba una imagen
+            o escriba el nombre en el recuadro.</p>
         </div>
+        <div class="grid g2">
+          <div>
+            <label class="f">Firma del padre, madre o encargado legal</label>
+            <div class="firma-caja">
+              <canvas id="firma-canvas" width="440" height="140" aria-label="Recuadro para firmar con el mouse o el dedo"></canvas>
+              <img id="firma-img" alt="Firma insertada como imagen" class="hidden">
+            </div>
+            <div class="firma-barra">
+              <button type="button" class="btn sm" id="btn-firma-limpiar">Limpiar</button>
+              <label class="btn sm" for="firma-archivo" style="margin:0">Subir imagen</label>
+              <input type="file" id="firma-archivo" accept="image/*" class="hidden">
+              <input type="text" id="firma-texto" placeholder="…o escriba el nombre completo"
+                style="flex:1;min-width:180px;padding:7px 10px;border:1px solid var(--border);border-radius:8px">
+            </div>
+          </div>
+          <div>
+            <label class="f">Firma del funcionario/a de matrícula</label>
+            <div class="firma-caja">
+              <canvas id="firma-canvas2" width="440" height="140" aria-label="Recuadro para firmar con el mouse o el dedo"></canvas>
+              <img id="firma-img2" alt="Firma insertada como imagen" class="hidden">
+            </div>
+            <div class="firma-barra">
+              <button type="button" class="btn sm" id="btn-firma-limpiar2">Limpiar</button>
+              <label class="btn sm" for="firma-archivo2" style="margin:0">Subir imagen</label>
+              <input type="file" id="firma-archivo2" accept="image/*" class="hidden">
+              <input type="text" id="firma-texto2" placeholder="…o escriba el nombre completo"
+                style="flex:1;min-width:180px;padding:7px 10px;border:1px solid var(--border);border-radius:8px">
+            </div>
+          </div>
+        </div>
+        <p class="small" style="margin-top:8px">La firma se guarda con la boleta y aparece en el detalle, la
+          exportación a Excel y el acuse. Tampoco es obligatoria.</p>
         <div style="margin-top:12px">
           <label class="f">Observaciones (opcional)</label>
           <textarea id="f-obs" rows="2"></textarea>
@@ -413,7 +450,7 @@
       <div class="stat"><b id="ok-estudiante" style="font-size:15px;font-family:inherit">—</b><span>Estudiante</span></div>
       <div class="stat"><b id="ok-correo" style="font-size:15px;font-family:inherit">—</b><span>Notificación enviada a</span></div>
     </div>
-    <p class="small" style="margin-top:12px">Conserve este folio: con él puede dar seguimiento a su solicitud en la escuela.
+    <p class="small" style="margin-top:12px">Conserve este folio, con él puede dar seguimiento a su solicitud en la escuela.
       El envío en línea no sustituye la entrega de los documentos físicos requeridos.</p>
     <div class="actions" style="margin-top:14px">
       <button class="btn" id="btn-imprimir-acuse">Imprimir / guardar acuse</button>
@@ -582,7 +619,7 @@
   <footer class="app">
     <div class="no-print">
       Escuela Barrio Los Ángeles · Código 1389 · Circuito 03 · Alajuela, San Carlos, Quesada, Barrio Los Ángeles<br>
-      Edificio Amara, detrás de KFC · Teléfono: 26853425 / 24601300 · esc.barriolosangeles.sancarlos@mep.go.cr · www.mep.go.cr<br>
+      100m este de la Urbanización La Torre, Barrio Los Ángeles, Quesada, San Carlos, Alajuela · Teléfono: 24601300 · esc.barriolosangeles.sancarlos@mep.go.cr · www.mep.go.cr<br>
       <b>Registro de Matrícula 2027 — elaborado por el Ing. Jonathan Díaz Ramírez</b>
     </div>
   </footer>
@@ -867,7 +904,7 @@ const CONFIG = {
   remitente: 'Escuela Barrio Los Ángeles <esc.barriolosangeles.sancarlos@mep.go.cr>',
   escuela: 'Escuela Barrio Los Ángeles · Código 1389 · Circuito 03',
   supervision: 'Dirección Regional de Educación San Carlos · Supervisión Educativa Circuito 03',
-  telefono: '24601300 / 26853425',
+  telefono: '24601300',
   correos_admin: 'esc.barriolosangeles.sancarlos@mep.go.cr', // <- editable
   notificar_padre: 'SI',                                    // SI / NO
   hoja_edad: '15 de febrero del 2027'
@@ -1324,7 +1361,7 @@ function htmlAdmin(r) {
     filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
     filaCorreo('Estado', esc(r.estado)) +
     filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado) + (r.seccion ? ' · ' + esc(r.seccion) : '')) +
-    filaCorreo('Estudiante', '<b>' + esc(nombreCompleto(r)) + '</b>') +
+    filaCorreo('Estudiante', esc(nombreCompleto(r))) +
     filaCorreo('Cédula / Nacimiento', esc(r.cedula) + ' · ' + esc(r.fecha_nac) + ' en ' + esc(r.lugar_nac)) +
     filaCorreo('Dirección', esc(r.direccion)) +
     filaCorreo('Vacunas', esc(r.vacunas)) +
@@ -1347,7 +1384,7 @@ function htmlPadre(r) {
     '<p style="text-align:center;margin:16px 0"><span style="display:inline-block;background:#eff6ff;border:1px solid #93c5fd;' +
     'color:#1e3a8a;font-size:22px;font-weight:bold;padding:10px 22px;border-radius:8px">' + esc(r.folio) + '</span></p>' +
     '<table style="width:100%;border-collapse:collapse">' +
-    filaCorreo('Estudiante', '<b>' + esc(nombreCompleto(r)) + '</b>') +
+    filaCorreo('Estudiante', esc(nombreCompleto(r))) +
     filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado)) +
     filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
     filaCorreo('Estado', esc(r.estado)) +
@@ -1380,7 +1417,7 @@ var t0 = Date.now();          /* hora en que se abrió el formulario */
    urlAppsScript: pegue la URL del App web (/exec) publicada con Google
    Apps Script. Mientras esté vacía, la app funciona en MODO LOCAL.     */
 var CONFIG = {
-  urlAppsScript: "https://script.google.com/macros/s/AKfycbxzEqQMtmgsQ7k_lDtc8nnmo2rxCQcDJMp6e4Fq2EBy0MrtctNkO3kQ0v7Xe4f_LKLkyA/exec",
+  urlAppsScript: "",
   claveAdmin: "MAT2027",
   minSegundos: 4
 };
@@ -1637,6 +1674,182 @@ var CAMPOS_PERSONA = [
   { k: "dir", l: "Dirección residencia", req: false, w: 3 }
 ];
 
+/* --------------------- Firmas (dibujo / imagen / texto) ---------------------
+   Tres formas de firmar en la boleta. El resultado se guarda como un solo
+   valor de texto que reutiliza las columnas existentes:
+     firma_enc   → firma del padre, madre o encargado  ("[img]data:…", "[firma]…")
+     firma_func  → "Sí"/"No" del checkbox + "[firma]…" si firmó en el recuadro
+   Así las 50 columnas del Excel y las hojas del servidor no cambian. */
+var FIRMAS = [
+  { lienzo: "firma-canvas", img: "firma-img", txt: "firma-texto", limpiar: "btn-firma-limpiar", archivo: "firma-archivo" },
+  { lienzo: "firma-canvas2", img: "firma-img2", txt: "firma-texto2", limpiar: "btn-firma-limpiar2", archivo: "firma-archivo2" }
+];
+
+function firmaPintarPlaceholder(s) {
+  var c = $(s.lienzo);
+  if (!c) return;
+  var g = c.getContext("2d");
+  g.clearRect(0, 0, c.width, c.height);
+  g.fillStyle = "#94a3b8";
+  g.font = "15px sans-serif";
+  g.textAlign = "center";
+  g.fillText("Firme aquí con el mouse o el dedo", c.width / 2, c.height / 2 + 5);
+}
+function firmaAjustarLienzo(s) {
+  var c = $(s.lienzo);
+  if (!c) return;
+  var datos = null;
+  try { datos = c.toDataURL("image/png"); } catch (e) { }
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  var anchoCss = c.clientWidth || 440;
+  c.width = Math.round(anchoCss * dpr);
+  c.height = Math.round(140 * dpr);
+  var g = c.getContext("2d");
+  g.scale(dpr, dpr);
+  g.lineCap = "round";
+  g.lineJoin = "round";
+  g.lineWidth = 2;
+  g.strokeStyle = "#0f172a";
+  if (datos) { var i = new Image(); i.onload = function () { g.drawImage(i, 0, 0, anchoCss, 140); }; i.src = datos; }
+  else firmaPintarPlaceholder(s);
+}
+function firmaInicializar() {
+  FIRMAS.forEach(function (s) {
+    var c = $(s.lienzo);
+    if (!c) return;
+    firmaAjustarLienzo(s);
+    var dibujando = false, vistazo = false;
+    function pos(e) {
+      var r = c.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * (c.width / r.width), y: (e.clientY - r.top) * (c.height / r.height) };
+    }
+    c.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      try { c.setPointerCapture(e.pointerId); } catch (err) { }
+      dibujando = true;
+      if (!vistazo) { c.getContext("2d").clearRect(0, 0, c.width, c.height); vistazo = true; }
+      var p = pos(e), g = c.getContext("2d");
+      g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(p.x + 0.1, p.y + 0.1); g.stroke();
+      if ($(s.img)) $(s.img).classList.add("hidden");
+      if ($(s.txt)) $(s.txt).value = "";
+    });
+    c.addEventListener("pointermove", function (e) {
+      if (!dibujando) return;
+      e.preventDefault();
+      var p = pos(e), g = c.getContext("2d");
+      g.lineTo(p.x, p.y); g.stroke();
+    });
+    ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) {
+      c.addEventListener(ev, function () {
+        if (!dibujando) return;
+        dibujando = false;
+        try { c.style.cursor = "default"; setTimeout(function () { c.style.cursor = "crosshair"; }, 50); } catch (err) { }
+      });
+    });
+    var btn = $(s.limpiar);
+    if (btn) btn.addEventListener("click", function () {
+      firmaPintarPlaceholder(s);
+      vistazo = false;
+      if ($(s.img)) $(s.img).classList.add("hidden");
+      if ($(s.txt)) $(s.txt).value = "";
+    });
+    var arch = $(s.archivo);
+    if (arch) arch.addEventListener("change", function () {
+      var f = this.files && this.files[0];
+      this.value = "";
+      if (!f) return;
+      if (!/^image\//.test(f.type)) { toast("El archivo debe ser una imagen (JPG, PNG…)", "err"); return; }
+      if (f.size > 2 * 1024 * 1024) { toast("La imagen no debe superar 2 MB", "err"); return; }
+      var fr = new FileReader();
+      fr.onload = function () {
+        var im = new Image();
+        im.onload = function () {
+          var max = 900, esc = Math.min(1, max / Math.max(im.width, im.height));
+          var cv = document.createElement("canvas");
+          cv.width = Math.max(1, Math.round(im.width * esc));
+          cv.height = Math.max(1, Math.round(im.height * esc));
+          cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+          var datos = cv.toDataURL("image/png");
+          var vista = $(s.img);
+          if (vista) { vista.src = datos; vista.classList.remove("hidden"); }
+          firmaPintarPlaceholder(s);   /* se tapa el texto guía, manda la imagen */
+          vistazo = false;
+          if ($(s.txt)) $(s.txt).value = "";
+        };
+        im.onerror = function () { toast("No se pudo leer la imagen", "err"); };
+        im.src = String(fr.result);
+      };
+      fr.readAsDataURL(f);
+    });
+  });
+  var avisoResize = false;
+  window.addEventListener("resize", function () {
+    if (avisoResize) return;
+    avisoResize = true;
+    setTimeout(function () { avisoResize = false; FIRMAS.forEach(firmaAjustarLienzo); }, 250);
+  });
+}
+function firmaValor(i) {
+  var s = FIRMAS[i];
+  if (!s) return "";
+  var t = $(s.txt) ? String($(s.txt).value || "").trim() : "";
+  if (t) return "[firma]" + t.replace(/\[img\]/g, "");
+  var vista = $(s.img);
+  if (vista && vista.src && !vista.classList.contains("hidden")) return "[img]" + vista.src;
+  var c = $(s.lienzo);
+  if (c && c.width && firmaTieneTrazo(i)) {
+    try { return "[firma]" + c.toDataURL("image/png"); } catch (e) { }
+  }
+  return "";
+}
+function firmaTieneTrazo(i) {
+  /* Detecta si el usuario dibujó: busca píxeles oscuros en el lienzo. */
+  var s = FIRMAS[i];
+  var c = s ? $(s.lienzo) : null;
+  if (!c) return false;
+  try {
+    var g = c.getContext("2d");
+    var d = g.getImageData(0, 0, c.width, c.height).data;
+    for (var k = 0; k < d.length; k += 16) {
+      if (d[k + 3] > 40 && d[k] < 200 && d[k + 1] < 200) return true;
+    }
+  } catch (e) { return false; }
+  return false;
+}
+function firmaPintarVista(contenedor, valor) {
+  if (!contenedor) return;
+  var v = String(valor || "");
+  if (!v) { contenedor.classList.add("hidden"); contenedor.innerHTML = ""; return; }
+  contenedor.classList.remove("hidden");
+  if (v.indexOf("[img]") === 0) {
+    contenedor.innerHTML = '<img class="vista-firma" alt="Firma" src="' + esc(v.slice(5)) + '">';
+  } else {
+    var texto = (v.indexOf("[firma]") === 0) ? v.slice(7) : v;
+    contenedor.innerHTML = '<div class="vista-firma texto">' + esc(texto) + '</div>';
+  }
+}
+function firmaCargar(i, valor) {
+  /* Restaura una firma guardada en los controles del formulario. */
+  var s = FIRMAS[i];
+  if (!s) return;
+  var v = String(valor || "");
+  if ($(s.txt)) $(s.txt).value = "";
+  if ($(s.img)) { $(s.img).classList.add("hidden"); $(s.img).removeAttribute("src"); }
+  firmaPintarPlaceholder(s);
+  if (!v) return;
+  if (v.indexOf("[img]") === 0 && $(s.img)) {
+    $(s.img).src = v.slice(5);
+    $(s.img).classList.remove("hidden");
+  } else if (v.indexOf("[firma]") === 0) {
+    if ($(s.txt)) $(s.txt).value = v.slice(7);
+  } else {
+    if ($(s.txt)) $(s.txt).value = v;
+  }
+}
+function firmaLimpiarTodo() {
+  FIRMAS.forEach(function (s, i) { firmaCargar(i, ""); });
+}
+
 function pintarPersonas() {
   var html = "";
   PERSONAS.forEach(function (p) {
@@ -1729,8 +1942,8 @@ function recolectar() {
     cedula: val("f-cedula"), nacionalidad: val("f-nacionalidad"),
     edad_a: val("f-edad-a"), edad_m: val("f-edad-m"), edad_d: val("f-edad-d"),
     vacunas: (document.querySelector('input[name="vacunas"]:checked') || {}).value || "",
-    firma_func: $("f-firma-func").checked ? "Sí" : "No",
-    firma_enc: $("f-firma-enc").checked ? "Sí" : "No",
+    firma_func: ($("f-firma-func").checked || !!firmaValor(1)) ? "Sí" : "No",
+    firma_enc: firmaValor(0),
     obs: val("f-obs"),
     correo: val("f-correo"),
     acuse: $("f-acuse").checked ? "Sí" : "No",
@@ -1761,8 +1974,10 @@ function cargar(r) {
   PERSONAS.forEach(function (p) {
     CAMPOS_PERSONA.forEach(function (c) { setVal("f-" + p.id + "-" + c.k, r[p.id + "_" + c.k]); });
   });
-  $("f-firma-func").checked = r.firma_func === "Sí";
-  $("f-firma-enc").checked = r.firma_enc === "Sí";
+  var ff = String(r.firma_func || "");
+  $("f-firma-func").checked = (ff !== "" && ff !== "No");
+  firmaCargar(0, r.firma_enc);
+  firmaCargar(1, (ff.indexOf("[firma]") === 0) ? ff : "");
   setVal("f-obs", r.obs);
   setVal("f-correo", r.correo || ""); setVal("f-correo2", r.correo || "");
   $("f-acuse").checked = (r.acuse || "Sí") === "Sí";
@@ -1777,6 +1992,7 @@ function limpiar() {
   $("f-acuse").checked = true;
   ["f-ap1", "f-ap2", "f-nombre", "f-cedula", "f-correo", "f-correo2"].forEach(function (id) { marcar(id, false); });
   $("f-autorizacion").classList.remove("bad");
+  firmaLimpiarTodo();
   editando = null;
   t0 = Date.now();
   intentoId = "";
@@ -1932,17 +2148,21 @@ function renderTabla() {
       '<td>' + esc(r.grado || "—") + (r.seccion ? ' · ' + esc(r.seccion) : '') + '</td>' +
       '<td><b>' + esc(nombreCompleto(r)) + '</b></td>' +
       '<td class="mono">' + esc(r.cedula || "—") + '</td>' +
-      '<td>' + esc(rep.nombre) + '</td>' +
+      '<td>' + esc(rep.nombre) +
+      '<div data-firma-enc="1" data-valor="' + esc(r.firma_enc || "") + '"></div>' +
+      '<div data-firma-func="1" data-valor="' + esc(r.firma_func || "") + '"></div></td>' +
       '<td>' + esc(r.correo || "—") + '</td>' +
       '<td>' + badgeOrigen(r.origen) + '</td>' +
       '<td class="mono">' + esc(r.fecha_registro || "—") + '</td>' +
       '<td style="white-space:nowrap">' +
       '<button class="btn sm" data-act="ver" data-folio="' + esc(r.folio) + '">Ver</button> ' +
-      (local ? '<button class="btn sm" data-act="editar" data-folio="' + esc(r.folio) + '">Editar</button> ' +
-        '<button class="btn sm red" data-act="borrar" data-folio="' + esc(r.folio) + '">X</button>' : '') +
+      '<button class="btn sm" data-act="editar" data-folio="' + esc(r.folio) + '">Editar</button> ' +
+      (local ? '<button class="btn sm red" data-act="borrar" data-folio="' + esc(r.folio) + '">X</button>' : '') +
       '</td></tr>';
   });
   tb.innerHTML = html;
+  Array.prototype.forEach.call(tb.querySelectorAll("[data-firma-enc]"), function (d) { firmaPintarVista(d, d.getAttribute("data-valor")); });
+  Array.prototype.forEach.call(tb.querySelectorAll("[data-firma-func]"), function (d) { firmaPintarVista(d, d.getAttribute("data-valor")); });
 }
 function render() { renderStats(); renderTabla(); }
 
@@ -1973,15 +2193,53 @@ async function guardar() {
 
   var r = recolectar();
 
-  /* Modo edición de un registro local (solo desde el panel). */
+  /* Modo edición (solo desde el panel, requiere sesión de administrador). */
   if (editando) {
     r.folio = editando;
-    r.estado = (buscarRec(editando) || {}).estado || "Recibida";
-    r.origen = (buscarRec(editando) || {}).origen || "Local";
-    r.fecha_envio = (buscarRec(editando) || {}).fecha_envio || "";
-    for (var i = 0; i < REC.length; i++) if (REC[i].folio === editando) { REC[i] = r; break; }
-    guardarLocal(); render();
-    toast("Registro actualizado: " + r.folio, "ok");
+    var previo = buscarRec(editando) || {};
+    r.estado = previo.estado || "Recibida";
+    r.fecha_envio = previo.fecha_envio || "";
+
+    if (esLocal(editando)) {
+      /* Registro local: se reemplaza en este equipo. */
+      r.origen = previo.origen || "Local";
+      for (var i = 0; i < REC.length; i++) if (REC[i].folio === editando) { REC[i] = r; break; }
+      guardarLocal(); render(); sincronizarCarpeta();
+      toast("Registro actualizado: " + r.folio, "ok");
+    } else if (CONFIG.urlAppsScript && adminOK) {
+      /* Registro en línea: se envían las columnas editadas a la hoja de la
+         escuela con la acción «actualizar» (el servidor conserva el folio). */
+      r.origen = previo.origen || "En línea";
+      var cambios = {};
+      csvCols().forEach(function (c) {
+        if (c.k === "folio") return;
+        var v = r[c.k];
+        cambios[c.k] = (v === undefined || v === null) ? "" : String(v);
+      });
+      var btnE = $("btn-guardar");
+      btnE.disabled = true; btnE.textContent = "Guardando…";
+      try {
+        var respE = await enviarServidor({ accion: "actualizar", usuario: usuarioSesion, clave: claveSesion, folio: editando, cambios: cambios });
+        if (!respE || respE.ok !== true) throw new Error((respE && respE.error) || "No se pudo actualizar");
+        for (var s = 0; s < SRV.length; s++) if (SRV[s].folio === editando) SRV[s] = r;
+        for (var j = 0; j < REC.length; j++) if (REC[j].folio === editando) REC[j] = r;
+        guardarLocal(); render(); sincronizarCarpeta();
+        toast("Registro actualizado en la hoja: " + r.folio, "ok");
+      } catch (errE) {
+        btnE.disabled = false; btnE.textContent = "Enviar matrícula";
+        toast("No se pudo guardar en la hoja: " + (errE && errE.message ? errE.message : errE), "err");
+        return;   /* permanece en edición para no perder los cambios */
+      }
+      btnE.disabled = false; btnE.textContent = "Enviar matrícula";
+    } else {
+      /* Sin servidor configurado: se guarda como copia local. */
+      r.origen = "Local";
+      var yaE = -1;
+      for (var k = 0; k < REC.length; k++) if (REC[k].folio === editando) { yaE = k; break; }
+      if (yaE >= 0) REC[yaE] = r; else REC.push(r);
+      guardarLocal(); render(); sincronizarCarpeta();
+      toast("Registro actualizado en modo local: " + r.folio, "warn");
+    }
     editando = null; limpiar();
     if (adminOK) { irPanelAdmin(); } else { mostrarTab("form"); }
     return;
@@ -2106,7 +2364,7 @@ function mensajePuente(res) {
 function editar(folio) {
   var r = buscarRec(folio);
   if (!r) return;
-  if (!esLocal(folio)) { detalle(folio); toast("Los registros en línea se consultan aquí; el estado sí se puede cambiar", "warn"); return; }
+  if (!adminOK) { detalle(folio); toast("Solo el personal autorizado puede editar registros", "warn"); return; }
   limpiar();
   cargar(r);
   editando = folio;
@@ -2259,9 +2517,17 @@ function deflateRaw(bytes) {
   try {
     var cs = new CompressionStream("deflate-raw");
     var w = cs.writable.getWriter();
-    return w.write(bytes).then(function () { return w.close(); }).then(function () {
-      return new Response(cs.readable).arrayBuffer();
-    }).then(function (ab) { return new Uint8Array(ab); });
+    /* Consumir el readable EN PARALELO (antes de escribir): si no se lee
+       mientras se escribe, CompressionStream aplica contrapresión y el
+       write()/close() nunca resuelven -> el .xlsx se quedaba "colgado".
+       Con la lectura concurrente ya no hay bloqueo, incluso con imágenes
+       de firma grandes embebidas en base64. */
+    var lectura = new Response(cs.readable).arrayBuffer();
+    return w.write(bytes)
+      .then(function () { return w.close(); })
+      .then(function () { return lectura; })
+      .then(function (ab) { return new Uint8Array(ab); })
+      ["catch"](function () { return null; });
   } catch (e) { return Promise.resolve(null); }
 }
 function zipArmar(archivos) {
@@ -2469,7 +2735,7 @@ function generarXlsx(regs) {
     ["Institución", "Escuela Barrio Los Ángeles - Código 1389 - Circuito 03"],
     ["Jurisdicción", "Dirección Regional de Educación San Carlos - Supervisión Educativa Circuito 03"],
     ["Ubicación", "Alajuela, San Carlos, Quesada, Barrio Los Ángeles"],
-    ["Contacto", "Teléfono 24601300 / 26853425 - esc.barriolosangeles.sancarlos@mep.go.cr"],
+    ["Contacto", "Teléfono 24601300 - esc.barriolosangeles.sancarlos@mep.go.cr"],
     ["Formato de referencia", "Boleta de Matrícula Curso Lectivo 2027 (Matricula 2027.docx)"],
     ["Fecha de exportación", fechaExport],
     ["Registros exportados", String(regs.length)],
@@ -2502,9 +2768,13 @@ function exportarXlsx(regs, etiqueta) {
     return;
   }
 
+  toast("Generando el Excel con " + regs.length + " registro(s)… si tarda, espere unos segundos.", "");
   generarXlsx(regs).then(function (bytes) {
-    descargarBinario(nombre, bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-    toast("Excel generado: " + regs.length + " fila(s) · " + cols.length + " columnas", "ok");
+    var tamKB = Math.round(bytes.length / 1024);
+    var okDescarga = descargarBinario(nombre, bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    toast(okDescarga
+      ? "Excel generado: " + regs.length + " fila(s) · " + cols.length + " columnas · " + tamKB + " KB"
+      : "Excel generado (" + tamKB + " KB) pero el navegador BLOQUEÓ la descarga: revise la barra de direcciones (icono de descarga bloqueada) o la carpeta Descargas del navegador.", okDescarga ? "ok" : "warn");
   })["catch"](function (e) {
     toast("No se pudo generar el .xlsx", String(e), "err");
   });
@@ -2743,11 +3013,15 @@ function detalle(folio) {
     html += '<div>' + esc(c.l) + '</div><div>' + esc(String(v)) + '</div>';
   });
   html += '</div>';
+  html += '<div style="margin-top:10px"><span class="f">Firma del padre, madre o encargado:</span><div id="det-firma-enc" class="hidden"></div></div>';
+  html += '<div style="margin-top:8px"><span class="f">Firma del funcionario/a de matrícula:</span><div id="det-firma-func" class="hidden"></div></div>';
   html += '<p class="nota"><span class="f">Estado:</span> ' + badgeEstado(r.estado) +
     (esLocal(folio) ? ' <span class="badge b-loc">Copia local</span>' : ' <span class="badge b-on">Servidor</span>') +
     (r.correo ? ' &nbsp; <span class="f">Correo:</span> ' + esc(r.correo) : '') +
     (r.fecha_envio ? ' &nbsp; <span class="f">Enviado:</span> ' + esc(r.fecha_envio) : '') + '</p>';
   $("det-cuerpo").innerHTML = html;
+  firmaPintarVista($("det-firma-enc"), r.firma_enc);
+  firmaPintarVista($("det-firma-func"), r.firma_func);
   $("det-back").classList.remove("hidden");
 }
 function ocultarDetalle() { $("det-back").classList.add("hidden"); }
@@ -3462,6 +3736,7 @@ if (CONFIG.urlAppsScript && !_temaLocal) {
 }
 
 pintarPersonas();
+firmaInicializar();
 cargarLocal();
 limpiar();
 render();
