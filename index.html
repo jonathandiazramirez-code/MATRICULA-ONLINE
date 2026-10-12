@@ -1,0 +1,3471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Matrícula 2027 - Escuela Barrio Los Ángeles | Ing. Jonathan Díaz Ramírez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#1e3a8a; --brand-2:#1d4ed8; --brand-3:#3b82f6; --brand-50:#eff6ff;
+    --brand-end:#0f766e;
+    --teal:#0d9488; --teal-50:#f0fdfa;
+    --amber:#b45309; --amber-50:#fffbeb;
+    --danger:#e11d48; --danger-50:#fff1f2;
+    --ok:#059669; --ok-50:#ecfdf5;
+    --bg:#f1f5f9; --surface:#ffffff; --sect:#fbfdff;
+    --border:#e2e8f0; --text:#0f172a; --muted:#64748b;
+    --radius:14px; --shadow:0 4px 14px -4px rgba(15,23,42,.12);
+  }
+  /* ===== TEMAS (fondo del encabezado y de las secciones) ===== */
+  html[data-tema="azul"]{
+    --brand:#1e3a8a; --brand-2:#1d4ed8; --brand-3:#3b82f6; --brand-50:#eff6ff; --brand-end:#0f766e;
+    --bg:#f1f5f9; --sect:#fbfdff; --surface:#ffffff;
+  }
+  html[data-tema="verde"]{
+    --brand:#065f46; --brand-2:#059669; --brand-3:#34d399; --brand-50:#ecfdf5; --brand-end:#0d9488;
+    --bg:#eef6f2; --sect:#f3faf6; --surface:#ffffff;
+    --teal:#0d9488; --teal-50:#f0fdfa;
+  }
+  html[data-tema="turquesa"]{
+    --brand:#115e59; --brand-2:#0d9488; --brand-3:#2dd4bf; --brand-50:#effefb; --brand-end:#1e3a8a;
+    --bg:#eef6f8; --sect:#f3fafc; --surface:#ffffff;
+    --teal:#0369a1; --teal-50:#f0f9ff;
+  }
+  html[data-tema="vino"]{
+    --brand:#7f1d1d; --brand-2:#b91c1c; --brand-3:#f87171; --brand-50:#fef2f2; --brand-end:#b45309;
+    --bg:#f7f3f0; --sect:#fdfaf7; --surface:#ffffff;
+    --teal:#9a3412; --teal-50:#fff7ed;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);padding:18px;min-height:100vh}
+  .wrap{max-width:1180px;margin:0 auto}
+
+  header.app{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 60%,var(--brand-end) 140%);color:#fff;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);margin-bottom:16px}
+  .cintillo{background:#fff;border-radius:10px;padding:6px 10px;margin-bottom:12px;text-align:center}
+  .cintillo img{width:100%;max-width:1040px;height:auto;display:block}
+  .cintillo .cintillo-alt{display:none;font-weight:700;color:var(--brand);font-size:13px;line-height:1.5;padding:8px 4px}
+  header.app h1{font-size:22px;font-weight:800;letter-spacing:.2px}
+  header.app .sub{font-size:13px;opacity:.92;margin-top:4px}
+  header.app .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  header.app .chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);padding:5px 11px;border-radius:999px;font-size:12px;font-weight:600}
+
+  nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  nav.tabs button{border:1px solid var(--border);background:var(--surface);color:var(--muted);font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;cursor:pointer;transition:.15s}
+  nav.tabs button:hover{border-color:var(--brand-3);color:var(--brand)}
+  nav.tabs button.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:var(--shadow)}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+  .panel h2{font-size:16px;color:var(--brand);margin-bottom:4px;font-weight:800}
+  .panel .hint{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  fieldset{border:1px solid var(--border);border-radius:12px;padding:14px 14px 16px;margin-bottom:14px;background:var(--sect)}
+  legend{font-size:13px;font-weight:800;color:var(--brand);padding:0 8px;text-transform:uppercase;letter-spacing:.4px}
+  .grid{display:grid;gap:12px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .span2{grid-column:span 2}
+  .span3{grid-column:span 3}
+  .span4{grid-column:span 4}
+  label.f{display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+  label.f .req{color:var(--danger)}
+  input[type=text],input[type=date],input[type=number],select,textarea{
+    width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:#fff;
+    font-size:14px;font-family:inherit;color:var(--text);transition:.15s}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand-3);box-shadow:0 0 0 3px rgba(59,130,246,.16)}
+  input.bad,select.bad{border-color:var(--danger);background:var(--danger-50)}
+  .radios{display:flex;gap:14px;flex-wrap:wrap;padding-top:6px}
+  .radios label{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;cursor:pointer}
+  .row-inline{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .small{font-size:12px;color:var(--muted)}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  button.btn{border:1px solid var(--border);background:#fff;color:var(--text);font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:10px;cursor:pointer;transition:.15s;font-family:inherit}
+  button.btn:hover{border-color:var(--brand-3);color:var(--brand)}
+  button.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  button.btn.primary:hover{background:var(--brand-2);color:#fff}
+  button.btn.green{background:var(--ok);border-color:var(--ok);color:#fff}
+  button.btn.green:hover{background:#047857;color:#fff}
+  button.btn.red{background:var(--danger-50);border-color:#fecdd3;color:var(--danger)}
+  button.btn.red:hover{background:var(--danger);border-color:var(--danger);color:#fff}
+  button.btn.ghost{background:transparent}
+  button.btn.sm{padding:6px 10px;font-size:12.5px;border-radius:8px}
+  button.btn:disabled{opacity:.5;cursor:not-allowed}
+
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+  .stat b{display:block;font-size:22px;color:var(--brand);font-family:'JetBrains Mono',monospace}
+  .stat span{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .toolbar input[type=text]{max-width:320px}
+  .toolbar select{width:auto;flex:0 0 auto;min-width:200px}
+  .tbl-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px;max-height:520px}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+  thead th{position:sticky;top:0;background:var(--brand);color:#fff;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;padding:10px 8px;text-align:left;z-index:2;white-space:nowrap}
+  tbody td{padding:9px 8px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+  tbody tr:hover{background:var(--brand-50)}
+  tbody tr:nth-child(even){background:var(--sect)}
+  tbody tr:nth-child(even):hover{background:var(--brand-50)}
+  td.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+  .b-mat{background:var(--teal-50);color:var(--teal)}
+  .b-tra{background:var(--amber-50);color:var(--amber)}
+  .b-otro{background:var(--brand-50);color:var(--brand-2)}
+  .b-ok{background:var(--ok-50);color:var(--ok)}
+  .b-no{background:var(--danger-50);color:var(--danger)}
+  .empty{padding:34px;text-align:center;color:var(--muted);font-size:14px}
+
+  .toast-box{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:99}
+  .toast{background:#0f172a;color:#fff;padding:11px 16px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 10px 25px -5px rgba(0,0,0,.35);animation:in .2s ease;max-width:340px}
+  .toast.ok{background:var(--ok)} .toast.err{background:var(--danger)} .toast.warn{background:var(--amber)}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  footer.app{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.7}
+  footer.app b{color:var(--brand)}
+  .credito{background:var(--amber-50);border:1px dashed #fcd34d;color:#92400e;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;text-align:center;margin-top:14px}
+  .hidden{display:none!important}
+
+  .btn-ventana{border:1px solid #93c5fd;background:var(--brand-50);color:var(--brand);font-weight:700;font-size:13.5px;
+    padding:10px 18px;border-radius:10px;cursor:pointer;margin-left:auto;transition:.15s;font-family:inherit}
+  .btn-ventana:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .admin-bar{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-bottom:14px}
+  .admin-bar .actions{margin-top:0}
+  .folio-caja{text-align:center;margin:16px 0}
+  .folio-caja span{display:inline-block;background:var(--brand-50);border:2px dashed var(--brand-3);color:var(--brand);
+    font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;padding:14px 34px;border-radius:12px;letter-spacing:1px}
+
+  .overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(3px);z-index:80;
+    display:flex;align-items:center;justify-content:center;padding:18px}
+  .overlay-box{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:560px;box-shadow:0 25px 50px -12px rgba(0,0,0,.4);
+    max-height:92vh;overflow:auto}
+  .overlay-box h3{color:var(--brand);font-size:17px;margin-bottom:6px}
+  .overlay-box input[type=password],.overlay-box input[type=text],.overlay-box textarea{margin-top:8px}
+  .overlay-box .actions{margin-top:16px}
+  .det-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .det-grid div{padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px}
+  .det-grid div:nth-child(odd){background:#f8fafc;font-weight:700;color:#334155}
+  .det-tit{font-size:12px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.4px;
+    grid-column:1/-1;background:var(--teal-50)!important;padding:7px 12px}
+  .estado-sel{font-size:12.5px;padding:5px 6px;border-radius:7px;border:1px solid var(--border);background:#fff;
+    width:132px;min-width:132px}
+  .badge.b-rev{background:#fef3c7;color:#b45309}
+  .badge.b-apr{background:var(--ok-50);color:var(--ok)}
+  .badge.b-obs{background:#ffedd5;color:#c2410c}
+  .badge.b-anu{background:var(--danger-50);color:var(--danger)}
+  .badge.b-rec{background:var(--brand-50);color:var(--brand-2)}
+  .badge.b-on{background:#ede9fe;color:#6d28d9}
+  .badge.b-loc{background:#f1f5f9;color:#475569}
+  .sel-filtro{padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:#fff;font-size:13.5px;
+    font-family:inherit;color:var(--text);font-weight:600}
+
+  /* Instalación asistida */
+  .inst-msg{margin-top:10px;font-size:13px;line-height:1.6;color:var(--muted);background:#f8fafc;
+    border:1px solid var(--border);border-radius:9px;padding:9px 12px}
+  .inst-msg.ok{background:var(--ok-50);border-color:#86efac;color:#15803d}
+  .inst-msg.err{background:var(--danger-50);border-color:#fca5a5;color:var(--danger)}
+  ul.checks{list-style:none;margin:8px 0 0;padding:0}
+  ul.checks li{font-size:13.5px;line-height:1.6;padding:7px 11px;border:1px solid var(--border);border-radius:9px;
+    margin-bottom:6px;background:#fff;color:#334155}
+  ul.checks li .ico{display:inline-block;width:18px;font-weight:800}
+  ul.checks li.ok{background:var(--ok-50);border-color:#bbf7d0;color:#166534}
+  ul.checks li.no{background:var(--danger-50);border-color:#fecaca;color:#b91c1c}
+  ul.checks li.pend{background:#f8fafc;color:var(--muted)}
+  ol.pasos{margin:8px 0 0;padding-left:22px;font-size:13.5px;line-height:1.85;color:#334155}
+
+  /* Administradores */
+  ul.admins-lista{list-style:none;margin:10px 0 0;padding:0}
+  ul.admins-lista li{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:9px 12px;
+    border:1px solid var(--border);border-radius:9px;margin-bottom:6px;background:#fff;color:#334155}
+  ul.admins-lista li b{color:var(--brand);font-size:14px}
+  ul.admins-lista li .yo{background:var(--brand-50);color:var(--brand-2);border-radius:999px;padding:2px 9px;
+    font-size:11px;font-weight:800}
+  ul.admins-lista li .acciones{margin-left:auto;display:flex;gap:6px}
+  ul.admins-lista li.vacio{color:var(--muted);justify-content:center;background:#f8fafc}
+
+  /* Temas de color */
+  .temas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+  .tema-card{border:2px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;
+    padding:0;text-align:left;transition:.15s;font-family:inherit}
+  .tema-card:hover{border-color:var(--brand-3);transform:translateY(-2px)}
+  .tema-card.on{border-color:var(--brand);box-shadow:var(--shadow)}
+  .tema-card .prev{height:70px;padding:9px 11px;color:#fff;font-weight:800;font-size:12.5px;
+    display:flex;align-items:flex-end;letter-spacing:.3px}
+  .tema-card .pie{display:flex;gap:7px;align-items:center;padding:9px 11px;font-size:13px;font-weight:700;color:var(--text)}
+  .tema-card .pie .banda{width:46px;height:15px;border-radius:4px;border:1px solid rgba(0,0,0,.15);flex:0 0 auto}
+
+  /* Modo administrativo: la barra pública se oculta */
+  body.es-admin .tabs{display:none!important}
+  body.es-admin .wrap{max-width:1400px}
+  input.bad,textarea.bad,select.bad{outline:2px solid var(--danger);outline-offset:1px}
+  input[type=checkbox].bad{accent-color:var(--danger);transform:scale(1.15)}
+  .nota{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.7}
+  .nota .f{font-weight:700;color:var(--brand-2)}
+  #login-error{color:var(--danger);font-size:13px;font-weight:700;margin-top:6px}
+  .acuse-cents{text-align:center}
+  .acuse-cents .marca{display:inline-flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:50%;
+    background:var(--ok-50);color:var(--ok);font-size:30px;font-weight:800;margin-bottom:6px}
+  .acuse-cents h3{color:var(--brand);margin:4px 0 2px}
+  .acuse-cents p{font-size:14px;color:var(--muted);margin:4px 0}
+
+  @media (max-width:900px){
+    .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .span3,.span4{grid-column:span 2}
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:600px){
+    body{padding:10px}
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .span2,.span3,.span4{grid-column:span 1}
+    header.app h1{font-size:18px}
+  }
+
+  @media print{
+    body{background:#fff;padding:0}
+    nav.tabs,.actions,.toolbar,.stats,.toast-box,header.app .meta,footer.app .no-print,.credito.no-print,button{display:none!important}
+    header.app{background:#fff;color:#000;box-shadow:none;border:1px solid #000}
+    .panel{border:1px solid #000;box-shadow:none;break-inside:avoid}
+    fieldset{background:#fff;border:1px solid #000}
+    .wrap{max-width:100%}
+    input,select,textarea{border:none!important;box-shadow:none!important;padding:4px 2px}
+    /* Impresión del detalle: solo la ventana superpuesta */
+    body.solo-overlay .wrap,body.solo-overlay .toast-box{display:none!important}
+    body.solo-overlay .overlay{position:static;inset:auto;background:none;backdrop-filter:none;padding:0;display:block}
+    body.solo-overlay .overlay-box{max-width:100%;box-shadow:none;max-height:none;overflow:visible}
+    body.solo-overlay .overlay .actions,body.solo-overlay .credito{display:none!important}
+    body.solo-overlay .det-grid div{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app">
+    <div class="cintillo">
+      <img id="img-encabezado" src="encabezado.png" alt="Ministerio de Educación Pública - Dirección Regional de Educación San Carlos - Supervisión Educativa Circuito 03 - Escuela Barrio Los Ángeles">
+      <div class="cintillo-alt" id="cintillo-alt">
+        MINISTERIO DE EDUCACIÓN PÚBLICA · GOBIERNO DE COSTA RICA<br>
+        Dirección Regional de Educación San Carlos · Supervisión Educativa Circuito 03<br>
+        Escuela Barrio Los Ángeles
+      </div>
+    </div>
+    <h1>Registro de Matrícula · Boleta de Matrícula Curso Lectivo 2027</h1>
+    <div class="sub">Escuela Barrio Los Ángeles · Código: 1389 · Circuito 03 · Quesada, San Carlos, Alajuela</div>
+    <div class="meta">
+      <span class="chip">Año lectivo 2027</span>
+      <span class="chip">Edad de referencia: 15 de febrero del 2027</span>
+      <span class="chip" id="chip-total">0 registros</span>
+      <span class="chip">Elaborado por el Ing. Jonathan Díaz Ramírez</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button id="tab-form" class="on" data-tab="form">Nueva boleta / Registro</button>
+    <button id="tab-help" data-tab="help">Ayuda y publicación</button>
+    <button id="btn-admin" class="btn-ventana" title="Ventana aparte y protegida con contraseña">Área administrativa</button>
+  </nav>
+
+  <!-- ================= FORMULARIO ================= -->
+  <section id="view-form" class="panel">
+    <h2 id="form-titulo">Boleta de matrícula · Curso Lectivo 2027</h2>
+    <p class="hint">Complete los campos tal como aparecen en la boleta física <b>“Matricula 2027.docx”</b>. Los campos con <span style="color:var(--danger)">*</span> son obligatorios.</p>
+
+    <form id="form" autocomplete="off">
+      <fieldset>
+        <legend>1 · Datos personales del estudiante</legend>
+        <div class="grid g3">
+          <div><label class="f">Primer apellido <span class="req">*</span></label><input type="text" id="f-ap1"></div>
+          <div><label class="f">Segundo apellido</label><input type="text" id="f-ap2"></div>
+          <div><label class="f">Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre"></div>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="span2"><label class="f">Dirección exacta del menor</label><input type="text" id="f-direccion"></div>
+        </div>
+        <div class="grid g4" style="margin-top:12px">
+          <div>
+            <label class="f">Identificación de nacimiento · Lugar</label>
+            <input type="text" id="f-lugar-nac" placeholder="Ej. San Carlos">
+          </div>
+          <div>
+            <label class="f">Identificación de nacimiento · Fecha</label>
+            <input type="date" id="f-fecha-nac">
+          </div>
+          <div>
+            <label class="f">Cédula</label>
+            <input type="text" id="f-cedula" inputmode="numeric" placeholder="000000000">
+          </div>
+          <div>
+            <label class="f">Nacionalidad</label>
+            <input type="text" id="f-nacionalidad" value="Costarricense">
+          </div>
+        </div>
+        <div class="grid g4" style="margin-top:12px">
+          <div><label class="f">Edad cumplida al 15/02/2027 · Años</label><input type="number" min="0" max="25" id="f-edad-a"></div>
+          <div><label class="f">Edad cumplida al 15/02/2027 · Meses</label><input type="number" min="0" max="11" id="f-edad-m"></div>
+          <div><label class="f">Edad cumplida al 15/02/2027 · Días</label><input type="number" min="0" max="31" id="f-edad-d"></div>
+          <div>
+            <label class="f">Vacunas</label>
+            <div class="radios">
+              <label><input type="radio" name="vacunas" value="Pendientes"> Pendientes</label>
+              <label><input type="radio" name="vacunas" value="Al día" checked> Al día</label>
+            </div>
+          </div>
+        </div>
+        <div class="actions" style="margin-top:8px">
+          <button type="button" class="btn sm ghost" id="btn-calc-edad">Calcular edad al 15/02/2027 desde la fecha de nacimiento</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2 · Grado y modalidad</legend>
+        <div class="grid g4">
+          <div>
+            <label class="f">Modalidad</label>
+            <select id="f-modalidad">
+              <option value="">— Seleccione —</option>
+              <option value="Materno">Materno</option>
+              <option value="Transición">Transición</option>
+              <option value="Otro (indicar grado)">Otro (indicar grado)</option>
+            </select>
+          </div>
+          <div>
+            <label class="f">Grado</label>
+            <input type="text" id="f-grado" placeholder="Ej. 1°, 2°, Materno…">
+          </div>
+          <div>
+            <label class="f">Sección / Aula</label>
+            <input type="text" id="f-seccion" placeholder="Ej. A, B…">
+          </div>
+          <div>
+            <label class="f">Fecha de registro</label>
+            <input type="date" id="f-fecha-reg">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3 · Información de madre, padre o encargado</legend>
+        <div id="rep-holder"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Firmas</legend>
+        <div class="grid g2">
+          <label class="row-inline" style="font-size:14px;font-weight:600">
+            <input type="checkbox" id="f-firma-func"> Firma registrada (funcionario/a de matrícula)
+          </label>
+          <label class="row-inline" style="font-size:14px;font-weight:600">
+            <input type="checkbox" id="f-firma-enc"> Firma del padre, madre o encargado legal: recibida
+          </label>
+        </div>
+        <div style="margin-top:12px">
+          <label class="f">Observaciones (opcional)</label>
+          <textarea id="f-obs" rows="2"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4 · Contacto, notificación y autorización</legend>
+        <div class="grid g2">
+          <div>
+            <label class="f">Correo electrónico del padre/madre/encargado</label>
+            <input type="text" id="f-correo" placeholder="ejemplo@correo.com">
+          </div>
+          <div>
+            <label class="f">Confirmar correo</label>
+            <input type="text" id="f-correo2" placeholder="repita el correo">
+          </div>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <label class="row-inline" style="font-size:14px;font-weight:600">
+            <input type="checkbox" id="f-acuse" checked> Enviar el acuse de recibo a mi correo
+          </label>
+          <label class="row-inline" style="font-size:14px;font-weight:600">
+            <input type="checkbox" id="f-autorizacion"> Autorizo el uso de mis datos personales para el proceso de matrícula <span class="req">*</span>
+          </label>
+        </div>
+        <p class="small" style="margin-top:8px">Al enviar la boleta, el sistema avisa por correo a los destinatarios
+          asignados por el administrador de la escuela y, si marca la casilla, le envía a usted el acuse con el número de folio.</p>
+        <input type="text" id="f-empresa" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      </fieldset>
+
+      <div class="credito">Aplicación y registro elaborados por el <b>Ing. Jonathan Díaz Ramírez</b></div>
+
+      <div class="actions" style="margin-top:14px">
+        <button type="submit" class="btn primary" id="btn-guardar">Enviar matrícula</button>
+        <button type="button" class="btn green hidden" id="btn-guardar-nuevo">Guardar y crear otro</button>
+        <button type="button" class="btn ghost" id="btn-limpiar">Limpiar boleta</button>
+        <button type="button" class="btn" id="btn-imprimir">Imprimir boleta</button>
+        <button type="button" class="btn red hidden" id="btn-cancelar-edicion">Cancelar edición</button>
+      </div>
+      <p class="small" id="estado-edicion" style="margin-top:8px">Al enviar se le entregará un folio <b>MAT-2027-###</b> y se notificará por correo a la escuela.</p>
+    </form>
+  </section>
+
+  <!-- ================= ACUSE / ENVÍO EXITOSO ================= -->
+  <section id="view-ok" class="panel hidden">
+    <h2 style="color:var(--ok)">Solicitud de matrícula recibida</h2>
+    <p class="hint" id="ok-mensaje">Su boleta fue registrada correctamente.</p>
+    <div class="folio-caja"><span id="ok-folio">MAT-2027-000</span></div>
+    <div class="grid g2">
+      <div class="stat"><b id="ok-estudiante" style="font-size:15px;font-family:inherit">—</b><span>Estudiante</span></div>
+      <div class="stat"><b id="ok-correo" style="font-size:15px;font-family:inherit">—</b><span>Notificación enviada a</span></div>
+    </div>
+    <p class="small" style="margin-top:12px">Conserve este folio: con él puede dar seguimiento a su solicitud en la escuela.
+      El envío en línea no sustituye la entrega de los documentos físicos requeridos.</p>
+    <div class="actions" style="margin-top:14px">
+      <button class="btn" id="btn-imprimir-acuse">Imprimir / guardar acuse</button>
+      <button class="btn primary" id="btn-nueva">Nueva matrícula</button>
+    </div>
+    <div class="credito" style="margin-top:16px">Registro de Matrícula 2027 — elaborado por el <b>Ing. Jonathan Díaz Ramírez</b></div>
+  </section>
+
+  <!-- ================= PANEL ADMINISTRATIVO (ventana aparte) ================= -->
+  <section id="view-list" class="panel hidden">
+    <div class="admin-bar">
+      <div>
+        <h2>Panel administrativo · Registros guardados</h2>
+        <p class="hint" id="admin-estado">Conectando con la base de datos…</p>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="btn-inst" title="Configurar dónde se guardan los registros">Instalación asistida</button>
+        <button class="btn" id="btn-refrescar">Refrescar</button>
+        <button class="btn green" id="btn-xlsx">Exportar a Excel (.xlsx)</button>
+        <button class="btn" id="btn-fs" title="Carpeta donde se guarda automáticamente el Excel con todos los registros">Carpeta Excel</button>
+        <button class="btn" id="btn-csv">CSV</button>
+        <button class="btn" id="btn-json">Respaldo JSON</button>
+        <button class="btn" id="btn-config">Correos de notificación</button>
+        <button class="btn" id="btn-puente" title="Ruta del archivo Excel y notificaciones con Outlook">Excel y Outlook</button>
+        <button class="btn" id="btn-admins">Administradores</button>
+        <button class="btn" id="btn-tema">Apariencia y colores</button>
+        <button class="btn red" id="btn-salir">Salir</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="st-total">0</b><span>Total registros</span></div>
+      <div class="stat"><b id="st-mat">0</b><span>Recibidas hoy</span></div>
+      <div class="stat"><b id="st-tra">0</b><span>Pendientes de revisar</span></div>
+      <div class="stat"><b id="st-firma">0</b><span>Matrículas aprobadas</span></div>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" id="buscar" placeholder="Buscar por nombre, apellido, cédula, folio o grado…">
+      <select id="filtro-estado">
+        <option value="">Todos los estados</option>
+        <option value="Recibida">Recibida</option>
+        <option value="En revisión">En revisión</option>
+        <option value="Aprobada">Aprobada</option>
+        <option value="Observada">Observada</option>
+        <option value="Anulada">Anulada</option>
+      </select>
+      <select id="filtro-modalidad">
+        <option value="">Todas las modalidades</option>
+        <option value="Materno">Materno</option>
+        <option value="Transición">Transición</option>
+        <option value="Otro (indicar grado)">Otro (indicar grado)</option>
+      </select>
+      <button class="btn red" id="btn-borrar-todo">Borrar registros locales</button>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Folio</th><th>Estado</th><th>Modalidad</th><th>Grado</th><th>Estudiante</th><th>Cédula</th>
+            <th>Representante</th><th>Correo</th><th>Origen</th><th>Fecha</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty hidden" id="vacio">Sin registros todavía.</div>
+    </div>
+  </section>
+
+  <!-- ================= AYUDA ================= -->
+  <section id="view-help" class="panel hidden">
+    <h2>Ayuda, publicación y créditos</h2>
+    <p class="hint">Para padres: llenar y enviar la boleta. Para la escuela: publicar la app y administrar los registros.</p>
+
+    <fieldset>
+      <legend>Cómo usa la app el padre de familia</legend>
+      <ol style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
+        <li>Abra <b>Nueva boleta / Registro</b> y complete la boleta igual que el formato físico.</li>
+        <li>Escriba su correo, marque la autorización de datos y pulse <b>Enviar matrícula</b>.</li>
+        <li>Recibirá en pantalla (y en su correo, si lo marcó) el folio <b>MAT-2027-###</b>.</li>
+        <li>La escuela es notificada por correo automáticamente con el detalle de la nueva matrícula.</li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <legend>Publicación en línea (una sola vez)</legend>
+      <ol style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
+        <li>Abra el archivo <b>Codigo Apps Script - Registro Matricula 2027.gs</b>: ahí están los 6 pasos de instalación
+          (hoja de cálculo Google, función <b>INSTALAR</b>, implementación como app web y la URL <b>/exec</b>).</li>
+        <li>Pegue esa URL en este HTML, en la línea <b>CONFIG.urlAppsScript</b> — o bien, más fácil:
+          entre al <b>Área administrativa ▸ Instalación asistida</b>, péguela ahí y pulse
+          <b>Verificar y guardar</b> (la app la guarda y la verifica sola; con
+          <b>Copiar línea para el HTML</b> obtiene la línea lista para pegarla en el archivo).</li>
+        <li><b>Paso 0 automático:</b> en <b>Instalación asistida</b> seleccione la <b>carpeta de
+          publicación</b> (la carpeta «Publicar en GitHub Pages»): al verificar la URL, el
+          <b>README.md</b> (Paso 0) y el <b>index.html</b> de esa carpeta se actualizan solos con la
+          URL, listos para subir a GitHub (Chrome/Edge).</li>
+        <li>Suba este HTML a su página (Drive web, GitHub Pages, hosting institucional, etc.). Los padres entran a esa dirección.</li>
+        <li>Los registros caen en la hoja <b>MATRICULA2027</b> de Google; se descarga como Excel desde Archivo &gt; Descargar &gt;
+          .xlsx, o desde el panel con <b>Exportar a Excel</b>.</li>
+        <li>Si la URL no está configurada, la app funciona en <b>modo local</b>: guarda en este mismo archivo/equipo y avisa en el panel.</li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <legend>Área administrativa</legend>
+      <p class="small" style="margin-bottom:8px">Botón <b>Área administrativa</b>: abre una ventana aparte protegida con
+        <b>usuario y contraseña</b> (o con la contraseña maestra, <b>CONFIG.claveAdmin</b>, dejando el usuario vacío).
+        Allí el administrador puede:</p>
+      <ul style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
+        <li>Ver todos los registros (en línea y locales), buscar y filtrar por estado o modalidad.</li>
+        <li><b>Administradores:</b> agregar o quitar personas con acceso y cambiar contraseñas (se guardan cifradas,
+          en SHA-256; el texto original no se almacena).</li>
+        <li><b>Apariencia y colores:</b> cambiar el fondo del encabezado y de las secciones entre 4 temas
+          (azul, verde, turquesa, vino) y compartirlos con todos los equipos.</li>
+        <li><b>Instalación asistida:</b> pegar el sitio de guardado (URL /exec), que la app verifique la
+          conexión, le diga qué falta y le deje copiar el código .gs en un clic.</li>
+        <li>Cambiar el estado: Recibida, En revisión, Aprobada, Observada o Anulada.</li>
+        <li>Descargar el <b>Excel</b> (50 columnas, con filtros), CSV o respaldo JSON.</li>
+        <li>Definir los <b>correos de notificación</b> que reciben el aviso de nueva matrícula.</li>
+        <li><b>Carpeta Excel:</b> elegir la carpeta de este equipo donde se guardará y actualizará
+          automáticamente <b>MATRICULA_2027.xlsx</b> con el mismo formato de la exportación
+          (Chrome/Edge; funciona también en la página publicada).</li>
+      </ul>
+    </fieldset>
+
+    <fieldset>
+      <legend>Puente local: Excel en una ruta + Outlook</legend>
+      <p class="small" style="margin-bottom:8px">Para que cada <b>Enviar matrícula</b> quede <b>automática y directamente</b>
+        en un archivo Excel de la escuela y la escuela reciba el aviso por <b>Microsoft Outlook</b>, use el puente local:</p>
+      <ol style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
+        <li>En la PC con Excel y Outlook, ejecute <b>«Iniciar puente matricula.bat»</b> y déjelo abierto
+          (para arrancarlo con Windows: Win+R ▸ <b>shell:startup</b> y copie ahí el acceso directo).</li>
+        <li>Área administrativa ▸ <b>Excel y Outlook</b>: pegue el <b>token</b> del puente, escriba la <b>ruta del
+          archivo Excel</b> (por ejemplo <span class="mono">C:\Escuela\MATRICULA_2027.xlsx</span> o una carpeta de red
+          <span class="mono">\\servidor\…</span>) y pulse <b>Guardar en el puente</b>.</li>
+        <li>En <b>Correos de notificación</b> defina los destinatarios (usuarios asignados por el administrador);
+          se sincronizan con el puente al guardar.</li>
+        <li>Al enviar una boleta: la fila se agrega al Excel (se crea con las 50 columnas si no existe) y Outlook envía
+          el aviso de nueva matrícula. El panel muestra el resultado (ruta y destinatarios).</li>
+      </ol>
+      <p class="small" style="color:var(--muted);margin-top:8px"><b>Nota:</b> el puente solo funciona en la PC donde corre
+        el script. Las boletas que otras familias envíen desde internet (con la URL de Google Apps Script) quedan en la
+        hoja de Google y se descargan como Excel desde el panel; el puente atiende los envíos hechos en la propia escuela.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Respaldo de datos locales</legend>
+      <p class="small" style="margin-bottom:10px">Los registros capturados en modo local se guardan en este equipo. Exporte un <b>.json</b> periódicamente.</p>
+      <div class="actions">
+        <button class="btn green" id="btn-json2">Exportar respaldo (.json)</button>
+        <button class="btn" id="btn-importar">Importar respaldo (.json)</button>
+        <input type="file" id="inp-json" accept="application/json,.json" class="hidden">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Formato de referencia</legend>
+      <p class="small">Este registro replica el documento físico <b>“Matricula 2027.docx”</b> (Boleta de Matrícula Curso Lectivo 2027, Escuela Barrio Los Ángeles, Código 1389, Circuito 03): datos personales del estudiante, grado y modalidad, información de madre, padre o encargado y firmas.</p>
+    </fieldset>
+
+    <div class="credito">Desarrollado e implementado por el <b>Ing. Jonathan Díaz Ramírez</b> · Escuela Barrio Los Ángeles · Curso Lectivo 2027</div>
+  </section>
+
+  <footer class="app">
+    <div class="no-print">
+      Escuela Barrio Los Ángeles · Código 1389 · Circuito 03 · Alajuela, San Carlos, Quesada, Barrio Los Ángeles<br>
+      Edificio Amara, detrás de KFC · Teléfono: 26853425 / 24601300 · esc.barriolosangeles.sancarlos@mep.go.cr · www.mep.go.cr<br>
+      <b>Registro de Matrícula 2027 — elaborado por el Ing. Jonathan Díaz Ramírez</b>
+    </div>
+  </footer>
+</div>
+
+<div class="toast-box" id="toasts"></div>
+
+<!-- ================= ACCESO ADMINISTRATIVO ================= -->
+<div class="overlay hidden" id="login-back">
+  <div class="overlay-box">
+    <h3>Área administrativa</h3>
+    <p class="small">Ventana aparte y protegida. Ingrese su usuario y contraseña para consultar los registros guardados.</p>
+    <label class="f" style="margin-top:14px">Usuario <span style="text-transform:none;font-weight:600;color:var(--muted)">(opcional si usa la contraseña maestra)</span></label>
+    <input type="text" id="login-usuario" placeholder="Nombre de usuario" autocomplete="username">
+    <label class="f" style="margin-top:12px">Contraseña</label>
+    <input type="password" id="login-clave" placeholder="Contraseña del administrador" autocomplete="current-password">
+    <p class="small hidden" id="login-error" style="color:var(--danger);font-weight:700;margin-top:8px">Usuario o contraseña incorrectos.</p>
+    <div class="actions">
+      <button class="btn primary" id="btn-login">Entrar</button>
+      <button class="btn ghost" id="btn-login-cancel">Cancelar</button>
+    </div>
+    <div class="credito" style="margin-top:16px">Acceso reservado al personal autorizado · Ing. Jonathan Díaz Ramírez</div>
+  </div>
+</div>
+
+<!-- ================= CORREOS DE NOTIFICACIÓN ================= -->
+<div class="overlay hidden" id="cfg-back">
+  <div class="overlay-box">
+    <h3>Correos de notificación</h3>
+    <p class="small">Destinatarios que reciben el aviso de <b>nueva matrícula</b> cuando un padre envía la boleta.
+      Separe varias direcciones con coma. Se guardan en la hoja CONFIG del Google Sheet.</p>
+    <label class="f" style="margin-top:14px">Correos (usuarios asignados por el administrador)</label>
+    <textarea id="cfg-correos" rows="3" style="width:100%;margin-top:6px;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:inherit"></textarea>
+    <label class="row-inline" style="margin-top:12px;font-size:14px;font-weight:600">
+      <input type="checkbox" id="cfg-padre"> Enviar también el acuse al correo del padre/madre/encargado
+    </label>
+    <div class="actions">
+      <button class="btn primary" id="btn-cfg-guardar">Guardar</button>
+      <button class="btn ghost" id="btn-cfg-cancel">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PUENTE LOCAL: EXCEL EN UNA RUTA + OUTLOOK ================= -->
+<div class="overlay hidden" id="puente-back">
+  <div class="overlay-box" style="max-width:740px">
+    <h3>Puente local · Excel en una ruta + correos con Outlook</h3>
+    <p class="small">El <b>puente local</b> es el script <b>«Puente Matricula 2027.ps1»</b> que se ejecuta en el equipo
+      de la escuela. Al enviar una boleta: guarda la fila en el <b>archivo Excel</b> que usted indique y envía el aviso
+      de <b>nueva matrícula con Microsoft Outlook</b> a los destinatarios de «Correos de notificación».</p>
+
+    <div class="grid g2" style="margin-top:12px">
+      <div><label class="f">Puerto del puente</label>
+        <input type="text" id="puente-puerto" placeholder="8787" spellcheck="false"></div>
+      <div><label class="f">Token de acceso</label>
+        <input type="password" id="puente-token" placeholder="token que muestra el script" autocomplete="off"></div>
+    </div>
+    <label class="f" style="margin-top:10px">Ruta del archivo Excel con todos los registros</label>
+    <input type="text" id="puente-ruta" placeholder="C:\Escuela\MATRICULA 2027\MATRICULA_2027.xlsx" spellcheck="false">
+    <p class="small" style="margin-top:6px;color:var(--muted)">La ruta pertenece al equipo donde corre el puente; también
+      puede ser una carpeta compartida de red (\\servidor\…). Si el archivo no existe, el puente lo crea con las 50 columnas.</p>
+
+    <p class="inst-msg" id="puente-estado">Sin verificar todavía.</p>
+    <p class="small" id="puente-correos-local" style="margin-top:6px"></p>
+
+    <div class="actions">
+      <button class="btn primary" id="btn-puente-guardar">Guardar en el puente</button>
+      <button class="btn" id="btn-puente-probar">Probar conexión</button>
+      <button class="btn ghost" id="btn-puente-cerrar">Cerrar</button>
+    </div>
+
+    <h3 style="margin-top:16px">Cómo activarlo (una sola vez)</h3>
+    <ol class="pasos">
+      <li>Ejecute <b>«Iniciar puente matricula.bat»</b> en la PC que tenga Excel y Outlook
+        (para arrancarlo con Windows: Win+R ▸ <b>shell:startup</b> y copie ahí el acceso directo).</li>
+      <li>Copie el <b>token</b> que muestra la ventana del puente (o el archivo
+        «Puente Matricula 2027.TOKEN.txt») y péguelo arriba.</li>
+      <li>Escriba la <b>ruta del Excel</b> y pulse <b>Guardar en el puente</b>.</li>
+      <li>Defina los destinatarios en <b>Correos de notificación</b> (se sincronizan con el puente al guardar).</li>
+    </ol>
+    <div class="credito" style="margin-top:12px">Registro de Matrícula 2027 · Ing. Jonathan Díaz Ramírez</div>
+  </div>
+</div>
+
+<!-- ================= CARPETA DE GUARDADO (EXCEL AUTOMÁTICO) ================= -->
+<div class="overlay hidden" id="fs-back">
+  <div class="overlay-box" style="max-width:740px">
+    <h3>Carpeta de guardado · Excel con todos los registros</h3>
+    <p class="small">El administrador elige <b>una carpeta de este equipo</b>: allí se guardará y se actualizará
+      el archivo <b>MATRICULA_2027.xlsx</b> con <b>el mismo formato de la exportación</b> (las mismas 50 columnas
+      y la hoja de información). La página puede estar publicada en internet: la carpeta es la de <b>este equipo</b>
+      y solo este navegador puede escribir en ella.</p>
+    <p class="small" style="color:var(--muted)">Requiere <b>Google Chrome o Microsoft Edge</b> (los navegadores
+      que permiten elegir carpetas) y que la página esté en HTTPS o abierta desde este equipo.</p>
+
+    <p class="inst-msg" id="fs-estado">Sin carpeta seleccionada.</p>
+
+    <label class="row-inline" style="margin-top:10px;font-size:14px;font-weight:600">
+      <input type="checkbox" id="fs-auto" checked> Actualizar el archivo automáticamente al haber nuevos registros
+      o cambios de estado
+    </label>
+
+    <div class="actions">
+      <button class="btn primary" id="btn-fs-seleccionar">Seleccionar carpeta…</button>
+      <button class="btn green" id="btn-fs-guardar">Guardar registros ahora</button>
+      <button class="btn red" id="btn-fs-quitar">Quitar carpeta</button>
+      <button class="btn ghost" id="btn-fs-cerrar">Cerrar</button>
+    </div>
+
+    <h3 style="margin-top:16px">Cómo funciona</h3>
+    <ol class="pasos">
+      <li>Pulse <b>Seleccionar carpeta…</b> y elija (o cree) la carpeta donde vivirá el archivo,
+        por ejemplo <span class="mono">C:\Escuela\MATRICULA 2027</span>. El navegador recuerda la carpeta
+        aunque cierre y vuelva a entrar.</li>
+      <li>El archivo <b>MATRICULA_2027.xlsx</b> se crea/actualiza al instante y cada vez que llega una
+        matrícula nueva o cambia un estado (puede apagarse con el cuadro de arriba).</li>
+      <li>Si el navegador vuelve a pedir permiso (por seguridad), vuelva a pulsar
+        <b>Seleccionar carpeta…</b> o <b>Guardar registros ahora</b> y conceda el acceso.</li>
+      <li>Si el archivo está abierto en Excel, ciérralo para que el puente/página pueda reescribirlo.</li>
+    </ol>
+    <div class="credito" style="margin-top:12px">Registro de Matrícula 2027 · Ing. Jonathan Díaz Ramírez</div>
+  </div>
+</div>
+
+<!-- ================= INSTALACIÓN ASISTIDA ================= -->
+<div class="overlay hidden" id="inst-back">
+  <div class="overlay-box" style="max-width:760px">
+    <h3>Instalación asistida · Dónde se guardan los registros</h3>
+    <p class="small">Pegue únicamente la dirección (URL) del guardado en línea. La app verifica todo lo demás
+      y le avisa si falta algún paso.</p>
+
+    <label class="f" style="margin-top:14px">Sitio de guardado de los registros (URL que termina en <b>/exec</b>)</label>
+    <input type="text" id="inst-url" placeholder="https://script.google.com/macros/s/AKfyc…/exec" spellcheck="false">
+    <div class="actions" style="margin-top:10px">
+      <button class="btn primary" id="btn-inst-probar">Verificar y guardar</button>
+      <button class="btn green hidden" id="btn-inst-copiar-linea">Copiar línea para el HTML</button>
+    </div>
+    <p class="inst-msg" id="inst-msg">Sin verificar todavía.</p>
+
+    <h3 style="margin-top:16px">Lista de verificación</h3>
+    <ul class="checks" id="inst-checks"></ul>
+
+    <h3 style="margin-top:16px">Lo que se hace una sola vez en Google (no se puede automatizar)</h3>
+    <ol class="pasos">
+      <li><b>Hoja de cálculo nueva</b> en Google Drive (nombre: MATRICULA 2027) ▸ <b>Extensiones ▸ Apps Script</b>.</li>
+      <li><b>Pegar el código</b> y ejecutar la función <b>INSTALAR</b> (autorice los permisos).</li>
+      <li><b>Implementar ▸ Nueva implementación ▸ App web</b>: "Ejecutar como: <b>Yo</b>",
+        "Quién tiene acceso: <b>Cualquier persona</b>" ▸ Implementar ▸ copie la URL <b>/exec</b>.</li>
+      <li>Pegue esa URL arriba y pulse <b>Verificar y guardar</b>.</li>
+    </ol>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn" id="btn-inst-copiar">Copiar el código .gs</button>
+      <button class="btn" id="btn-inst-descargar">Descargar código .gs</button>
+    </div>
+
+    <h3 style="margin-top:16px">Publicación en GitHub · Paso 0 automático</h3>
+    <p class="small">Al verificar la URL, la aplicación actualiza en la <b>carpeta de publicación</b> de
+      su equipo el <b>README.md</b> (Paso 0 con esta URL) y la línea <span class="mono">CONFIG.urlAppsScript</span>
+      del <b>index.html</b>, listos para subir a GitHub. Seleccione la carpeta
+      «Publicar en GitHub Pages» una sola vez.</p>
+    <p class="inst-msg" id="pub-estado">Sin carpeta de publicación seleccionada.</p>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn primary" id="btn-pub-seleccionar">Seleccionar carpeta de publicación…</button>
+      <button class="btn" id="btn-pub-actualizar">Actualizar README e index.html</button>
+    </div>
+
+    <div class="actions" style="margin-top:16px">
+      <button class="btn ghost" id="btn-inst-cerrar">Cerrar</button>
+    </div>
+    <div class="credito" style="margin-top:14px">Desarrollado e implementado por el <b>Ing. Jonathan Díaz Ramírez</b></div>
+  </div>
+</div>
+
+<!-- ================= ADMINISTRADORES ================= -->
+<div class="overlay hidden" id="admins-back">
+  <div class="overlay-box" style="max-width:660px">
+    <h3>Administradores</h3>
+    <p class="small">Personas con acceso al panel. Cada una entra con su propio <b>usuario</b> y <b>contraseña</b>.
+      Si deja el usuario vacío, se usa la <b>contraseña maestra</b>.</p>
+
+    <ul class="admins-lista" id="admins-lista"></ul>
+
+    <h3 style="margin-top:16px">Agregar administrador</h3>
+    <div class="grid g3">
+      <div><label class="f">Usuario</label><input type="text" id="nvo-usuario" placeholder="nombre de usuario"></div>
+      <div><label class="f">Contraseña</label><input type="password" id="nvo-clave" autocomplete="new-password"></div>
+      <div><label class="f">Repetir contraseña</label><input type="password" id="nvo-clave2" autocomplete="new-password"></div>
+    </div>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn green" id="btn-admin-agregar">Agregar administrador</button>
+    </div>
+
+    <h3 style="margin-top:16px">Cambiar mi contraseña</h3>
+    <div class="grid g3">
+      <div><label class="f">Nueva contraseña</label><input type="password" id="mia-clave" autocomplete="new-password"></div>
+      <div><label class="f">Repetir contraseña</label><input type="password" id="mia-clave2" autocomplete="new-password"></div>
+      <div><label class="f">&nbsp;</label><button class="btn" id="btn-admin-mia">Cambiar</button></div>
+    </div>
+
+    <p class="inst-msg" id="admins-msg">Contraseñas guardadas con cifrado SHA-256: ni el panel ni la hoja guardan el texto original.</p>
+    <div class="actions" style="margin-top:14px">
+      <button class="btn ghost" id="btn-admins-cerrar">Cerrar</button>
+    </div>
+    <div class="credito" style="margin-top:14px">Acceso reservado al personal autorizado · Ing. Jonathan Díaz Ramírez</div>
+  </div>
+</div>
+
+<!-- ================= APARIENCIA / TEMAS ================= -->
+<div class="overlay hidden" id="tema-back">
+  <div class="overlay-box" style="max-width:700px">
+    <h3>Apariencia y colores</h3>
+    <p class="small">Cambie el color de fondo del <b>encabezado</b> y de las <b>secciones</b> de la boleta.
+      Se aplica de inmediato a toda la aplicación.</p>
+    <div class="temas" id="temas-cuentas"></div>
+    <p class="inst-msg" id="tema-msg">Tema aplicado en este equipo.</p>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn green" id="btn-tema-guardar">Guardar para todos (servidor)</button>
+      <button class="btn" id="btn-tema-linea">Copiar línea para el HTML</button>
+      <button class="btn ghost" id="btn-tema-cerrar">Cerrar</button>
+    </div>
+    <div class="credito" style="margin-top:14px">Registro de Matrícula 2027 · Ing. Jonathan Díaz Ramírez</div>
+  </div>
+</div>
+
+<!-- ================= DETALLE DEL REGISTRO ================= -->
+<div class="overlay hidden" id="det-back">
+  <div class="overlay-box" style="max-width:840px">
+    <h3 id="det-titulo">Detalle de la matrícula</h3>
+    <div id="det-cuerpo"></div>
+    <div class="actions">
+      <button class="btn" id="btn-det-imprimir">Imprimir</button>
+      <button class="btn primary" id="btn-det-cerrar">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CODIGO DEL BACKEND (copia exacta de "Codigo Apps Script - Registro Matricula 2027.gs") ===== -->
+<script type="text/plain" id="codigo-gs">
+/**
+ * ===========================================================================
+ *  REGISTRO DE MATRÍCULA 2027 — Escuela Barrio Los Ángeles (Código 1389)
+ *  Backend para el archivo "Registro Matricula 2027.html"
+ *  Elaborado por el Ing. Jonathan Díaz Ramírez
+ * ===========================================================================
+ *
+ *  INSTALACIÓN EN 6 PASOS
+ *  ----------------------
+ *  1. En Google Drive cree una hoja de cálculo nueva (ej. "MATRICULA 2027").
+ *  2. Dentro de la hoja: menú Extensiones > Apps Script. Borre lo que haya
+ *     y pegue TODO este archivo.
+ *  3. Arriba, en "Ejecutar", elija la función INSTALAR y autorice los
+ *     permisos. Crea las hojas MATRICULA2027 y CONFIG con sus encabezados.
+ *  4. Implementar > Nueva implementación > Tipo: App web
+ *        · Ejecutar como: Yo
+ *        · Quién tiene acceso: Cualquier persona
+ *     Copie la URL que termina en /exec.
+ *  5. Pegue esa URL en el HTML, en:  CONFIG.urlAppsScript
+ *  6. Tras cada cambio del script: Implementar > Administrar implementaciones
+ *     > (lápiz) > Nueva versión.  Si no, la app seguirá usando la versión vieja.
+ *
+ *  QUIÉN RECIBE LOS CORREOS DE "NUEVA MATRÍCULA"
+ *  ---------------------------------------------
+ *  Se editan desde la propia app (Área administrativa > Correos de
+ *  notificación) y se guardan en la hoja CONFIG. Si nunca los edita, se usa
+ *  la lista de CONFIG.correos_admin de más abajo.
+ *
+ *  ACCESO AL ÁREA ADMINISTRATIVA
+ *  ------------------------------
+ *  · Varios administradores, cada uno con su usuario y contraseña, se
+ *    agregan desde la propia app (Área administrativa > Administradores).
+ *    En la hoja CONFIG solo se guardan cifras SHA-256, nunca la contraseña.
+ *  · Contraseña maestra (usuario vacío): CONFIG.claveAdmin. Al cambiarla
+ *    desde la app se guarda en CONFIG como "clave_master_hash".
+ */
+
+const CONFIG = {
+  hojaRegistros: 'MATRICULA2027',
+  hojaConfig: 'CONFIG',
+  claveAdmin: 'MAT2027',
+  asuntoAdmin: 'Nueva matrícula - Curso Lectivo 2027',
+  asuntoPadre: 'Acuse de recepción de matrícula - Curso Lectivo 2027',
+  remitente: 'Escuela Barrio Los Ángeles <esc.barriolosangeles.sancarlos@mep.go.cr>',
+  escuela: 'Escuela Barrio Los Ángeles · Código 1389 · Circuito 03',
+  supervision: 'Dirección Regional de Educación San Carlos · Supervisión Educativa Circuito 03',
+  telefono: '24601300 / 26853425',
+  correos_admin: 'esc.barriolosangeles.sancarlos@mep.go.cr', // <- editable
+  notificar_padre: 'SI',                                    // SI / NO
+  hoja_edad: '15 de febrero del 2027'
+};
+
+/* Orden EXACTO de columnas: debe coincidir con csvCols() del HTML. */
+const COLUMNAS = [
+  'Folio', 'Fecha de registro', 'Estado', 'Modalidad', 'Grado', 'Sección / Aula',
+  'Estudiante - Primer apellido', 'Estudiante - Segundo apellido', 'Estudiante - Nombre completo',
+  'Dirección exacta del menor', 'Lugar de nacimiento', 'Fecha de nacimiento',
+  'Edad al 15/02/2027 - Años', 'Edad al 15/02/2027 - Meses', 'Edad al 15/02/2027 - Días',
+  'Cédula', 'Nacionalidad', 'Vacunas',
+  'Madre - Primer apellido', 'Madre - Segundo apellido', 'Madre - Nombre completo',
+  'Madre - Cédula', 'Madre - Teléfono', 'Madre - Ocupación', 'Madre - Nacionalidad', 'Madre - Dirección residencia',
+  'Padre - Primer apellido', 'Padre - Segundo apellido', 'Padre - Nombre completo',
+  'Padre - Cédula', 'Padre - Teléfono', 'Padre - Ocupación', 'Padre - Nacionalidad', 'Padre - Dirección residencia',
+  'Encargado (a) - Primer apellido', 'Encargado (a) - Segundo apellido', 'Encargado (a) - Nombre completo',
+  'Encargado (a) - Cédula', 'Encargado (a) - Teléfono', 'Encargado (a) - Ocupación',
+  'Encargado (a) - Nacionalidad', 'Encargado (a) - Dirección residencia',
+  'Firma funcionario/a de matrícula', 'Firma del padre, madre o encargado legal', 'Observaciones',
+  'Autorización de datos',
+  'Correo electrónico', 'Enviar acuse', 'Fecha de envío', 'Origen',
+  'ID envío'
+];
+
+const CLAVES = [
+  'folio', 'fecha_registro', 'estado', 'modalidad', 'grado', 'seccion',
+  'ap1', 'ap2', 'nombre', 'direccion', 'lugar_nac', 'fecha_nac',
+  'edad_a', 'edad_m', 'edad_d', 'cedula', 'nacionalidad', 'vacunas',
+  'madre_ap1', 'madre_ap2', 'madre_nombre', 'madre_cedula', 'madre_tel', 'madre_ocup', 'madre_nac', 'madre_dir',
+  'padre_ap1', 'padre_ap2', 'padre_nombre', 'padre_cedula', 'padre_tel', 'padre_ocup', 'padre_nac', 'padre_dir',
+  'enc_ap1', 'enc_ap2', 'enc_nombre', 'enc_cedula', 'enc_tel', 'enc_ocup', 'enc_nac', 'enc_dir',
+  'firma_func', 'firma_enc', 'obs',
+  'autorizacion',
+  'correo', 'acuse', 'fecha_envio', 'origen',
+  'intento_id'
+];
+
+/* ======================= INSTALACIÓN ==================================== */
+function INSTALAR() {
+  const ss = libro();
+  let sh = ss.getSheetByName(CONFIG.hojaRegistros);
+  if (!sh) sh = ss.insertSheet(CONFIG.hojaRegistros);
+  sh.clear();
+  sh.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS])
+    .setFontWeight('bold').setBackground('#1e3a8a').setFontColor('#ffffff')
+    .setWrap(true).setVerticalAlignment('middle');
+  sh.setFrozenRows(1);
+  sh.getRange(1, 1, 600, COLUMNAS.length).setVerticalAlignment('top');
+  for (let i = 1; i <= COLUMNAS.length; i++) sh.setColumnWidth(i, 150);
+  sh.setColumnWidth(1, 130); sh.setColumnWidth(9, 200); sh.setColumnWidth(CLAVES.indexOf('obs') + 1, 260);
+
+  let cfg = ss.getSheetByName(CONFIG.hojaConfig);
+  if (!cfg) cfg = ss.insertSheet(CONFIG.hojaConfig);
+  /* Solo se crean los valores por defecto si la hoja CONFIG está vacía:
+     así un re-ejecutar de INSTALAR no borra correos, temas ni administradores. */
+  if (cfg.getLastRow() < 2) {
+    cfg.getRange(1, 1, 1, 2).setValues([['CLAVE', 'VALOR']]).setFontWeight('bold');
+    cfg.getRange(2, 1, 4, 2).setValues([
+      ['correos_admin', CONFIG.correos_admin],
+      ['notificar_padre', CONFIG.notificar_padre],
+      ['asunto_admin', CONFIG.asuntoAdmin],
+      ['asunto_padre', CONFIG.asuntoPadre]
+    ]);
+  }
+  if (cfg.getLastColumn() < 2) cfg.getRange(1, 1, 1, 2).setValues([['CLAVE', 'VALOR']]).setFontWeight('bold');
+  cfg.setColumnWidth(1, 220); cfg.setColumnWidth(2, 520);
+  SpreadsheetApp.getActive().toast('Hoja MATRICULA2027 y CONFIG listas. Ahora publique el App web.', 'Instalación');
+}
+
+function libro() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss) return ss;
+  const id = PropertiesService.getScriptProperties().getProperty('sheetId');
+  if (!id) throw new Error('No se encontró el libro. Ejecute INSTALAR desde un script vinculado a la hoja.');
+  return SpreadsheetApp.openById(id);
+}
+
+/* ======================= UTILIDADES ===================================== */
+function hoja() {
+  const ss = libro();
+  const sh = ss.getSheetByName(CONFIG.hojaRegistros);
+  if (!sh) throw new Error('No existe la hoja ' + CONFIG.hojaRegistros + '. Ejecute la función INSTALAR.');
+  return sh;
+}
+function json(datos, callback) {
+  if (callback) {
+    return ContentService.createTextOutput(callback + '(' + JSON.stringify(datos) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService.createTextOutput(JSON.stringify(datos))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+function errorJson(mensaje, callback) { return json({ ok: false, error: String(mensaje) }, callback); }
+function ahora() {
+  const d = new Date();
+  return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear() +
+    ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+}
+function celdasAObjeto(encabezados, fila) {
+  const o = {};
+  CLAVES.forEach(function (k, i) {
+    const pos = encabezados.indexOf(COLUMNAS[i]);   /* el encabezado manda */
+    const p = pos >= 0 ? pos : i;
+    o[k] = fila[p] === undefined || fila[p] === null ? '' : String(fila[p]);
+  });
+  return o;
+}
+function leerRegistros() {
+  const sh = hoja();
+  const ult = sh.getLastRow();
+  if (ult < 2) return [];
+  const enc = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  const datos = sh.getRange(2, 1, ult - 1, sh.getLastColumn()).getValues();
+  return datos
+    .filter(function (f) { return f && String(f[0] || '').trim() !== ''; })
+    .map(function (f) { return celdasAObjeto(enc, f); });
+}
+function leerConfig() {
+  const ss = libro();
+  const cfg = ss.getSheetByName(CONFIG.hojaConfig);
+  const salida = {
+    correos_admin: CONFIG.correos_admin,
+    notificar_padre: CONFIG.notificar_padre,
+    asunto_admin: CONFIG.asuntoAdmin,
+    asunto_padre: CONFIG.asuntoPadre
+  };
+  if (!cfg || cfg.getLastRow() < 2) return salida;
+  const v = cfg.getRange(2, 1, cfg.getLastRow() - 1, 2).getValues();
+  v.forEach(function (f) {
+    if (f[0] && String(f[0]).trim()) salida[String(f[0]).trim()] = String(f[1] === undefined ? '' : f[1]);
+  });
+  return salida;
+}
+function siguienteFolio(registros) {
+  let max = 0;
+  registros.forEach(function (r) {
+    const m = String(r.folio || '').match(/(\d+)\s*$/);
+    if (m) { const n = parseInt(m[1], 10); if (n > max) max = n; }
+  });
+  return 'MAT-2027-' + ('00' + (max + 1)).slice(-3);
+}
+/* ======================= AUTENTICACIÓN ==================================
+   La contraseña en claro NUNCA viaja ni se guarda: el navegador envía
+   SHA-256(usuario + ":" + contraseña) y en la hoja CONFIG solo se guardan
+   esas cifras (clave "admins") junto con el hash de la contraseña maestra
+   (clave "clave_master_hash").                                   */
+
+function sha256hex(txt) {
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(txt), Utilities.Charset.UTF_8)
+    .map(function (b) { return ('0' + (b & 0xff).toString(16)).slice(-2); })
+    .join('');
+}
+function credHash(usuario, clave) { return sha256hex(String(usuario || '') + ':' + String(clave || '')); }
+
+function listaAdmins() {
+  const c = leerConfig();
+  try {
+    const a = JSON.parse(String(c.admins || '[]'));
+    return Array.isArray(a) ? a.filter(function (x) { return x && x.u && x.p; }) : [];
+  } catch (e) { return []; }
+}
+function masterHash() {
+  const h = String(leerConfig().clave_master_hash || '').trim();
+  return h || credHash('', CONFIG.claveAdmin);
+}
+/* Acepta: usuario de la lista (hash) · contraseña maestra (hash o texto
+   antiguo en claro) · primera instalación (lista vacía + maestra). */
+function adminOk(usuario, cred) {
+  cred = String(cred || '');
+  const u = String(usuario || '').trim();
+  if (!u) return cred === masterHash() || cred === CONFIG.claveAdmin;
+  const lista = listaAdmins();
+  for (let i = 0; i < lista.length; i++) {
+    if (String(lista[i].u).toLowerCase() === u.toLowerCase() && String(lista[i].p) === cred) return true;
+  }
+  if (!lista.length) return cred === credHash(u, CONFIG.claveAdmin);
+  return false;
+}
+function autorizado(datos) { return adminOk(datos.usuario, datos.clave) || claveOk(datos.clave); }
+function errorAuth() { return { ok: false, error: 'Usuario o contraseña incorrectos' }; }
+function hashValido(h) { return /^[0-9a-f]{32,128}$/i.test(String(h || '')); }
+
+/* Compatibilidad con versiones anteriores del HTML (enviaban la clave tal cual). */
+function claveOk(clave) { const c = String(clave || ''); return c === CONFIG.claveAdmin || c === masterHash(); }
+
+/* ======================= doGet (lectura) =============================== */
+function doGet(e) {
+  let cb;
+  try {
+    const p = e && e.parameter ? e.parameter : {};
+    cb = p.callback || p.callbackFunc || p.jsonp;
+    /* ping: no pide contraseña; solo devuelve diagnóstico de instalación */
+    if (p.action === 'ping') {
+      const sh = hoja();
+      const enc = sh.getLastColumn() > 0 ? sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0] : [];
+      const encOk = enc.length === COLUMNAS.length &&
+        String(enc[0] || '') === COLUMNAS[0] &&
+        String(enc[enc.length - 1] || '') === COLUMNAS[COLUMNAS.length - 1];
+      let correos = false;
+      try { correos = listaCorreos(leerConfig().correos_admin).length > 0; } catch (e2) { correos = false; }
+      return json({
+        ok: true,
+        total: Math.max(0, sh.getLastRow() - 1),
+        hoja: sh.getName(),
+        columnas: enc.length,
+        encabezados_ok: encOk,
+        correos_config: correos,
+        version: '2027.2'
+      }, cb);
+    }
+    /* tema: colores de la boleta; no pide contraseña (lo ven todos) */
+    if (p.action === 'tema') {
+      return json({ ok: true, tema: String(leerConfig().tema || 'azul').trim() || 'azul' }, cb);
+    }
+    if (!autorizado(p)) return json({ ok: false, error: 'Usuario o contraseña incorrectos' }, cb);
+    if (p.action === 'config') {
+      const cfg = leerConfig();
+      return json({
+        ok: true,
+        correos: listaCorreos(cfg.correos_admin),
+        acuse_padre: String(cfg.notificar_padre || CONFIG.notificar_padre).toUpperCase() === 'NO' ? 'No' : 'Sí',
+        tema: String(cfg.tema || 'azul'),
+        config: cfg
+      }, cb);
+    }
+    return json({ ok: true, registros: leerRegistros(), admins: listaAdmins() }, cb);
+  } catch (err) {
+    return errorJson(err, cb);
+  }
+}
+
+/* ======================= doPost (escritura) ============================ */
+function doPost(e) {
+  try {
+    let datos;
+    try { datos = JSON.parse(e.postData.contents); } catch (x) { return errorJson('JSON inválido'); }
+    const accion = datos.accion || 'registrar';
+
+    if (accion === 'registrar') return json(registrar(datos));
+    if (accion === 'actualizar') return json(actualizar(datos));
+    if (accion === 'guardar_config') return json(guardarConfig(datos));
+    if (accion === 'guardar_admins') return json(guardarAdmins(datos));
+    return errorJson('Acción desconocida: ' + accion);
+  } catch (err) {
+    return errorJson(err);
+  }
+}
+
+function registrar(datos) {
+  const reg = datos.registro || {};
+  if (reg.empresa) return { ok: true, folio: '', ignorado: 'formulario automático' };
+  if (!reg.ap1 || !reg.nombre) return { ok: false, error: 'Faltan datos obligatorios del estudiante' };
+
+  const sh = hoja();
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const existentes = leerRegistros();
+
+    /* Idempotencia: si este mismo envío ya se registró, no se duplica. */
+    if (datos.intento_id) {
+      const dup = existentes.filter(function (r) { return String(r.intento_id) === String(datos.intento_id); })[0];
+      if (dup) return { ok: true, folio: dup.folio, duplicado: true, fecha: dup.fecha_envio };
+    }
+
+    const folio = siguienteFolio(existentes);
+    const fila = {};
+    CLAVES.forEach(function (k) { fila[k] = reg[k] === undefined || reg[k] === null ? '' : String(reg[k]); });
+    fila.folio = folio;
+    fila.fecha_registro = fila.fecha_registro || ahora();
+    fila.estado = fila.estado || 'Recibida';
+    fila.origen = fila.origen || 'En línea';
+    fila.fecha_envio = ahora();
+    fila.intento_id = datos.intento_id || '';
+
+    sh.appendRow(CLAVES.map(function (k) { return fila[k]; }));
+
+    const cfg = leerConfig();
+    const correos = enviarCorreos(fila, cfg);
+    return { ok: true, folio: folio, correos: correos, fecha: fila.fecha_envio };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function actualizar(datos) {
+  if (!autorizado(datos)) return errorAuth();
+  const folio = String(datos.folio || '');
+  if (!folio) return { ok: false, error: 'Falta el folio' };
+  const cambios = datos.cambios || {};
+  const sh = hoja();
+  const enc = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  const ult = sh.getLastRow();
+  if (ult < 2) return { ok: false, error: 'No hay registros' };
+  const filas = sh.getRange(2, 1, ult - 1, 1).getValues();
+  let filaNum = 0;
+  for (let i = 0; i < filas.length; i++) if (String(filas[i][0]) === folio) { filaNum = i + 2; break; }
+  if (!filaNum) return { ok: false, error: 'No se encontró el folio ' + folio };
+
+  const aplicados = {};
+  Object.keys(cambios).forEach(function (k) {
+    const i = CLAVES.indexOf(k);
+    if (i < 0) return;                       /* solo columnas de la boleta */
+    const pos = enc.indexOf(COLUMNAS[i]);
+    const col = pos >= 0 ? pos : i;
+    sh.getRange(filaNum, col + 1).setValue(String(cambios[k]));
+    aplicados[k] = String(cambios[k]);
+  });
+  return { ok: true, folio: folio, cambios: aplicados };
+}
+
+function escribirCfg(pares) {
+  if (!pares.length) return;
+  const ss = libro();
+  let cfg = ss.getSheetByName(CONFIG.hojaConfig);
+  if (!cfg) { cfg = ss.insertSheet(CONFIG.hojaConfig); cfg.getRange(1, 1, 1, 2).setValues([['CLAVE', 'VALOR']]); }
+  pares.forEach(function (f) {
+    let r = 0;
+    const vals = cfg.getLastRow() > 1 ? cfg.getRange(2, 1, cfg.getLastRow() - 1, 1).getValues() : [];
+    for (let i = 0; i < vals.length; i++) if (String(vals[i][0]) === f[0]) r = i + 2;
+    if (r) cfg.getRange(r, 2).setValue(f[1]);
+    else cfg.appendRow([f[0], f[1]]);
+  });
+}
+
+/* Guarda solo lo que viene en el envío: correos, acuse, tema y/o el hash de
+   la contraseña maestra. Nada se pisa con valores vacíos.               */
+function guardarConfig(datos) {
+  if (!autorizado(datos)) return errorAuth();
+  const pares = [];
+
+  if (datos.correos !== undefined || datos.correos_admin !== undefined || datos.notificar_padre !== undefined) {
+    const correos = Array.isArray(datos.correos)
+      ? datos.correos.join(', ')
+      : String(datos.correos_admin || '');
+    const padre = (datos.acuse_padre !== undefined ? datos.acuse_padre : datos.notificar_padre);
+    const valorPadre = (padre === false || String(padre).toUpperCase() === 'NO' || padre === 'No') ? 'NO' : 'SI';
+    pares.push(['correos_admin', correos]);
+    pares.push(['notificar_padre', valorPadre]);
+  }
+  if (datos.tema !== undefined) {
+    const t = String(datos.tema || '').trim().toLowerCase();
+    pares.push(['tema', /^(azul|verde|turquesa|vino)$/.test(t) ? t : 'azul']);
+  }
+  if (datos.clave_master_hash !== undefined) {
+    const h = String(datos.clave_master_hash || '');
+    if (!hashValido(h)) return { ok: false, error: 'Cifrada de contraseña no válida' };
+    pares.push(['clave_master_hash', h]);
+  }
+  escribirCfg(pares);
+
+  const cfg2 = leerConfig();
+  const correos = listaCorreos(cfg2.correos_admin);
+  return {
+    ok: true,
+    correos: correos,
+    acuse_padre: String(cfg2.notificar_padre || CONFIG.notificar_padre).toUpperCase() === 'NO' ? 'No' : 'Sí',
+    tema: String(cfg2.tema || 'azul'),
+    config: cfg2
+  };
+}
+
+/* Lista completa de administradores [{u, p}] con p = SHA-256(u:contraseña). */
+function guardarAdmins(datos) {
+  if (!autorizado(datos)) return errorAuth();
+  const lista = Array.isArray(datos.lista) ? datos.lista : [];
+  const salida = [];
+  const vistos = {};
+  for (let i = 0; i < lista.length; i++) {
+    const a = lista[i] || {};
+    const u = String(a.u === undefined || a.u === null ? '' : a.u).trim();
+    const p = String(a.p === undefined || a.p === null ? '' : a.p).trim();
+    if (!u && !p) continue;
+    if (!/^[A-Za-z0-9._ -]{2,40}$/.test(u)) return { ok: false, error: 'Usuario inválido: «' + u + '»' };
+    if (!hashValido(p)) return { ok: false, error: 'Cifrada no válida para «' + u + '»' };
+    const k = u.toLowerCase();
+    if (vistos[k]) continue;
+    vistos[k] = true;
+    salida.push({ u: u, p: p });
+  }
+  escribirCfg([['admins', JSON.stringify(salida)]]);
+  return { ok: true, admins: salida };
+}
+
+/* ======================= CORREOS ======================================== */
+function listaCorreos(texto) {
+  return String(texto || '')
+    .split(/[,;\s]+/)
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return /.+@.+\..+/.test(s); });
+}
+function enviarCorreos(fila, cfg) {
+  const destinatarios = listaCorreos(cfg.correos_admin);
+  const enviados = [];
+  if (destinatarios.length) {
+    try {
+      MailApp.sendEmail({
+        to: destinatarios.join(','),
+        subject: String(cfg.asunto_admin || CONFIG.asuntoAdmin) + ' - ' + fila.folio,
+        htmlBody: htmlAdmin(fila),
+        name: CONFIG.remitente
+      });
+      enviados.push.apply(enviados, destinatarios);
+    } catch (e) { /* el registro ya quedó guardado aunque falle el correo */ }
+  }
+  const avisoPadre = String(cfg.notificar_padre || CONFIG.notificar_padre).toUpperCase() !== 'NO';
+  const correoPadre = listaCorreos(fila.correo)[0];
+  if (avisoPadre && correoPadre) {
+    try {
+      MailApp.sendEmail({
+        to: correoPadre,
+        subject: String(cfg.asunto_padre || CONFIG.asuntoPadre) + ' - ' + fila.folio,
+        htmlBody: htmlPadre(fila),
+        name: CONFIG.remitente
+      });
+      enviados.push(correoPadre);
+    } catch (e) { /* ignore */ }
+  }
+  return enviados;
+}
+function esc(s) {
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function pie() {
+  return '<div style="margin-top:18px;padding-top:10px;border-top:1px solid #cbd5e1;font-size:12px;color:#64748a">' +
+    esc(CONFIG.escuela) + '<br>' + esc(CONFIG.supervision) + '<br>Teléfono: ' + esc(CONFIG.telefono) +
+    '<br><b>Registro de Matrícula 2027 — elaborado por el Ing. Jonathan Díaz Ramírez</b></div>';
+}
+function filaCorreo(etiqueta, valor) {
+  if (!valor) return '';
+  return '<tr><td style="padding:5px 8px;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748a;vertical-align:top">' +
+    esc(etiqueta) + '</td><td style="padding:5px 8px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a">' +
+    esc(valor) + '</td></tr>';
+}
+function nombreCompleto(r) {
+  return ((r.ap1 || '') + ' ' + (r.ap2 || '') + ' ' + (r.nombre || '')).replace(/\s+/g, ' ').trim();
+}
+function htmlAdmin(r) {
+  const rep = ['madre', 'padre', 'enc'].map(function (p) {
+    const n = r[p + '_nombre'];
+    return n ? p.toUpperCase() + ': ' + [r[p + '_ap1'], r[p + '_ap2'], n].filter(Boolean).join(' ') +
+      (r[p + '_cedula'] ? ' (Céd. ' + r[p + '_cedula'] + ')' : '') + (r[p + '_tel'] ? ' · Tel. ' + r[p + '_tel'] : '') : '';
+  }).filter(Boolean).join('<br>');
+
+  return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">' +
+    '<div style="background:#1e3a8a;color:#fff;padding:14px 18px">' +
+    '<div style="font-size:18px;font-weight:bold">Nueva matrícula registrada</div>' +
+    '<div style="font-size:13px;opacity:.9">Curso Lectivo 2027 · ' + esc(CONFIG.escuela) + '</div></div>' +
+    '<div style="padding:16px 18px">' +
+    '<table style="width:100%;border-collapse:collapse">' +
+    filaCorreo('Folio', '<b>' + esc(r.folio) + '</b>') +
+    filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
+    filaCorreo('Estado', esc(r.estado)) +
+    filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado) + (r.seccion ? ' · ' + esc(r.seccion) : '')) +
+    filaCorreo('Estudiante', '<b>' + esc(nombreCompleto(r)) + '</b>') +
+    filaCorreo('Cédula / Nacimiento', esc(r.cedula) + ' · ' + esc(r.fecha_nac) + ' en ' + esc(r.lugar_nac)) +
+    filaCorreo('Dirección', esc(r.direccion)) +
+    filaCorreo('Vacunas', esc(r.vacunas)) +
+    filaCorreo('Representantes', rep) +
+    filaCorreo('Correo del solicitante', esc(r.correo)) +
+    filaCorreo('Observaciones', esc(r.obs)) +
+    '</table>' +
+    '<p style="font-size:12.5px;color:#475569;margin-top:14px">Ingrese al panel administrativo de la aplicación para ' +
+    'revisar, cambiar el estado y descargar el Excel con todas las matrículas.</p>' +
+    pie() + '</div></div>';
+}
+function htmlPadre(r) {
+  return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">' +
+    '<div style="background:#0d9488;color:#fff;padding:14px 18px">' +
+    '<div style="font-size:18px;font-weight:bold">Acuse de recepción de matrícula</div>' +
+    '<div style="font-size:13px;opacity:.9">Curso Lectivo 2027 · ' + esc(CONFIG.escuela) + '</div></div>' +
+    '<div style="padding:16px 18px">' +
+    '<p style="font-size:14px;color:#0f172a">Estimada familia:</p>' +
+    '<p style="font-size:14px;color:#334155">Hemos recibido la solicitud de matrícula en línea con el siguiente número de referencia:</p>' +
+    '<p style="text-align:center;margin:16px 0"><span style="display:inline-block;background:#eff6ff;border:1px solid #93c5fd;' +
+    'color:#1e3a8a;font-size:22px;font-weight:bold;padding:10px 22px;border-radius:8px">' + esc(r.folio) + '</span></p>' +
+    '<table style="width:100%;border-collapse:collapse">' +
+    filaCorreo('Estudiante', '<b>' + esc(nombreCompleto(r)) + '</b>') +
+    filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado)) +
+    filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
+    filaCorreo('Estado', esc(r.estado)) +
+    '</table>' +
+    '<p style="font-size:13px;color:#475569;margin-top:14px">Guarde este número: con él puede consultar el avance de su ' +
+    'solicitud en la escuela. El envío en línea no sustituye la entrega de los documentos físicos requeridos.</p>' +
+    pie() + '</div></div>';
+}
+
+</script>
+
+<script>
+"use strict";
+/* =========================================================================
+   REGISTRO DE MATRÍCULA 2027 — Escuela Barrio Los Ángeles
+   Formulario basado en el documento físico "Matricula 2027.docx".
+   Elaborado por el Ing. Jonathan Díaz Ramírez.
+   ========================================================================= */
+
+var CLAVE = "matricula2027.registros";
+var REC = [];                 /* registros guardados en este equipo (modo local) */
+var SRV = [];                 /* registros del servidor (Google Sheet) */
+var editando = null;          /* folio del registro en edición local */
+var TOTAL_EDAD = "15 de febrero del 2027";
+var adminOK = false;          /* sesión administrativa abierta */
+var intentoId = "";           /* id único del envío: evita duplicados */
+var t0 = Date.now();          /* hora en que se abrió el formulario */
+
+/* ================== CONFIGURACIÓN DE LA APLICACIÓN ==================
+   urlAppsScript: pegue la URL del App web (/exec) publicada con Google
+   Apps Script. Mientras esté vacía, la app funciona en MODO LOCAL.     */
+var CONFIG = {
+  urlAppsScript: "https://script.google.com/macros/s/AKfycbxzEqQMtmgsQ7k_lDtc8nnmo2rxCQcDJMp6e4Fq2EBy0MrtctNkO3kQ0v7Xe4f_LKLkyA/exec",
+  claveAdmin: "MAT2027",
+  minSegundos: 4
+};
+
+function uuid() {
+  return "e-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+}
+
+/* ================= PUENTE LOCAL (Excel + Outlook) =================
+   Cliente HTTP del script "Puente Matricula 2027.ps1", que corre en la
+   PC de la escuela y escucha en 127.0.0.1. El token lo pega el
+   administrador en el panel ▸ botón "Excel y Outlook".               */
+var CLAVE_PUENTE = "matricula2027.puente";
+function leerPuente() {
+  try {
+    var p = JSON.parse(localStorage.getItem(CLAVE_PUENTE) || "{}");
+    return { puerto: (parseInt(p.puerto, 10) || 8787), token: String(p.token || "").trim() };
+  } catch (e) { return { puerto: 8787, token: "" }; }
+}
+function guardarPuenteLocal(p) {
+  try { localStorage.setItem(CLAVE_PUENTE, JSON.stringify({ puerto: p.puerto, token: p.token })); } catch (e) {}
+}
+function llamarPuente(accion, datos, ms) {
+  var p = leerPuente();
+  var ctrl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+  var t = null;
+  if (ctrl) t = setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, ms || 25000);
+  return fetch("http://127.0.0.1:" + p.puerto + "/api", {
+    method: "POST",
+    headers: { "Content-Type": "application/json;charset=utf-8", "X-Puente-Token": p.token },
+    body: JSON.stringify(Object.assign({ accion: accion }, datos || {})),
+    signal: ctrl ? ctrl.signal : undefined
+  }).then(function (resp) {
+    if (t) clearTimeout(t);
+    if (resp.status === 403) { var e = new Error("Token incorrecto del puente local"); e.token = true; throw e; }
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    return resp.json();
+  }).catch(function (err) { if (t) clearTimeout(t); throw err; });
+}
+window.host = {
+  call: function (accion, datos) {
+    var mapa = { "matricula.submit": "registrar" };
+    return llamarPuente(mapa[accion] || accion, datos, 45000);
+  }
+};
+
+/* ========== CARPETA DE GUARDADO (File System Access API) ==========
+   El administrador elige una carpeta de SU equipo y el navegador reescribe
+   allí MATRICULA_2027.xlsx con el MISMO formato que la exportación
+   (misma función generarXlsx: 50 columnas + hoja INFORMACIÓN).
+   Funciona en la página publicada (HTTPS de GitHub Pages) porque el
+   navegador solo permite elegir carpetas en contexto seguro.
+   Requiere Chrome o Edge. La carpeta se recuerda en IndexedDB y el
+   permiso lo concede el navegador con un gesto del usuario. */
+var FS_ARCHIVO = "MATRICULA_2027.xlsx";
+var FS_CLAVE_AUTO = "matricula2027.fsAuto";
+var fsHandle = null;       /* carpeta elegida en esta sesión */
+var fsRestaurado = false;  /* ya se intentó leer de IndexedDB */
+var fsTimer = null;        /* debounce de la sincronización automática */
+var fsAvisoPermiso = false;
+
+function fsSoportado() { return typeof window.showDirectoryPicker === "function"; }
+function fsAutoOn() { try { return localStorage.getItem(FS_CLAVE_AUTO) !== "No"; } catch (e) { return true; } }
+function fsAutoSet(v) { try { localStorage.setItem(FS_CLAVE_AUTO, v ? "Sí" : "No"); } catch (e) {} }
+function fsEstado(txt, tipo) { setMsg("fs-estado", txt, tipo || ""); }
+
+/* --- IndexedDB mínimo para recordar la carpeta entre sesiones --- */
+function idbAbrir() {
+  return new Promise(function (res, rej) {
+    try {
+      var rq = indexedDB.open("matricula2027fs", 1);
+      rq.onupgradeneeded = function () { rq.result.createObjectStore("fs"); };
+      rq.onsuccess = function () { res(rq.result); };
+      rq.onerror = function () { rej(rq.error); };
+    } catch (e) { rej(e); }
+  });
+}
+function idbOperacion(accion, clave, valor) {
+  return idbAbrir().then(function (db) {
+    return new Promise(function (res, rej) {
+      var tx = db.transaction("fs", accion === "get" ? "readonly" : "readwrite");
+      var os = tx.objectStore("fs");
+      var rq = accion === "get" ? os.get(clave) : (accion === "put" ? os.put(valor, clave) : os.delete(clave));
+      if (rq) rq.onerror = function () { rej(rq.error); };
+      tx.oncomplete = function () { res(accion === "get" ? (rq.result || null) : true); };
+      tx.onerror = function () { rej(tx.error); };
+    });
+  });
+}
+function fsRestaurar() {
+  if (fsHandle) return Promise.resolve(fsHandle);
+  if (fsRestaurado || !fsSoportado()) return Promise.resolve(null);
+  return idbOperacion("get", "carpeta").then(function (h) {
+    fsRestaurado = true; fsHandle = h; return h;
+  })["catch"](function () { fsRestaurado = true; return null; });
+}
+function fsPermiso(conceder) { return permisoDe(fsHandle, conceder); }
+function permisoDe(h, conceder) {
+  if (!h || !h.queryPermission) return Promise.resolve("granted");
+  return h.queryPermission({ mode: "readwrite" }).then(function (st) {
+    if (st === "granted" || !conceder) return st;
+    return h.requestPermission({ mode: "readwrite" });   /* gesto del usuario */
+  });
+}
+/* Escribe TODOS los registros (local + servidor) en la carpeta elegida. */
+function escribirCarpeta(conceder) {
+  return fsRestaurar().then(function (h) {
+    if (!h) return { ok: false, sinCarpeta: true };
+    return fsPermiso(!!conceder).then(function (st) {
+      if (st !== "granted") return { ok: false, sinPermiso: true };
+      var regs = todos();
+      if (!regs.length) return { ok: false, vacio: true };
+      if (typeof CompressionStream === "undefined") return { ok: false, error: "Este navegador no genera archivos .xlsx" };
+      return generarXlsx(regs).then(function (bytes) {
+        return h.getFileHandle(FS_ARCHIVO, { create: true })
+          .then(function (fh) { return fh.createWritable(); })
+          .then(function (w) {
+            return w.write(bytes).then(function () { return w.close(); }).then(function () {
+              return { ok: true, total: regs.length, carpeta: h.name };
+            });
+          });
+      });
+    });
+  });
+}
+function fsGuardarAhora(manual) {
+  if (!fsSoportado()) {
+    if (manual) toast("Este navegador no permite elegir carpetas: use Google Chrome o Microsoft Edge", "err");
+    return Promise.resolve({ ok: false });
+  }
+  return escribirCarpeta(!!manual).then(function (r) {
+    if (r.ok) {
+      fsAvisoPermiso = false;
+      fsEstado("Archivo actualizado: " + FS_ARCHIVO + " · " + r.total + " registro(s) · carpeta «" + r.carpeta + "»", "ok");
+      if (manual) toast("Excel guardado en la carpeta: " + r.total + " registro(s)", "ok");
+    } else if (r.sinCarpeta) {
+      fsEstado("Sin carpeta seleccionada: pulse «Seleccionar carpeta…»", "err");
+      if (manual) toast("Primero seleccione la carpeta de destino", "warn");
+    } else if (r.sinPermiso) {
+      fsEstado("El navegador pide permiso sobre la carpeta: conceda el acceso (pulse «Guardar registros ahora») o vuelva a elegirla con «Seleccionar carpeta…»", "err");
+      if (manual || !fsAvisoPermiso) { toast("Conceda el acceso a la carpeta (Área administrativa ▸ Carpeta Excel)", "warn"); fsAvisoPermiso = true; }
+    } else if (r.vacio) {
+      if (manual) toast("Sin registros para guardar todavía", "warn");
+    } else if (r.error) {
+      fsEstado("Error: " + r.error, "err");
+      if (manual) toast("No se pudo guardar: " + r.error, "err");
+    }
+    return r;
+  })["catch"](function (e) {
+    var m = (e && e.message) ? e.message : String(e);
+    var extra = /open|locked|being used|in use|cerr/i.test(m) ? " (¿está el archivo abierto en Excel? Ciérralo e intente de nuevo)" : "";
+    fsEstado("Error al escribir: " + m + extra, "err");
+    if (manual) toast("No se pudo guardar en la carpeta: " + m, "err");
+    return { ok: false, error: m };
+  });
+}
+/* Sincronización automática (con debounce) — se dispara desde guardarLocal(),
+   al cambiar un estado y al refrescar los registros del servidor. */
+function sincronizarCarpeta() {
+  if (!fsSoportado() || !fsAutoOn()) return;
+  if (fsTimer) clearTimeout(fsTimer);
+  fsTimer = setTimeout(function () {
+    fsTimer = null;
+    fsRestaurar().then(function (h) { if (h) fsGuardarAhora(false); });
+  }, 1200);
+}
+function fsSeleccionar() {
+  if (!fsSoportado()) {
+    toast("Este navegador no permite elegir carpetas: use Google Chrome o Microsoft Edge", "err");
+    return;
+  }
+  window.showDirectoryPicker({ mode: "readwrite", startIn: "documents" }).then(function (h) {
+    fsHandle = h; fsRestaurado = true;
+    return idbOperacion("put", "carpeta", h)["catch"](function () {
+      toast("Aviso: el navegador no podrá recordar la carpeta al recargar (IndexedDB no disponible)", "warn");
+    }).then(function () { return h; });
+  }).then(function (h) {
+    fsEstado("Carpeta elegida: «" + h.name + "» · escribiendo " + FS_ARCHIVO + "…", "");
+    return fsGuardarAhora(true);
+  })["catch"](function (e) {
+    if (e && e.name === "AbortError") return;   /* el administrador canceló el diálogo */
+    toast("No se pudo usar la carpeta: " + (e && e.message ? e.message : e), "err");
+  });
+}
+function fsQuitar() {
+  fsHandle = null;
+  idbOperacion("delete", "carpeta")["catch"](function () {});
+  fsEstado("Carpeta desconectada de este navegador. El archivo ya creado permanece donde estaba.", "");
+  toast("Carpeta desconectada", "warn");
+}
+function abrirFs() {
+  $("fs-back").classList.remove("hidden");
+  $("fs-auto").checked = fsAutoOn();
+  if (!fsSoportado()) {
+    fsEstado("Este navegador no permite seleccionar carpetas: use Google Chrome o Microsoft Edge (o descargue el Excel con «Exportar a Excel»).", "err");
+    return;
+  }
+  fsRestaurar().then(function (h) {
+    if (!h) { fsEstado("Sin carpeta seleccionada: pulse «Seleccionar carpeta…»", ""); return; }
+    return fsPermiso(false).then(function (st) {
+      if (st === "granted") fsEstado("Carpeta lista: «" + h.name + "» · archivo " + FS_ARCHIVO, "ok");
+      else fsEstado("Carpeta «" + h.name + "» guardada, pero el navegador vuelve a pedir permiso: pulse «Guardar registros ahora» o vuelva a elegirla con «Seleccionar carpeta…».", "err");
+    });
+  });
+}
+
+
+/* --------------------------- Utilidades --------------------------- */
+function $(id) { return document.getElementById(id); }
+function val(id) { var e = $(id); return e ? String(e.value || "").trim() : ""; }
+function setVal(id, v) { var e = $(id); if (e) e.value = (v === null || v === undefined ? "" : v); }
+function setTxt(id, v) { var e = $(id); if (e) e.textContent = (v === null || v === undefined ? "" : v); }
+function norm(s) {
+  return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+function esc(s) {
+  return String(s === null || s === undefined ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function hoyISO() {
+  var d = new Date();
+  var m = String(d.getMonth() + 1).padStart(2, "0"), n = String(d.getDate()).padStart(2, "0");
+  return d.getFullYear() + "-" + m + "-" + n;
+}
+function fechaLarga(iso) {
+  if (!iso) return "";
+  var p = String(iso).split("-");
+  if (p.length !== 3) return iso;
+  return p[2] + "/" + p[1] + "/" + p[0];
+}
+function toast(msg, tipo) {
+  var d = document.createElement("div");
+  d.className = "toast " + (tipo || "");
+  d.textContent = msg;
+  $("toasts").appendChild(d);
+  setTimeout(function () { d.style.opacity = "0"; d.style.transition = "opacity .4s"; }, 3200);
+  setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 3800);
+}
+
+/* ------------------- Bloques madre / padre / encargado ------------------- */
+var PERSONAS = [
+  { id: "madre", titulo: "Madre" },
+  { id: "padre", titulo: "Padre" },
+  { id: "enc", titulo: "Encargado (a)" }
+];
+var CAMPOS_PERSONA = [
+  { k: "ap1", l: "Primer apellido", req: false, w: 1 },
+  { k: "ap2", l: "Segundo apellido", req: false, w: 1 },
+  { k: "nombre", l: "Nombre completo", req: false, w: 1 },
+  { k: "cedula", l: "Cédula", req: false, w: 1 },
+  { k: "tel", l: "Teléfono", req: false, w: 1 },
+  { k: "ocup", l: "Ocupación", req: false, w: 1 },
+  { k: "nac", l: "Nacionalidad", req: false, w: 1 },
+  { k: "dir", l: "Dirección residencia", req: false, w: 3 }
+];
+
+function pintarPersonas() {
+  var html = "";
+  PERSONAS.forEach(function (p) {
+    html += '<div class="grid g4" style="margin-bottom:6px"><div class="span4" style="font-size:12.5px;font-weight:800;color:#0f766e;text-transform:uppercase;letter-spacing:.4px">' +
+      esc(p.titulo) + '</div></div>';
+    html += '<div class="grid g4" style="margin-bottom:14px">';
+    CAMPOS_PERSONA.forEach(function (c) {
+      var id = "f-" + p.id + "-" + c.k;
+      var span = c.w === 3 ? " span3" : "";
+      html += '<div class="' + span.trim() + '"><label class="f">' + esc(c.l) +
+        (c.req ? ' <span class="req">*</span>' : '') + '</label><input type="text" id="' + id + '"></div>';
+    });
+    html += '</div>';
+  });
+  $("rep-holder").innerHTML = html;
+}
+
+/* ------------------------- Validación ------------------------- */
+function marcar(id, malo) {
+  var e = $(id);
+  if (!e) return;
+  if (malo) e.classList.add("bad"); else e.classList.remove("bad");
+}
+function cedulaOk(v) {
+  if (!v) return true;
+  var d = v.replace(/[^\d]/g, "");
+  return d.length >= 9 && d.length <= 10;
+}
+function validar() {
+  var fallos = [];
+  ["f-ap1", "f-nombre"].forEach(function (id) {
+    var malo = !val(id);
+    marcar(id, malo);
+    if (malo) fallos.push(id);
+  });
+  /* Cédula del estudiante: si se indica, debe ser válida. */
+  var cel = val("f-cedula");
+  var celMalo = !cedulaOk(cel);
+  marcar("f-cedula", celMalo);
+  if (celMalo && cel) fallos.push("f-cedula");
+
+  /* Cédula del representante: obligatoria cuando se captura su nombre. */
+  var conNombre = false;
+  ["madre", "padre", "enc"].forEach(function (p) {
+    var n = val("f-" + p + "-nombre");
+    var c = val("f-" + p + "-cedula");
+    if (n) {
+      conNombre = true;
+      var ok = !!c && cedulaOk(c);
+      marcar("f-" + p + "-cedula", !ok);
+      if (!ok) fallos.push("f-" + p + "-cedula");
+    } else {
+      marcar("f-" + p + "-cedula", false);
+    }
+  });
+  if (!conNombre) toast("Indique a la madre, el padre o el encargado con su cédula", "warn");
+
+  /* Correo: si se escribe, debe ser válido y coincidir con la confirmación. */
+  var correo = val("f-correo"), correo2 = val("f-correo2");
+  var correoMalo = !!correo && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
+  marcar("f-correo", correoMalo);
+  if (correoMalo) fallos.push("f-correo");
+  marcar("f-correo2", !!(correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()));
+  if (correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()) fallos.push("f-correo2");
+
+  /* Autorización de datos personales: obligatoria. */
+  if (!$("f-autorizacion").checked) { $("f-autorizacion").classList.add("bad"); fallos.push("f-autorizacion"); }
+  else $("f-autorizacion").classList.remove("bad");
+
+  /* Anti-automatización: campo trampa y tiempo mínimo de llenado. */
+  if (val("f-empresa")) return ["f-empresa"];
+  if (Date.now() - t0 < CONFIG.minSegundos * 1000) {
+    toast("Espere " + CONFIG.minSegundos + " segundos antes de enviar", "warn");
+    return ["f-tiempo"];
+  }
+  return fallos;
+}
+
+/* ------------------------ Recolectar / cargar ------------------------ */
+function recolectar() {
+  var r = {
+    folio: editando || "",
+    fecha_registro: val("f-fecha-reg") || hoyISO(),
+    modalidad: val("f-modalidad"),
+    grado: val("f-grado"),
+    seccion: val("f-seccion"),
+    ap1: val("f-ap1"), ap2: val("f-ap2"), nombre: val("f-nombre"),
+    direccion: val("f-direccion"),
+    lugar_nac: val("f-lugar-nac"), fecha_nac: val("f-fecha-nac"),
+    cedula: val("f-cedula"), nacionalidad: val("f-nacionalidad"),
+    edad_a: val("f-edad-a"), edad_m: val("f-edad-m"), edad_d: val("f-edad-d"),
+    vacunas: (document.querySelector('input[name="vacunas"]:checked') || {}).value || "",
+    firma_func: $("f-firma-func").checked ? "Sí" : "No",
+    firma_enc: $("f-firma-enc").checked ? "Sí" : "No",
+    obs: val("f-obs"),
+    correo: val("f-correo"),
+    acuse: $("f-acuse").checked ? "Sí" : "No",
+    autorizacion: $("f-autorizacion").checked ? "Sí" : "No",
+    estado: "Recibida",
+    fecha_envio: "",
+    origen: CONFIG.urlAppsScript ? "En línea" : "Local"
+  };
+  PERSONAS.forEach(function (p) {
+    CAMPOS_PERSONA.forEach(function (c) {
+      r[p.id + "_" + c.k] = val("f-" + p.id + "-" + c.k);
+    });
+  });
+  return r;
+}
+function cargar(r) {
+  setVal("f-fecha-reg", r.fecha_registro);
+  setVal("f-modalidad", r.modalidad);
+  setVal("f-grado", r.grado);
+  setVal("f-seccion", r.seccion);
+  setVal("f-ap1", r.ap1); setVal("f-ap2", r.ap2); setVal("f-nombre", r.nombre);
+  setVal("f-direccion", r.direccion);
+  setVal("f-lugar-nac", r.lugar_nac); setVal("f-fecha-nac", r.fecha_nac);
+  setVal("f-cedula", r.cedula); setVal("f-nacionalidad", r.nacionalidad);
+  setVal("f-edad-a", r.edad_a); setVal("f-edad-m", r.edad_m); setVal("f-edad-d", r.edad_d);
+  var v = document.querySelector('input[name="vacunas"][value="' + (r.vacunas || "Al día") + '"]');
+  if (v) v.checked = true;
+  PERSONAS.forEach(function (p) {
+    CAMPOS_PERSONA.forEach(function (c) { setVal("f-" + p.id + "-" + c.k, r[p.id + "_" + c.k]); });
+  });
+  $("f-firma-func").checked = r.firma_func === "Sí";
+  $("f-firma-enc").checked = r.firma_enc === "Sí";
+  setVal("f-obs", r.obs);
+  setVal("f-correo", r.correo || ""); setVal("f-correo2", r.correo || "");
+  $("f-acuse").checked = (r.acuse || "Sí") === "Sí";
+  $("f-autorizacion").checked = (r.autorizacion || "Sí") === "Sí";
+}
+function limpiar() {
+  $("form").reset();
+  setVal("f-fecha-reg", hoyISO());
+  setVal("f-nacionalidad", "Costarricense");
+  var v = document.querySelector('input[name="vacunas"][value="Al día"]');
+  if (v) v.checked = true;
+  $("f-acuse").checked = true;
+  ["f-ap1", "f-ap2", "f-nombre", "f-cedula", "f-correo", "f-correo2"].forEach(function (id) { marcar(id, false); });
+  $("f-autorizacion").classList.remove("bad");
+  editando = null;
+  t0 = Date.now();
+  intentoId = "";
+  $("form-titulo").textContent = "Boleta de matrícula · Curso Lectivo 2027";
+  $("estado-edicion").textContent = "Al enviar se le entregará un folio MAT-2027-### y se notificará por correo a la escuela.";
+  $("btn-cancelar-edicion").classList.add("hidden");
+}
+
+/* ------------------------- Persistencia ------------------------- */
+function guardarLocal() {
+  try { localStorage.setItem(CLAVE, JSON.stringify(REC)); }
+  catch (e) { toast("No se pudo guardar en el equipo", String(e), "err"); }
+  sincronizarCarpeta();   /* mantiene al día el Excel de la carpeta elegida */
+}
+function cargarLocal() {
+  try {
+    var raw = localStorage.getItem(CLAVE);
+    REC = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(REC)) REC = [];
+  } catch (e) { REC = []; toast("No se pudo leer el almacenamiento local", String(e), "err"); }
+}
+/* Unión de registros locales y del servidor (gana el servidor). */
+function todos() {
+  var salida = [];
+  REC.forEach(function (r) { if (r && r.folio) salida.push(r); });
+  SRV.forEach(function (r) {
+    if (!r || !r.folio) return;
+    var idx = -1;
+    for (var i = 0; i < salida.length; i++) if (salida[i].folio === r.folio) { idx = i; break; }
+    if (idx >= 0) salida[idx] = r; else salida.push(r);
+  });
+  return salida;
+}
+function buscarRec(folio) {
+  var t = todos();
+  for (var i = 0; i < t.length; i++) if (t[i].folio === folio) return t[i];
+  return null;
+}
+function esLocal(folio) {
+  for (var i = 0; i < REC.length; i++) if (REC[i].folio === folio) return true;
+  return false;
+}
+function ahoraTexto() {
+  var d = new Date();
+  return ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear() +
+    " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+}
+function siguienteFolio() {
+  var max = 0;
+  todos().forEach(function (r) {
+    var m = String(r.folio || "").match(/(\d+)\s*$/);
+    if (m) { var n = parseInt(m[1], 10); if (n > max) max = n; }
+  });
+  return "MAT-2027-" + String(max + 1).padStart(3, "0");
+}
+function nombreCompleto(r) {
+  return ((r.ap1 || "") + " " + (r.ap2 || "") + " " + (r.nombre || "")).replace(/\s+/g, " ").trim();
+}
+function primerRepresentante(r) {
+  var p = PERSONAS.filter(function (x) { return r[x.id + "_nombre"]; })[0];
+  if (!p) return { nombre: "—", cedula: "" };
+  return {
+    nombre: p.titulo + ": " + [r[p.id + "_ap1"], r[p.id + "_ap2"], r[p.id + "_nombre"]].filter(Boolean).join(" "),
+    cedula: r[p.id + "_cedula"] || ""
+  };
+}
+function edadTexto(r) {
+  var a = r.edad_a || "", m = r.edad_m || "", d = r.edad_d || "";
+  if (a === "" && m === "" && d === "") return "—";
+  return (a || "0") + "a " + (m || "0") + "m " + (d || "0") + "d";
+}
+
+/* ------------------------- Edad al 15/02/2027 ------------------------- */
+function edadAl15022027(fechaNac) {
+  if (!fechaNac) return null;
+  var p = String(fechaNac).split("-");
+  if (p.length !== 3) return null;
+  var nac = new Date(+p[0], +p[1] - 1, +p[2]);
+  if (isNaN(nac.getTime())) return null;
+  var ref = new Date(2027, 1, 15);
+  if (nac > ref) return null;
+  var a = ref.getFullYear() - nac.getFullYear();
+  var m = ref.getMonth() - nac.getMonth();
+  var d = ref.getDate() - nac.getDate();
+  if (d < 0) { m -= 1; d += new Date(ref.getFullYear(), ref.getMonth(), 0).getDate(); }
+  if (m < 0) { a -= 1; m += 12; }
+  return { a: a, m: m, d: d };
+}
+
+/* --------------------------- Render lista --------------------------- */
+function renderStats() {
+  var t = todos();
+  var hoy = hoyISO(), hoyL = fechaLarga(hoyISO());
+  var hoyN = t.filter(function (r) {
+    return r.fecha_registro === hoy || r.fecha_registro === hoyL || String(r.fecha_envio || "").indexOf(hoyL) === 0;
+  }).length;
+  var pend = t.filter(function (r) { return !r.estado || r.estado === "Recibida" || r.estado === "En revisión"; }).length;
+  var apr = t.filter(function (r) { return r.estado === "Aprobada"; }).length;
+  $("st-total").textContent = t.length;
+  $("st-mat").textContent = hoyN;
+  $("st-tra").textContent = pend;
+  $("st-firma").textContent = apr;
+  var chip = $("chip-total");
+  if (chip) chip.textContent = (SRV.length ? SRV.length + " en línea · " : "") + t.length + (t.length === 1 ? " registro" : " registros");
+}
+function badgeModalidad(m) {
+  if (m === "Materno") return '<span class="badge b-mat">Materno</span>';
+  if (m === "Transición") return '<span class="badge b-tra">Transición</span>';
+  if (m) return '<span class="badge b-otro">' + esc(m) + '</span>';
+  return '<span class="badge b-otro">—</span>';
+}
+function badgeEstado(e) {
+  var c = { "Recibida": "b-rec", "En revisión": "b-rev", "Aprobada": "b-apr", "Observada": "b-obs", "Anulada": "b-anu" };
+  return '<span class="badge ' + (c[e] || "b-rec") + '">' + esc(e || "Recibida") + '</span>';
+}
+function badgeOrigen(o) {
+  return o === "En línea" ? '<span class="badge b-on">En línea</span>' : '<span class="badge b-loc">Local</span>';
+}
+function filasVisibles() {
+  var q = norm($("buscar").value);
+  var fe = $("filtro-estado").value, fm = $("filtro-modalidad").value;
+  return todos().filter(function (r) {
+    if (fe && (r.estado || "Recibida") !== fe) return false;
+    if (fm && r.modalidad !== fm) return false;
+    if (!q) return true;
+    var blob = norm([r.folio, r.ap1, r.ap2, r.nombre, r.cedula, r.grado, r.modalidad, r.seccion, r.correo,
+      r.madre_nombre, r.padre_nombre, r.enc_nombre, r.direccion, r.estado].join(" "));
+    return blob.indexOf(q) >= 0;
+  });
+}
+function renderTabla() {
+  var t = todos(), filas = filasVisibles();
+  var tb = $("tbody");
+  $("vacio").classList.toggle("hidden", filas.length > 0 || t.length === 0);
+  if (!filas.length) {
+    tb.innerHTML = "";
+    if (t.length && ($("buscar").value || $("filtro-estado").value || $("filtro-modalidad").value))
+      tb.innerHTML = '<tr><td colspan="11" class="empty">Sin coincidencias para la búsqueda o filtro actual.</td></tr>';
+    return;
+  }
+  var ESTADOS = ["Recibida", "En revisión", "Aprobada", "Observada", "Anulada"];
+  var html = "";
+  filas.forEach(function (r) {
+    var rep = primerRepresentante(r);
+    var local = esLocal(r.folio);
+    var opciones = ESTADOS.map(function (s) {
+      return '<option value="' + s + '"' + ((r.estado || "Recibida") === s ? " selected" : "") + '>' + s + '</option>';
+    }).join("");
+    html += '<tr>' +
+      '<td class="mono">' + esc(r.folio) + '</td>' +
+      '<td><select class="estado-sel" data-act="estado" data-folio="' + esc(r.folio) + '">' + opciones + '</select></td>' +
+      '<td>' + badgeModalidad(r.modalidad) + '</td>' +
+      '<td>' + esc(r.grado || "—") + (r.seccion ? ' · ' + esc(r.seccion) : '') + '</td>' +
+      '<td><b>' + esc(nombreCompleto(r)) + '</b></td>' +
+      '<td class="mono">' + esc(r.cedula || "—") + '</td>' +
+      '<td>' + esc(rep.nombre) + '</td>' +
+      '<td>' + esc(r.correo || "—") + '</td>' +
+      '<td>' + badgeOrigen(r.origen) + '</td>' +
+      '<td class="mono">' + esc(r.fecha_registro || "—") + '</td>' +
+      '<td style="white-space:nowrap">' +
+      '<button class="btn sm" data-act="ver" data-folio="' + esc(r.folio) + '">Ver</button> ' +
+      (local ? '<button class="btn sm" data-act="editar" data-folio="' + esc(r.folio) + '">Editar</button> ' +
+        '<button class="btn sm red" data-act="borrar" data-folio="' + esc(r.folio) + '">X</button>' : '') +
+      '</td></tr>';
+  });
+  tb.innerHTML = html;
+}
+function render() { renderStats(); renderTabla(); }
+
+/* --------------------------- Envío de la boleta --------------------------- */
+function mostrarOk(r, mensaje) {
+  $("ok-folio").textContent = r.folio || "—";
+  $("ok-estudiante").textContent = nombreCompleto(r) || "—";
+  $("ok-correo").textContent = (r.correo && r.acuse === "Sí") ? r.correo : (CONFIG.urlAppsScript ? "Destinatarios de la escuela" : "Modo local (sin servidor)");
+  $("ok-mensaje").innerHTML = mensaje;
+  mostrarTab("ok");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+async function guardar() {
+  var fallos = validar();
+
+  /* Campo trampa: se finge el éxito y no se envía nada. */
+  if (fallos.indexOf("f-empresa") >= 0) {
+    limpiar();
+    mostrarOk({ folio: "MAT-2027-000" }, "Solicitud recibida. Gracias por su interés en nuestra escuela.");
+    return;
+  }
+  if (fallos.length) {
+    toast("Revise los campos marcados", "err");
+    var primero = $(fallos[0]);
+    if (primero && primero.focus) primero.focus();
+    return;
+  }
+
+  var r = recolectar();
+
+  /* Modo edición de un registro local (solo desde el panel). */
+  if (editando) {
+    r.folio = editando;
+    r.estado = (buscarRec(editando) || {}).estado || "Recibida";
+    r.origen = (buscarRec(editando) || {}).origen || "Local";
+    r.fecha_envio = (buscarRec(editando) || {}).fecha_envio || "";
+    for (var i = 0; i < REC.length; i++) if (REC[i].folio === editando) { REC[i] = r; break; }
+    guardarLocal(); render();
+    toast("Registro actualizado: " + r.folio, "ok");
+    editando = null; limpiar();
+    if (adminOK) { irPanelAdmin(); } else { mostrarTab("form"); }
+    return;
+  }
+
+  if (!intentoId) intentoId = uuid();
+  r.intento_id = intentoId;
+  /* Folio y fecha locales: los usa el puente y el modo local.
+     Si se usa Google, el servidor devuelve los suyos y reemplazan estos. */
+  r.folio = siguienteFolio();
+  r.fecha_envio = ahoraTexto();
+
+  /* ---------- PUENTE LOCAL (Excel en la ruta indicada + correo Outlook) ---------- */
+  var cfgPuente = leerPuente();
+  if (cfgPuente.token) {
+    var btnPuente = $("btn-guardar");
+    btnPuente.disabled = true; btnPuente.textContent = "Enviando…";
+    try {
+      var colsPuente = csvCols();
+      var resPuente = await host.call("matricula.submit", {
+        intento_id: intentoId,
+        registro: r,
+        columnas: colsPuente.map(function (c) { return c.l; }),
+        celdas: colsPuente.map(function (c) { var v = r[c.k]; return (v === undefined || v === null) ? "" : String(v); })
+      });
+      if (resPuente && resPuente.ok) {
+        btnPuente.disabled = false; btnPuente.textContent = "Enviar matrícula";
+        if (resPuente.folio) r.folio = resPuente.folio;
+        if (resPuente.fecha) r.fecha_envio = resPuente.fecha;
+        r.estado = "Recibida";
+        r.origen = "Puente local";
+        var ya = -1;
+        for (var i = 0; i < REC.length; i++) if (REC[i].folio === r.folio) { ya = i; break; }
+        if (ya >= 0) REC[ya] = r; else REC.push(r);
+        guardarLocal(); render();
+        mostrarOk(r, mensajePuente(resPuente));
+        intentoId = "";
+        limpiar();
+        return;
+      }
+      if (resPuente && !resPuente.ok) toast("Puente local: " + (resPuente.error || "no se pudo procesar"), "err");
+    } catch (ePuente) {
+      if (ePuente && ePuente.token) {
+        toast("Puente local: token incorrecto. Revíselo en ▸ Excel y Outlook", "err");
+      } else {
+        console.log("Puente local no disponible, se continúa con el modo normal.", ePuente);
+      }
+    }
+    btnPuente.disabled = false; btnPuente.textContent = "Enviar matrícula";
+  }
+
+  /* ---------- MODO LOCAL (sin URL de servidor) ---------- */
+  if (!CONFIG.urlAppsScript) {
+    r.origen = "Local";
+    REC.push(r); guardarLocal(); render();
+    toast("Guardado en modo local: " + r.folio, "warn");
+    mostrarOk(r, "La boleta quedó registrada en este equipo en <b>modo local</b>. " +
+      "Configure la URL del App web en <b>CONFIG.urlAppsScript</b> para que los padres puedan enviarla desde internet.");
+    return;
+  }
+
+  /* ---------- MODO EN LÍNEA (Google Apps Script) ---------- */
+  var btn = $("btn-guardar");
+  btn.disabled = true; btn.textContent = "Enviando…";
+
+  enviarServidor({ accion: "registrar", intento_id: intentoId, registro: r })
+    .then(function (resp) {
+      btn.disabled = false; btn.textContent = "Enviar matrícula";
+      if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "Respuesta inválida del servidor");
+      if (resp.sinConfirmacion) {
+        mostrarOk({ folio: "En proceso", correo: r.correo, acuse: r.acuse },
+          "Su solicitud fue enviada a la escuela. El número de folio se lo confirmaremos por correo en unos minutos.");
+        limpiar();
+        return;
+      }
+      r.folio = resp.folio;
+      r.fecha_envio = resp.fecha || ahoraTexto();
+      r.estado = "Recibida";
+      r.origen = "En línea";
+      var ya = -1;
+      for (var i = 0; i < REC.length; i++) if (REC[i].folio === r.folio) { ya = i; break; }
+      if (ya >= 0) REC[ya] = r; else REC.push(r);
+      guardarLocal(); render();
+      var aviso = (resp.correos && resp.correos.length)
+        ? "Se envió el aviso de nueva matrícula a:<br><b>" + esc(resp.correos.join(", ")) + "</b>"
+        : "La escuela recibió su solicitud.";
+      if (r.correo && r.acuse === "Sí") aviso += "<br>Acuse enviado a <b>" + esc(r.correo) + "</b>.";
+      mostrarOk(r, aviso);
+      intentoId = "";
+      limpiar();
+    })
+    .catch(function (err) {
+      btn.disabled = false; btn.textContent = "Enviar matrícula";
+      toast("No se pudo enviar: " + (err && err.message ? err.message : err), "err");
+    });
+}
+/* Mensaje de la pantalla de éxito cuando el registro pasó por el puente
+   local (indica la ruta del Excel y a quién llegó el correo Outlook). */
+function mensajePuente(res) {
+  var partes = [];
+  if (res.repetido) partes.push("Esta boleta ya se había registrado (envío repetido): no se duplicó la fila ni el correo.");
+  var xl = res.excel || {};
+  if (xl.ok && xl.ruta) {
+    partes.push("Fila guardada en el Excel de la escuela:<br><b>" + esc(xl.ruta) + "</b>" +
+      (xl.creado ? " <i>(archivo creado)</i>" : ""));
+  } else if (xl.error && !res.repetido) {
+    partes.push("⚠ No se escribió el Excel: " + esc(xl.error));
+  }
+  var ca = res.correo_admin || {};
+  if (ca.ok) {
+    partes.push("Aviso de nueva matrícula " +
+      (ca.modo === "borrador" ? "guardado como borrador en Outlook para " : "enviado por Microsoft Outlook a ") +
+      "<b>" + esc(ca.para) + "</b>");
+  } else if (ca.error && !res.repetido) {
+    partes.push("⚠ Aviso a la escuela: " + esc(ca.error));
+  }
+  if (res.acuse && res.acuse.ok) partes.push("Acuse enviado a <b>" + esc(res.acuse.para) + "</b>.");
+  if (!partes.length) partes.push("La matrícula se registró en el puente local de la escuela.");
+  return partes.join("<br>");
+}
+
+function editar(folio) {
+  var r = buscarRec(folio);
+  if (!r) return;
+  if (!esLocal(folio)) { detalle(folio); toast("Los registros en línea se consultan aquí; el estado sí se puede cambiar", "warn"); return; }
+  limpiar();
+  cargar(r);
+  editando = folio;
+  $("form-titulo").textContent = "Boleta de matrícula · editando " + folio;
+  $("estado-edicion").innerHTML = "Editando el registro <b>" + esc(folio) + "</b>. Los cambios reemplazan el registro al guardar.";
+  $("btn-cancelar-edicion").classList.remove("hidden");
+  mostrarTab("form");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function borrar(folio) {
+  var r = buscarRec(folio);
+  if (!r) return;
+  /* Registro en línea: no se borra, se marca como Anulada en la hoja. */
+  if (!esLocal(folio)) {
+    if (!confirm("¿Anular el registro " + folio + "? Quedará marcado como «Anulada» en la hoja de la escuela.")) return;
+    cambiarEstado(folio, "Anulada");
+    return;
+  }
+  if (!confirm("¿Eliminar el registro " + folio + "? Esta acción no se puede deshacer.")) return;
+  REC = REC.filter(function (x) { return x.folio !== folio; });
+  if (editando === folio) limpiar();
+  guardarLocal(); render();
+  toast("Registro eliminado: " + folio, "warn");
+}
+function cambiarEstado(folio, estado) {
+  var r = buscarRec(folio);
+  if (!r) return;
+  if (esLocal(folio)) {
+    for (var i = 0; i < REC.length; i++) if (REC[i].folio === folio) { REC[i].estado = estado; break; }
+    guardarLocal();
+    for (var j = 0; j < SRV.length; j++) if (SRV[j].folio === folio) SRV[j].estado = estado;
+    render();
+    toast("Estado actualizado: " + estado, "ok");
+    return;
+  }
+  enviarServidor({ accion: "actualizar", usuario: usuarioSesion, clave: claveSesion, folio: folio, cambios: { estado: estado } })
+    .then(function (resp) {
+      if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo actualizar");
+      for (var k = 0; k < SRV.length; k++) if (SRV[k].folio === folio) SRV[k].estado = estado;
+      render();
+      sincronizarCarpeta();
+      toast("Estado actualizado: " + estado, "ok");
+    })
+    .catch(function (err) { toast("No se pudo actualizar: " + (err && err.message ? err.message : err), "err"); render(); });
+}
+
+/* ------------------------- Exportación CSV ------------------------- */
+function descargar(nombre, contenido, mime) {
+  try {
+    var blob = new Blob([contenido], { type: mime || "text/plain;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = nombre;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+    return true;
+  } catch (e) { toast("No se pudo descargar", String(e), "err"); return false; }
+}
+function csvCols() {
+  var c = [
+    { k: "folio", l: "Folio", w: 15 },
+    { k: "fecha_registro", l: "Fecha de registro", t: "fecha", w: 14 },
+    { k: "estado", l: "Estado", w: 13 },
+    { k: "modalidad", l: "Modalidad", w: 16 },
+    { k: "grado", l: "Grado", w: 12 },
+    { k: "seccion", l: "Sección / Aula", w: 13 },
+    { k: "ap1", l: "Estudiante - Primer apellido", w: 20 },
+    { k: "ap2", l: "Estudiante - Segundo apellido", w: 20 },
+    { k: "nombre", l: "Estudiante - Nombre completo", w: 26 },
+    { k: "direccion", l: "Dirección exacta del menor", w: 34 },
+    { k: "lugar_nac", l: "Lugar de nacimiento", w: 18 },
+    { k: "fecha_nac", l: "Fecha de nacimiento", t: "fecha", w: 16 },
+    { k: "edad_a", l: "Edad al 15/02/2027 - Años", w: 11 },
+    { k: "edad_m", l: "Edad al 15/02/2027 - Meses", w: 11 },
+    { k: "edad_d", l: "Edad al 15/02/2027 - Días", w: 11 },
+    { k: "cedula", l: "Cédula", w: 13 },
+    { k: "nacionalidad", l: "Nacionalidad", w: 16 },
+    { k: "vacunas", l: "Vacunas", w: 13 }
+  ];
+  PERSONAS.forEach(function (p) {
+    CAMPOS_PERSONA.forEach(function (cc) {
+      c.push({ k: p.id + "_" + cc.k, l: p.titulo + " - " + cc.l, w: cc.k === "dir" ? 30 : 18 });
+    });
+  });
+  c.push({ k: "firma_func", l: "Firma funcionario/a de matrícula", w: 17 });
+  c.push({ k: "firma_enc", l: "Firma del padre, madre o encargado legal", w: 18 });
+  c.push({ k: "obs", l: "Observaciones", w: 34 });
+  c.push({ k: "autorizacion", l: "Autorización de datos", w: 15 });
+  c.push({ k: "correo", l: "Correo electrónico", w: 26 });
+  c.push({ k: "acuse", l: "Enviar acuse", w: 12 });
+  c.push({ k: "fecha_envio", l: "Fecha de envío", t: "fecha", w: 16 });
+  c.push({ k: "origen", l: "Origen", w: 12 });
+  return c;
+}
+function exportarCSV(regs, nombre) {
+  var cols = csvCols();
+  var lines = [cols.map(function (c) { return c.l; }).join(";")];
+  regs.forEach(function (r) {
+    lines.push(cols.map(function (c) {
+      var v = r[c.k] === undefined || r[c.k] === null ? "" : String(r[c.k]);
+      if (/[";\n]/.test(v)) v = '"' + v.replace(/"/g, '""') + '"';
+      return v;
+    }).join(";"));
+  });
+  descargar(nombre || "MATRICULA_2027.csv", "\uFEFF" + lines.join("\r\n"), "text/csv;charset=utf-8");
+  toast("Archivo CSV generado (" + regs.length + " fila(s))", "ok");
+}
+
+/* =======================================================================
+   GENERACIÓN DE .xlsx REAL (Open Packaging Conventions) SIN LIBRERÍAS
+   ZIP armado con CompressionStream ("deflate-raw"), con respaldo a
+   almacenamiento simple (método 0) si el navegador no comprime.
+   ===================================================================== */
+var CRC_TABLA = (function () {
+  var t = new Uint32Array(256), n, k, c;
+  for (n = 0; n < 256; n++) {
+    c = n;
+    for (k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(bytes) {
+  var c = 0xFFFFFFFF;
+  for (var i = 0; i < bytes.length; i++) c = CRC_TABLA[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function textoABytes(s) {
+  if (typeof TextEncoder !== "undefined") return new TextEncoder().encode(s);
+  var b = new Uint8Array(s.length);
+  for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i) & 0xFF;
+  return b;
+}
+function colLetra(n) {
+  var s = "";
+  while (n > 0) { var r = (n - 1) % 26; s = String.fromCharCode(65 + r) + s; n = Math.floor((n - 1) / 26); }
+  return s;
+}
+function xmlTxt(s) {
+  return String(s === null || s === undefined ? "" : s)
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+function descargarBinario(nombre, bytes, mime) {
+  descargar(nombre, bytes, mime || "application/octet-stream");
+}
+function deflateRaw(bytes) {
+  if (typeof CompressionStream === "undefined") return Promise.resolve(null);
+  try {
+    var cs = new CompressionStream("deflate-raw");
+    var w = cs.writable.getWriter();
+    return w.write(bytes).then(function () { return w.close(); }).then(function () {
+      return new Response(cs.readable).arrayBuffer();
+    }).then(function (ab) { return new Uint8Array(ab); });
+  } catch (e) { return Promise.resolve(null); }
+}
+function zipArmar(archivos) {
+  var promesas = archivos.map(function (a) {
+    return deflateRaw(a.bytes).then(function (comp) {
+      var usar = comp && comp.length > 0 && comp.length < a.bytes.length;
+      return {
+        nombre: a.nombre, crudo: a.bytes,
+        datos: usar ? comp : a.bytes,
+        metodo: usar ? 8 : 0,
+        crc: crc32(a.bytes)
+      };
+    });
+  });
+  return Promise.all(promesas).then(function (items) {
+    var d = new Date();
+    var hora = ((d.getHours() << 11) | (d.getMinutes() << 5) | Math.floor(d.getSeconds() / 2)) & 0xFFFF;
+    var fechaDos = (((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate()) & 0xFFFF;
+    var partes = [], central = [], offset = 0;
+    items.forEach(function (it) {
+      var nom = textoABytes(it.nombre);
+      var cab = new Uint8Array(30 + nom.length);
+      var dv = new DataView(cab.buffer);
+      dv.setUint32(0, 0x04034b50, true);
+      dv.setUint16(4, 20, true);
+      dv.setUint16(6, 0x0800, true);
+      dv.setUint16(8, it.metodo, true);
+      dv.setUint16(10, hora, true);
+      dv.setUint16(12, fechaDos, true);
+      dv.setUint32(14, it.crc, true);
+      dv.setUint32(18, it.datos.length, true);
+      dv.setUint32(22, it.crudo.length, true);
+      dv.setUint16(26, nom.length, true);
+      dv.setUint16(28, 0, true);
+      cab.set(nom, 30);
+      partes.push(cab, it.datos);
+      central.push({ it: it, nom: nom, offset: offset, hora: hora, fecha: fechaDos });
+      offset += cab.length + it.datos.length;
+    });
+    var cd = central.map(function (c) {
+      var buf = new Uint8Array(46 + c.nom.length);
+      var dv = new DataView(buf.buffer);
+      dv.setUint32(0, 0x02014b50, true);
+      dv.setUint16(4, 20, true);
+      dv.setUint16(6, 20, true);
+      dv.setUint16(8, 0x0800, true);
+      dv.setUint16(10, c.it.metodo, true);
+      dv.setUint16(12, c.hora, true);
+      dv.setUint16(14, c.fecha, true);
+      dv.setUint32(16, c.it.crc, true);
+      dv.setUint32(20, c.it.datos.length, true);
+      dv.setUint32(24, c.it.crudo.length, true);
+      dv.setUint16(28, c.nom.length, true);
+      dv.setUint32(42, c.offset, true);
+      buf.set(c.nom, 46);
+      return buf;
+    });
+    var tamCD = cd.reduce(function (a, b) { return a + b.length; }, 0);
+    var fin = new Uint8Array(22);
+    var dvf = new DataView(fin.buffer);
+    dvf.setUint32(0, 0x06054b50, true);
+    dvf.setUint16(8, central.length, true);
+    dvf.setUint16(10, central.length, true);
+    dvf.setUint32(12, tamCD, true);
+    dvf.setUint32(16, offset, true);
+    var salida = new Uint8Array(offset + tamCD + 22), pos = 0;
+    partes.forEach(function (p) { salida.set(p, pos); pos += p.length; });
+    cd.forEach(function (p) { salida.set(p, pos); pos += p.length; });
+    salida.set(fin, pos);
+    return salida;
+  });
+}
+
+var XLSX_CONTENT_TYPES =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+  '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+  '<Default Extension="xml" ContentType="application/xml"/>' +
+  '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+  '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' +
+  '<Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' +
+  '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' +
+  '</Types>';
+var XLSX_RELS =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>' +
+  '</Relationships>';
+var XLSX_WB_RELS =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>' +
+  '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/>' +
+  '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>' +
+  '</Relationships>';
+var XLSX_STYLES =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+  '<fonts count="3">' +
+  '<font><sz val="10"/><name val="Calibri"/></font>' +
+  '<font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font>' +
+  '<font><b/><sz val="11"/><color rgb="FF1E3A8A"/><name val="Calibri"/></font>' +
+  '</fonts>' +
+  '<fills count="3">' +
+  '<fill><patternFill patternType="none"/></fill>' +
+  '<fill><patternFill patternType="gray125"/></fill>' +
+  '<fill><patternFill patternType="solid"><fgColor rgb="FF1E3A8A"/><bgColor indexed="64"/></patternFill></fill>' +
+  '</fills>' +
+  '<borders count="2">' +
+  '<border><left/><right/><top/><bottom/><diagonal/></border>' +
+  '<border><left style="thin"><color rgb="FFBFBFBF"/></left><right style="thin"><color rgb="FFBFBFBF"/></right>' +
+  '<top style="thin"><color rgb="FFBFBFBF"/></top><bottom style="thin"><color rgb="FFBFBFBF"/></bottom><diagonal/></border>' +
+  '</borders>' +
+  '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>' +
+  '<cellXfs count="5">' +
+  '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
+  '<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1">' +
+  '<alignment horizontal="center" vertical="center" wrapText="1"/></xf>' +
+  '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1">' +
+  '<alignment vertical="top" wrapText="1"/></xf>' +
+  '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>' +
+  '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"/>' +
+  '</cellXfs>' +
+  '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>' +
+  '</styleSheet>';
+
+function workbookXmlPart(n1, n2) {
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
+    'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
+    '<sheets><sheet name="' + xmlTxt(n1) + '" sheetId="1" r:id="rId1"/>' +
+    '<sheet name="' + xmlTxt(n2) + '" sheetId="2" r:id="rId2"/></sheets></workbook>';
+}
+var CREDITO_PIE = "Elaborado por el Ing. Jonathan Diaz Ramirez - Registro de Matricula 2027";
+
+function hojaMatriculaXml(cols, regs) {
+  var out = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+    '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">',
+    '<sheetViews><sheetView workbookViewId="0">',
+    '<pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/>',
+    '</sheetView></sheetViews>',
+    '<sheetFormatPr defaultRowHeight="15"/>',
+    '<cols>' + cols.map(function (c, i) {
+      return '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + (c.w || 18) + '" customWidth="1"/>';
+    }).join('') + '</cols>',
+    '<sheetData>',
+    '<row r="1" ht="34" customHeight="1">' + cols.map(function (c, i) {
+      return '<c r="' + colLetra(i + 1) + '1" s="1" t="inlineStr"><is><t xml:space="preserve">' +
+        xmlTxt(c.l) + '</t></is></c>';
+    }).join('') + '</row>'];
+
+  regs.forEach(function (r, iF) {
+    var fila = iF + 2;
+    var celdas = cols.map(function (c, iC) {
+      var ref = colLetra(iC + 1) + fila;
+      var v = r[c.k];
+      if (v === null || v === undefined || String(v).trim() === "") return "";
+      return '<c r="' + ref + '" s="4" t="inlineStr"><is><t xml:space="preserve">' +
+        xmlTxt(c.t === "fecha" ? fechaLarga(v) : v) + '</t></is></c>';
+    }).join('');
+    out.push('<row r="' + fila + '">' + celdas + '</row>');
+  });
+
+  out.push('</sheetData>');
+  out.push('<autoFilter ref="A1:' + colLetra(cols.length) + Math.max(1, regs.length + 1) + '"/>');
+  out.push('<pageMargins left="0.4" right="0.4" top="0.6" bottom="0.6" header="0.3" footer="0.3"/>');
+  out.push('<headerFooter><oddFooter>&amp;C' + xmlTxt(CREDITO_PIE) + '</oddFooter></headerFooter>');
+  out.push('</worksheet>');
+  return out.join('');
+}
+
+function hojaInfoXml(filas) {
+  var out = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+    '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">',
+    '<sheetViews><sheetView workbookViewId="0"/></sheetViews>',
+    '<sheetFormatPr defaultRowHeight="15"/>',
+    '<cols><col min="1" max="1" width="34" customWidth="1"/><col min="2" max="2" width="86" customWidth="1"/></cols>',
+    '<sheetData>'];
+  filas.forEach(function (f, i) {
+    var n = i + 1;
+    var a = '<c r="A' + n + '" s="' + (i === 0 ? "1" : "3") + '" t="inlineStr"><is><t xml:space="preserve">' + xmlTxt(f[0]) + '</t></is></c>';
+    var b = '<c r="B' + n + '" s="4" t="inlineStr"><is><t xml:space="preserve">' + xmlTxt(f[1]) + '</t></is></c>';
+    out.push('<row r="' + n + '">' + a + b + '</row>');
+  });
+  out.push('</sheetData>');
+  out.push('<pageMargins left="0.4" right="0.4" top="0.6" bottom="0.6" header="0.3" footer="0.3"/>');
+  out.push('<headerFooter><oddFooter>&amp;C' + xmlTxt(CREDITO_PIE) + '</oddFooter></headerFooter>');
+  out.push('</worksheet>');
+  return out.join('');
+}
+
+function generarXlsx(regs) {
+  /* Devuelve una Promise con los bytes del .xlsx — MISMO formato de la
+     exportación: hoja de datos (las 50 columnas de csvCols) + hoja
+     INFORMACIÓN. Lo comparten el botón "Exportar a Excel" y la carpeta
+     de guardado automático (Carpeta Excel). */
+  var cols = csvCols();
+  var d = new Date();
+  var fechaExport = ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear() +
+    " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+
+  var info = [
+    ["INFORMACIÓN DEL LIBRO", "VALOR"],
+    ["Título", "Registro de Matrícula - Curso Lectivo 2027"],
+    ["Institución", "Escuela Barrio Los Ángeles - Código 1389 - Circuito 03"],
+    ["Jurisdicción", "Dirección Regional de Educación San Carlos - Supervisión Educativa Circuito 03"],
+    ["Ubicación", "Alajuela, San Carlos, Quesada, Barrio Los Ángeles"],
+    ["Contacto", "Teléfono 24601300 / 26853425 - esc.barriolosangeles.sancarlos@mep.go.cr"],
+    ["Formato de referencia", "Boleta de Matrícula Curso Lectivo 2027 (Matricula 2027.docx)"],
+    ["Fecha de exportación", fechaExport],
+    ["Registros exportados", String(regs.length)],
+    ["Columnas", String(cols.length)],
+    ["Elaborado por", "Ing. Jonathan Díaz Ramírez"],
+    ["Nota", "Aplicación de Registro de Matrícula elaborada por el Ing. Jonathan Díaz Ramírez"]
+  ];
+
+  var partes = [
+    { nombre: "[Content_Types].xml", texto: XLSX_CONTENT_TYPES },
+    { nombre: "_rels/.rels", texto: XLSX_RELS },
+    { nombre: "xl/workbook.xml", texto: workbookXmlPart("MATRÍCULA 2027", "INFO") },
+    { nombre: "xl/_rels/workbook.xml.rels", texto: XLSX_WB_RELS },
+    { nombre: "xl/styles.xml", texto: XLSX_STYLES },
+    { nombre: "xl/worksheets/sheet1.xml", texto: hojaMatriculaXml(cols, regs) },
+    { nombre: "xl/worksheets/sheet2.xml", texto: hojaInfoXml(info) }
+  ].map(function (p) { return { nombre: p.nombre, bytes: textoABytes(p.texto) }; });
+
+  return zipArmar(partes);
+}
+
+function exportarXlsx(regs, etiqueta) {
+  if (!regs || !regs.length) { toast("Sin registros", "No hay datos para exportar", "warn"); return; }
+  var cols = csvCols();
+  var nombre = "MATRICULA_2027_" + (etiqueta || "REGISTROS") + ".xlsx";
+
+  if (typeof CompressionStream === "undefined") {
+    exportarCSV(regs, nombre.replace(/\.xlsx$/, ".csv"));
+    toast("Este navegador no genera .xlsx: se descargó el CSV", "warn");
+    return;
+  }
+
+  generarXlsx(regs).then(function (bytes) {
+    descargarBinario(nombre, bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    toast("Excel generado: " + regs.length + " fila(s) · " + cols.length + " columnas", "ok");
+  })["catch"](function (e) {
+    toast("No se pudo generar el .xlsx", String(e), "err");
+  });
+}
+
+/* --------------------------- Respaldo JSON --------------------------- */
+function exportarJSON() {
+  var paquete = {
+    app: "Registro de Matrícula 2027",
+    escuela: "Escuela Barrio Los Ángeles - Código 1389 - Circuito 03",
+    elaborado_por: "Ing. Jonathan Díaz Ramírez",
+    fecha: new Date().toISOString(),
+    registros: REC
+  };
+  descargar("MATRICULA_2027_respaldo.json", JSON.stringify(paquete, null, 2), "application/json");
+  toast("Respaldo JSON generado (" + REC.length + " registro(s))", "ok");
+}
+function importarJSON(archivo) {
+  var fr = new FileReader();
+  fr.onload = function () {
+    try {
+      var dato = JSON.parse(String(fr.result));
+      var arr = Array.isArray(dato) ? dato : (dato.registros || []);
+      if (!Array.isArray(arr) || !arr.length) { toast("El archivo no contiene registros", "err"); return; }
+      if (!confirm("Se importarán " + arr.length + " registro(s). ¿Reemplazar los datos actuales (" + REC.length + " registro(s))?")) return;
+      REC = arr.filter(function (r) { return r && typeof r === "object"; });
+      guardarLocal(); render();
+      toast("Respaldo importado: " + REC.length + " registro(s)", "ok");
+    } catch (e) { toast("No se pudo leer el archivo", String(e), "err"); }
+  };
+  fr.readAsText(archivo, "utf-8");
+}
+
+/* --------------------------- Pestañas --------------------------- */
+function mostrarTab(nombre) {
+  ["form", "list", "help", "ok"].forEach(function (t) {
+    var v = $("view-" + t); if (v) v.classList.toggle("hidden", t !== nombre);
+    var tb = $("tab-" + t); if (tb) tb.classList.toggle("on", t === nombre);
+  });
+  var tbF = $("tab-form"), tbH = $("tab-help");
+  if (tbF) tbF.classList.toggle("on", nombre === "form" || nombre === "ok");
+  if (nombre === "list") render();
+}
+
+/* ======================================================================
+   COMUNICACIÓN CON EL SERVIDOR (Google Apps Script)
+   ==================================================================== */
+function urlConHash(h) { return location.pathname + location.search + h; }
+
+/* Lectura simple (JSONP) para evitar problemas de CORS.
+   baseUrl opcional: permite probar una URL que todavía no se ha guardado. */
+function jsonp(params, baseUrl) {
+  return new Promise(function (resolve, reject) {
+    var base = baseUrl || CONFIG.urlAppsScript;
+    if (!base) { reject(new Error("Falta CONFIG.urlAppsScript")); return; }
+    var cb = "mt27cb" + Date.now().toString(36) + Math.floor(Math.random() * 10000);
+    var s = document.createElement("script");
+    var timer = setTimeout(function () { limpiar(); reject(new Error("El servidor no responde")); }, 20000);
+    function limpiar() {
+      clearTimeout(timer);
+      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      if (s.parentNode) s.parentNode.removeChild(s);
+    }
+    window[cb] = function (d) { limpiar(); resolve(d); };
+    s.onerror = function () { limpiar(); reject(new Error("No se pudo conectar con el servidor")); };
+    var q = [];
+    Object.keys(params || {}).forEach(function (k) { q.push(encodeURIComponent(k) + "=" + encodeURIComponent(params[k])); });
+    q.push("callback=" + cb);
+    s.src = base + (base.indexOf("?") >= 0 ? "&" : "?") + q.join("&");
+    document.head.appendChild(s);
+  });
+}
+function probarServidor(url) { return jsonp({ action: "ping" }, url); }
+
+/* Escritura (POST). Si la lectura de la respuesta falla, reintenta sin
+   leer; el servidor evita duplicados con el intento_id.               */
+function enviarServidor(datos) {
+  var init = { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(datos) };
+  return fetch(CONFIG.urlAppsScript, init)
+    .then(function (r) { return r.text(); })
+    .then(function (t) {
+      try { return JSON.parse(t); }
+      catch (e) { return { ok: true, sinConfirmacion: true }; }
+    })
+    .catch(function () {
+      return fetch(CONFIG.urlAppsScript, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(datos)
+      }).then(function () { return { ok: true, sinConfirmacion: true }; });
+    });
+}
+
+function descargarServidor() {
+  return jsonp({ action: "lista", usuario: usuarioSesion, clave: claveSesion }).then(function (resp) {
+    if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo leer la lista");
+    SRV = resp.registros || [];
+    return SRV;
+  });
+}
+
+/* --------------------------- Área administrativa --------------------------- */
+var claveSesion = "";       /* credencial (SHA-256) de la sesión abierta */
+var usuarioSesion = "";     /* usuario de la sesión (vacío = contraseña maestra) */
+var adminsCache = [];       /* [{u, p}] lista de administradores */
+var CLAVE_ADMINS = "matricula2027.admins";
+var CLAVE_MASTER = "matricula2027.master_hash";
+
+/* Credencial = SHA-256(usuario + ":" + contraseña). La contraseña en claro
+   nunca sale del navegador ni se guarda en la hoja. */
+function hashCred(usuario, clave) {
+  var txt = String(usuario || "") + ":" + String(clave || "");
+  if (!(window.crypto && window.crypto.subtle && window.crypto.subtle.digest && window.TextEncoder)) {
+    return Promise.reject(new Error("Este navegador no soporta cifrado seguro (requiere HTTPS o navegador actualizado)"));
+  }
+  return crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt)).then(function (buf) {
+    return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+      return ("0" + b.toString(16)).slice(-2);
+    }).join("");
+  });
+}
+function leerAdminsLocal() {
+  try {
+    var a = JSON.parse(localStorage.getItem(CLAVE_ADMINS) || "[]");
+    return Array.isArray(a) ? a.filter(function (x) { return x && x.u && x.p; }) : [];
+  } catch (e) { return []; }
+}
+function guardarAdminsLocal(lista) {
+  try { localStorage.setItem(CLAVE_ADMINS, JSON.stringify(lista || [])); } catch (e) {}
+  adminsCache = (lista || []).slice();
+}
+function masterLocal() {
+  /* hash de la contraseña maestra en este equipo (si nunca se cambió, la de CONFIG) */
+  return localStorage.getItem(CLAVE_MASTER) || null;
+}
+
+function mostrarLogin() {
+  $("login-error").classList.add("hidden");
+  setVal("login-clave", "");
+  try { setVal("login-usuario", localStorage.getItem("matricula2027.ultimoUsuario") || ""); } catch (e) {}
+  $("login-back").classList.remove("hidden");
+  setTimeout(function () {
+    try { (val("login-usuario") ? $("login-clave") : $("login-usuario")).focus(); } catch (e) {}
+  }, 60);
+}
+function ocultarLogin() { $("login-back").classList.add("hidden"); }
+
+function abrirAdmin() {
+  if (adminOK) { irPanelAdmin(); return; }
+  var w = null;
+  try { w = window.open(urlConHash("#admin"), "MAT2027-admin"); } catch (e) { w = null; }
+  if (!w) mostrarLogin();           /* popup bloqueado: preguntar aquí */
+}
+function errorLogin(msg) { setTxt("login-error", msg); $("login-error").classList.remove("hidden"); }
+
+function entrarAdmin(clave) {
+  var usuario = val("login-usuario").trim();
+  clave = String(clave || "").trim();
+  if (!clave) { errorLogin("Escriba la contraseña"); return; }
+  if (usuario && !/^[A-Za-z0-9._ -]{2,40}$/.test(usuario)) {
+    errorLogin("El usuario debe tener de 2 a 40 caracteres (letras, números, punto, guion o espacio)");
+    return;
+  }
+  var b = $("btn-login");
+  b.disabled = true; b.textContent = "Verificando…";
+
+  hashCred(usuario, clave).then(function (cred) {
+    if (!CONFIG.urlAppsScript) {
+      /* ---- modo local ---- */
+      var ok;
+      if (!usuario) {
+        var m = masterLocal();
+        ok = m ? (cred === m) : (clave === CONFIG.claveAdmin);
+      } else {
+        ok = leerAdminsLocal().some(function (a) {
+          return String(a.u).toLowerCase() === usuario.toLowerCase() && String(a.p) === cred;
+        });
+      }
+      if (!ok) throw new Error(usuario ? "Usuario o contraseña incorrectos" : "Contraseña incorrecta");
+      adminsCache = leerAdminsLocal();
+      guardarSesion(usuario, cred);
+      b.disabled = false; b.textContent = "Entrar";
+      ocultarLogin(); irPanelAdmin();
+    } else {
+      /* ---- en línea ---- */
+      return jsonp({ action: "lista", usuario: usuario, clave: cred }).then(function (resp) {
+        b.disabled = false; b.textContent = "Entrar";
+        if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "Usuario o contraseña incorrectos");
+        SRV = resp.registros || [];
+        adminsCache = Array.isArray(resp.admins) ? resp.admins : [];
+        guardarSesion(usuario, cred);
+        ocultarLogin(); irPanelAdmin();
+      });
+    }
+  })["catch"](function (err) {
+    b.disabled = false; b.textContent = "Entrar";
+    errorLogin(err && err.message ? err.message : "No se pudo verificar");
+  });
+}
+function guardarSesion(usuario, cred) {
+  usuarioSesion = usuario || "";
+  claveSesion = cred;
+  adminOK = true;
+  try { if (usuario) localStorage.setItem("matricula2027.ultimoUsuario", usuario); } catch (e) {}
+}
+
+function actualizarEstadoAdmin() {
+  var t = CONFIG.urlAppsScript
+    ? "En línea · " + (SRV.length ? SRV.length + " registro(s)" : "conectado") + " · " + CONFIG.urlAppsScript.replace(/^https:\/\//, "")
+    : "Modo local · sin URL de guardado · " + REC.length + " registro(s) en este equipo";
+  setTxt("admin-estado", t);
+}
+function irPanelAdmin() {
+  adminOK = true;
+  document.body.classList.add("es-admin");
+  mostrarTab("list");
+  actualizarEstadoAdmin();
+  render();
+}
+function salirAdmin() {
+  adminOK = false; claveSesion = ""; usuarioSesion = ""; adminsCache = []; SRV = [];
+  document.body.classList.remove("es-admin");
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
+  mostrarTab("form");
+  toast("Sesión administrativa cerrada", "warn");
+}
+
+/* --------------------------- Detalle de un registro --------------------------- */
+function detalle(folio) {
+  var r = buscarRec(folio);
+  if (!r) return;
+  setTxt("det-titulo", "Registro " + folio + " · " + nombreCompleto(r));
+  var html = '<div class="det-grid">';
+  csvCols().forEach(function (c) {
+    var v = r[c.k];
+    if (v === undefined || v === null || v === "") v = "—";
+    html += '<div>' + esc(c.l) + '</div><div>' + esc(String(v)) + '</div>';
+  });
+  html += '</div>';
+  html += '<p class="nota"><span class="f">Estado:</span> ' + badgeEstado(r.estado) +
+    (esLocal(folio) ? ' <span class="badge b-loc">Copia local</span>' : ' <span class="badge b-on">Servidor</span>') +
+    (r.correo ? ' &nbsp; <span class="f">Correo:</span> ' + esc(r.correo) : '') +
+    (r.fecha_envio ? ' &nbsp; <span class="f">Enviado:</span> ' + esc(r.fecha_envio) : '') + '</p>';
+  $("det-cuerpo").innerHTML = html;
+  $("det-back").classList.remove("hidden");
+}
+function ocultarDetalle() { $("det-back").classList.add("hidden"); }
+
+/* --------------------------- Configuración de correos --------------------------- */
+function abrirConfig() {
+  var correos = "", padre = "Sí";
+  try {
+    correos = localStorage.getItem("matricula2027.correos") || "";
+    padre = localStorage.getItem("matricula2027.acusePadre") || "Sí";
+  } catch (e) {}
+  setVal("cfg-correos", correos);
+  $("cfg-padre").checked = padre !== "No";
+  $("cfg-back").classList.remove("hidden");
+
+  if (CONFIG.urlAppsScript && adminOK) {
+    jsonp({ action: "config", usuario: usuarioSesion, clave: claveSesion })
+      .then(function (resp) {
+        if (!resp || resp.ok !== true) return;
+        if (resp.correos && resp.correos.length) setVal("cfg-correos", resp.correos.join(", "));
+        if (resp.acuse_padre) $("cfg-padre").checked = resp.acuse_padre !== "No";
+      })
+      .catch(function () { /* se queda lo local */ });
+  }
+}
+function guardarConfig() {
+  var correos = String(val("cfg-correos") || "")
+    .split(/[,;\s]+/).map(function (s) { return s.trim(); })
+    .filter(function (s) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s); });
+  var padre = $("cfg-padre").checked ? "Sí" : "No";
+  if (!correos.length) { toast("Indique al menos un correo válido", "err"); return; }
+  try {
+    localStorage.setItem("matricula2027.correos", correos.join(", "));
+    localStorage.setItem("matricula2027.acusePadre", padre);
+  } catch (e) {}
+  sincronizarPuenteCorreos(correos, padre);
+  if (CONFIG.urlAppsScript && adminOK) {
+    enviarServidor({ accion: "guardar_config", usuario: usuarioSesion, clave: claveSesion, correos: correos, acuse_padre: padre })
+      .then(function (resp) {
+        if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo guardar");
+        $("cfg-back").classList.add("hidden");
+        toast("Notificaciones guardadas en el servidor", "ok");
+      })
+      .catch(function (err) { toast("No se pudo guardar: " + (err && err.message ? err.message : err), "err"); });
+  } else {
+    $("cfg-back").classList.add("hidden");
+    toast("Guardado en este equipo (configure la URL del servidor para activarlo)", "warn");
+  }
+}
+
+/* --------------------------- Puente local (Excel + Outlook) --------------------------- */
+function sincronizarPuenteCorreos(correos, padre) {
+  if (!leerPuente().token) return;
+  llamarPuente("guardar_config", { correos: (correos || []).join(", "), acuse_padre: padre !== "No" }, 15000)
+    .then(function (r) { if (r && r.ok) toast("Destinatarios sincronizados con el puente local (Outlook)", "ok"); })
+    ["catch"](function () { /* sin puente: se reenvía desde el botón «Excel y Outlook» */ });
+}
+function pintarEstadoPuente(cfg, prefijo) {
+  var partes = [];
+  partes.push("Excel: " + (cfg.ruta_excel
+    ? cfg.ruta_excel + (cfg.archivo_existe ? "" : " (aún no existe; se creará al primer registro)")
+    : "SIN RUTA"));
+  partes.push("Correos: " + ((cfg.correos && cfg.correos.length) ? cfg.correos.join(", ") : "sin destinatarios"));
+  partes.push("Correo: " + cfg.correo_modo + (cfg.acuse_padre ? " · acuse al padre activo" : " · sin acuse al padre"));
+  setMsg("puente-estado", prefijo + " · " + partes.join(" · "), prefijo.indexOf("✓") === 0 ? "ok" : "err");
+}
+function abrirPuente() {
+  var p = leerPuente();
+  setVal("puente-puerto", p.puerto);
+  setVal("puente-token", p.token);
+  var correos = "", padre = "Sí";
+  try {
+    correos = localStorage.getItem("matricula2027.correos") || "";
+    padre = localStorage.getItem("matricula2027.acusePadre") || "Sí";
+  } catch (e) {}
+  setTxt("puente-correos-local", "Destinatarios en este equipo: " + (correos || "(aún sin definir)") +
+    " · Acuse al padre: " + (padre !== "No" ? "Sí" : "No"));
+  $("puente-back").classList.remove("hidden");
+  probarPuente();
+}
+function probarPuente() {
+  guardarPuenteLocal({ puerto: parseInt(val("puente-puerto"), 10) || 8787, token: val("puente-token") });
+  setMsg("puente-estado", leerPuente().token
+    ? "Conectando con el puente local…"
+    : "Conectando… (falta el token: péguelo para poder guardar la ruta y los correos)", "");
+  llamarPuente("ping", {}, 8000)
+    .then(function (r) {
+      if (!r || !r.ok) throw new Error("respuesta inválida");
+      if (r.config) { pintarEstadoPuente(r.config, "✓ Puente conectado"); return; }
+      setMsg("puente-estado", "✓ Puente conectado · falta el token: péguelo arriba y pulse «Guardar en el puente».", "ok");
+    })
+    ["catch"](function (err) {
+      if (err && err.token) setMsg("puente-estado", "✗ Token incorrecto. Copie el token que muestra la ventana del puente.", "err");
+      else setMsg("puente-estado", "✗ No responde el puente local. Ejecute «Iniciar puente matricula.bat» en la PC de la escuela y verifique el puerto.", "err");
+    });
+}
+function guardarPuente() {
+  var p = { puerto: parseInt(val("puente-puerto"), 10) || 8787, token: val("puente-token") };
+  if (!p.token) {
+    setMsg("puente-estado", "Pegue primero el token del puente (lo muestra la ventana del script o el archivo «Puente Matricula 2027.TOKEN.txt»).", "err");
+    return;
+  }
+  guardarPuenteLocal(p);
+  var correos = "", padre = "Sí";
+  try {
+    correos = localStorage.getItem("matricula2027.correos") || "";
+    padre = localStorage.getItem("matricula2027.acusePadre") || "Sí";
+  } catch (e) {}
+  var datos = { ruta_excel: val("puente-ruta"), acuse_padre: padre !== "No" };
+  if (correos) datos.correos = correos;   /* si no hay, no se borra la lista que ya tenga el puente */
+  setMsg("puente-estado", "Guardando en el puente…", "");
+  llamarPuente("guardar_config", datos, 15000)
+    .then(function (r) {
+      if (!r || !r.ok) throw new Error((r && r.error) || "respuesta inválida");
+      pintarEstadoPuente(r.config, "✓ Guardado en el puente");
+      toast("Ruta y destinatarios guardados en el puente local", "ok");
+    })
+    ["catch"](function (err) {
+      if (err && err.token) setMsg("puente-estado", "✗ Token incorrecto: no se guardó nada.", "err");
+      else setMsg("puente-estado", "✗ No se pudo guardar: " + (err && err.message ? err.message : err), "err");
+    });
+}
+
+/* ======================================================================
+   INSTALACIÓN ASISTIDA — un solo campo: la URL de guardado
+   ==================================================================== */
+var CLAVE_URL = "matricula2027.urlAppsScript";
+var ultimoPing = null;
+
+function leerUrlGuardada() {
+  try { return localStorage.getItem(CLAVE_URL) || ""; } catch (e) { return ""; }
+}
+function guardarUrl(url) {
+  try { localStorage.setItem(CLAVE_URL, url); } catch (e) {}
+  CONFIG.urlAppsScript = url;
+}
+function normalizarUrl(v) {
+  var u = String(v || "").trim().replace(/^["'<]+/, "").replace(/["'>]+$/, "").replace(/\s+/g, "");
+  if (u && !/^https?:\/\//i.test(u)) u = "https://" + u;
+  return u.replace(/\/+$/, "");
+}
+function urlValida(u) {
+  return /^https:\/\/script\.google\.com\/macros\/s\//i.test(u) && /\/exec$/i.test(u);
+}
+function setMsg(id, txt, tipo) {
+  var e = $(id);
+  if (!e) return;
+  e.textContent = txt;
+  e.className = "inst-msg" + (tipo ? " " + tipo : "");
+}
+function est(ok, texto) {
+  var c = ok === null ? "pend" : (ok ? "ok" : "no");
+  var i = ok === null ? "○" : (ok ? "✓" : "✗");
+  return '<li class="' + c + '"><span class="ico">' + i + '</span> ' + texto + '</li>';
+}
+function renderChecks(ping) {
+  var url = CONFIG.urlAppsScript;
+  var L = [est(!!url, url ? "Dirección de guardado configurada" : "Falta la dirección de guardado (URL /exec)")];
+  if (url && !urlValida(url))
+    L.push(est(false, "La dirección debe empezar por <i>https://script.google.com/macros/s/</i> y terminar en <b>/exec</b>"));
+
+  if (ping === null || ping === undefined) {
+    L.push(est(null, "Conexión con el servidor: <i>sin verificar</i>"));
+    L.push(est(null, "Hoja MATRICULA2027: <i>sin verificar</i>"));
+    L.push(est(null, "Correos de notificación: <i>sin verificar</i>"));
+  } else if (ping.ok === true) {
+    L.push(est(true, "App web publicado y accesible · " + (ping.total === undefined ? "?" : ping.total) + " registro(s) en la hoja"));
+    L.push(est(ping.encabezados_ok !== false,
+      "Hoja <b>" + esc(ping.hoja || "MATRICULA2027") + "</b> con " + (ping.columnas === undefined ? "?" : ping.columnas) +
+      " columnas y encabezados correctos"));
+    L.push(est(ping.correos_config === true, "Correos de notificación definidos"));
+    if (ping.encabezados_ok === false)
+      L.push(est(false, "Abra el archivo .gs en Apps Script y ejecute la función <b>INSTALAR</b>"));
+    if (ping.correos_config !== true)
+      L.push(est(false, "Defina los destinatarios en <b>Área administrativa ▸ Correos de notificación</b>"));
+  } else {
+    L.push(est(false, "No se pudo conectar: " + esc(ping.error || "sin respuesta")));
+    L.push(est(null, "Hoja MATRICULA2027: <i>sin verificar</i>"));
+    L.push(est(null, "Correos de notificación: <i>sin verificar</i>"));
+  }
+  $("inst-checks").innerHTML = L.join("");
+}
+function abrirInstalacion() {
+  var url = CONFIG.urlAppsScript || leerUrlGuardada();
+  setVal("inst-url", url);
+  setMsg("inst-msg", url ? "Guardado: " + url : "Pegue la dirección y pulse «Verificar y guardar».", url ? "ok" : "");
+  $("btn-inst-copiar-linea").classList.toggle("hidden", !url);
+  renderChecks(ultimoPing);
+  $("inst-back").classList.remove("hidden");
+  pubPintar();
+  setTimeout(function () { try { $("inst-url").focus(); } catch (e) {} }, 60);
+}
+function probarYGuardar() {
+  var u = normalizarUrl($("inst-url").value);
+  if (!u) { setMsg("inst-msg", "Escriba la dirección del guardado (la que termina en /exec).", "err"); return; }
+  if (/docs\.google\.com\/spreadsheets/i.test(u)) {
+    setMsg("inst-msg", "Esa es la dirección de la HOJA de cálculo. Necesita la dirección del App web publicado: " +
+      "Implementar ▸ App web ▸ copie la URL que termina en /exec.", "err");
+    return;
+  }
+  if (!urlValida(u)) {
+    setMsg("inst-msg", "La dirección no parece correcta: debe empezar con https://script.google.com/macros/s/ " +
+      "y terminar en /exec (sin nada después).", "err");
+    return;
+  }
+  var b = $("btn-inst-probar");
+  b.disabled = true; b.textContent = "Verificando…";
+  setMsg("inst-msg", "Conectando con el servidor…", "");
+  probarServidor(u)
+    .then(function (p) {
+      b.disabled = false; b.textContent = "Verificar y guardar";
+      ultimoPing = p || { ok: false, error: "Respuesta vacía" };
+      if (ultimoPing.ok !== true) {
+        setMsg("inst-msg", "No se pudo verificar: " + (ultimoPing.error || "sin respuesta"), "err");
+        renderChecks(ultimoPing);
+        return;
+      }
+      guardarUrl(u);
+      setMsg("inst-msg", "✓ Conectado y guardado · " + (ultimoPing.total === 0 ? "sin registros todavía" : ultimoPing.total + " registro(s)"), "ok");
+      $("btn-inst-copiar-linea").classList.remove("hidden");
+      renderChecks(ultimoPing);
+      actualizarEstadoAdmin();
+      if (adminOK) descargarServidor().then(function () { render(); })["catch"](function () {});
+      toast("Guardado en línea configurado", "ok");
+      pubActualizar(false);   /* Paso 0 automático en la carpeta de publicación */
+    })
+    ["catch"](function (err) {
+      b.disabled = false; b.textContent = "Verificar y guardar";
+      var m = (err && err.message) ? err.message : String(err);
+      var ayuda = "";
+      if (/no responde|conectar|vac/i.test(m))
+        ayuda = " Revise: 1) la URL termine en /exec; 2) Implementar ▸ «Quién tiene acceso: Cualquier persona»; " +
+          "3) Implementar ▸ Administrar implementaciones ▸ Nueva versión si cambió el código.";
+      setMsg("inst-msg", "No se pudo conectar: " + m + "." + ayuda, "err");
+      renderChecks({ ok: false, error: m });
+    });
+}
+function copiarTexto(t) {
+  function respaldo(x) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = x;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      return true;
+    } catch (e) { return false; }
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    return navigator.clipboard.writeText(t).then(function () { return true; })["catch"](function () { return respaldo(t); });
+  return Promise.resolve(respaldo(t));
+}
+
+/* ============ PUBLICACIÓN EN GITHUB · PASO 0 AUTOMÁTICO ============
+   Cuando el administrador guarda la URL del "Sitio de guardado" (/exec),
+   la app escribe esa URL en la CARPETA DE PUBLICACIÓN elegida (una sola
+   vez): actualiza el bloque marcado del README.md (Paso 0) y la línea
+   CONFIG.urlAppsScript del index.html, listos para subir a GitHub.       */
+var pubHandle = null;
+var pubRestaurado = false;
+
+function pubRestaurar() {
+  if (pubHandle) return Promise.resolve(pubHandle);
+  if (pubRestaurado || !fsSoportado()) return Promise.resolve(null);
+  return idbOperacion("get", "publicacion").then(function (h) {
+    pubRestaurado = true; pubHandle = h; return h;
+  })["catch"](function () { pubRestaurado = true; return null; });
+}
+function pubEstado(txt, tipo) { setMsg("pub-estado", txt, tipo || ""); }
+function pubPintar() {
+  if (!fsSoportado()) { pubEstado("Este navegador no permite elegir carpetas: use Google Chrome o Microsoft Edge.", "err"); return; }
+  pubRestaurar().then(function (h) {
+    if (h) pubEstado("Carpeta de publicación: «" + h.name + "» · README.md e index.html se actualizan al guardar la URL", "ok");
+    else pubEstado("Sin carpeta de publicación: pulse «Seleccionar carpeta de publicación…» y elija la carpeta «Publicar en GitHub Pages».", "");
+  });
+}
+/* Rellena el Paso 0 del README con la URL.
+   1) Entre los marcadores <!--URL-APPS-SCRIPT-INICIO/FIN-->.
+   2) Si no hay marcadores, reemplaza el ejemplo AKfyc…/exec (respaldo). */
+function aplicarUrlReadme(texto, url) {
+  var ini = "<!--URL-APPS-SCRIPT-INICIO-->", fin = "<!--URL-APPS-SCRIPT-FIN-->";
+  var i = texto.indexOf(ini), j = texto.indexOf(fin);
+  if (i >= 0 && j > i) {
+    var bloque = ini + "\n**URL guardada actualmente:** `" + url + "`\n\n" +
+      "```js\nurlAppsScript: \"" + url + "\",\n```\n" + fin;
+    return texto.substring(0, i) + bloque + texto.substring(j + fin.length);
+  }
+  var ejemplo = "https://script.google.com/macros/s/AKfyc.../exec";
+  if (texto.indexOf(ejemplo) >= 0) return texto.split(ejemplo).join(url);
+  return null;
+}
+/* Cambia CONFIG.urlAppsScript dentro del index.html publicado
+   (anclado a la línea claveAdmin para no tocar la línea de "Copiar línea"). */
+function aplicarUrlIndex(texto, url) {
+  var re = /urlAppsScript:\s*"([^"]*)"(\s*,\s*\n\s*claveAdmin)/;
+  if (!re.test(texto)) return null;
+  return texto.replace(re, function (m, v, cola) { return 'urlAppsScript: "' + url + '"' + cola; });
+}
+function leerArchivoPub(h, nombre) {
+  return h.getFileHandle(nombre).then(function (fh) { return fh.getFile(); })
+    .then(function (f) { return f.text(); })["catch"](function () { return null; });
+}
+function escribirArchivoPub(h, nombre, texto) {
+  return h.getFileHandle(nombre, { create: true }).then(function (fh) { return fh.createWritable(); })
+    .then(function (w) { return w.write(texto).then(function () { return w.close(); }); });
+}
+function pubActualizar(manual) {
+  if (!fsSoportado()) {
+    if (manual) toast("Use Google Chrome o Microsoft Edge para actualizar la publicación", "err");
+    return Promise.resolve(null);
+  }
+  var url = String(CONFIG.urlAppsScript || leerUrlGuardada() || "").trim().replace(/"/g, "");
+  if (!url) {
+    if (manual) toast("Primero verifique y guarde la URL del sitio de guardado (/exec)", "warn");
+    return Promise.resolve(null);
+  }
+  return pubRestaurar().then(function (h) {
+    if (!h) { if (manual) toast("Seleccione primero la carpeta de publicación", "warn"); return null; }
+    return permisoDe(h, !!manual).then(function (st) {
+      if (st !== "granted") {
+        pubEstado("El navegador pide permiso sobre la carpeta de publicación: selecciónela de nuevo y conceda el acceso.", "err");
+        if (manual) toast("Conceda el acceso a la carpeta de publicación", "warn");
+        return null;
+      }
+      return Promise.all([leerArchivoPub(h, "README.md"), leerArchivoPub(h, "index.html")]).then(function (archivos) {
+        var readme = archivos[0], index = archivos[1];
+        if (readme === null && index === null) {
+          pubEstado("No se encontró README.md ni index.html: esta carpeta no parece «Publicar en GitHub Pages».", "err");
+          if (manual) toast("La carpeta no contiene README.md ni index.html", "err");
+          return null;
+        }
+        var trabajos = [], hechos = [], notas = [];
+        var nr = (readme !== null) ? aplicarUrlReadme(readme, url) : null;
+        if (readme === null) notas.push("falta README.md");
+        else if (nr === null) notas.push("README.md sin el patrón del Paso 0");
+        else if (nr !== readme) { trabajos.push(escribirArchivoPub(h, "README.md", nr)); hechos.push("README.md"); }
+        else notas.push("README.md ya estaba al día");
+        var ni = (index !== null) ? aplicarUrlIndex(index, url) : null;
+        if (index === null) notas.push("falta index.html");
+        else if (ni === null) notas.push("index.html sin la línea CONFIG.urlAppsScript");
+        else if (ni !== index) { trabajos.push(escribirArchivoPub(h, "index.html", ni)); hechos.push("index.html"); }
+        else notas.push("index.html ya estaba al día");
+        return Promise.all(trabajos).then(function () {
+          var partes = [];
+          if (hechos.length) partes.push("Actualizado con la URL: " + hechos.join(", "));
+          if (notas.length) partes.push(notas.join(" · "));
+          pubEstado(partes.join(" · "), hechos.length ? "ok" : "");
+          if (hechos.length) toast("Publicación actualizada: " + hechos.join(", "), "ok");
+          else if (manual) toast(notas.join(" · "), "warn");
+          return true;
+        });
+      });
+    });
+  })["catch"](function (e) {
+    var m = (e && e.message) ? e.message : String(e);
+    pubEstado("Error al actualizar la publicación: " + m, "err");
+    if (manual) toast("No se pudo actualizar: " + m, "err");
+    return null;
+  });
+}
+function pubSeleccionar() {
+  if (!fsSoportado()) { toast("Este navegador no permite elegir carpetas: use Google Chrome o Microsoft Edge", "err"); return; }
+  window.showDirectoryPicker({ mode: "readwrite", startIn: "documents" }).then(function (h) {
+    pubHandle = h; pubRestaurado = true;
+    return idbOperacion("put", "publicacion", h)["catch"](function () {
+      toast("Aviso: el navegador no recordará la carpeta al recargar (IndexedDB no disponible)", "warn");
+    }).then(function () { return h; });
+  }).then(function (h) {
+    pubEstado("Carpeta de publicación: «" + h.name + "»", "ok");
+    return pubActualizar(true);
+  })["catch"](function (e) {
+    if (e && e.name === "AbortError") return;   /* el administrador canceló */
+    toast("No se pudo usar la carpeta: " + (e && e.message ? e.message : e), "err");
+  });
+}
+
+/* ====================== ADMINISTRADORES (varias personas) ================= */
+function msgAdmins(txt, tipo) { setMsg("admins-msg", txt, tipo); }
+
+function abrirAdmins() {
+  if (!adminOK) { mostrarLogin(); return; }
+  ["nvo-usuario", "nvo-clave", "nvo-clave2", "mia-clave", "mia-clave2"].forEach(function (id) { setVal(id, ""); });
+  msgAdmins("Las contraseñas se guardan cifradas (SHA-256): ni el panel ni la hoja guardan el texto original.", "");
+  $("admins-back").classList.remove("hidden");
+  refrescarAdmins();
+}
+function ocultarAdmins() { $("admins-back").classList.add("hidden"); }
+
+function refrescarAdmins() {
+  if (!CONFIG.urlAppsScript) { adminsCache = leerAdminsLocal(); renderAdmins(); return; }
+  jsonp({ action: "lista", usuario: usuarioSesion, clave: claveSesion })
+    .then(function (resp) {
+      if (resp && resp.ok === true && Array.isArray(resp.admins)) adminsCache = resp.admins;
+      renderAdmins();
+    })
+    ["catch"](function () { renderAdmins(); });
+}
+function renderAdmins() {
+  var ul = $("admins-lista");
+  if (!adminsCache.length) {
+    ul.innerHTML = '<li class="vacio">Aún no hay usuarios: por ahora entra con la contraseña maestra. Agregue el primero.</li>';
+    return;
+  }
+  ul.innerHTML = adminsCache.map(function (a) {
+    var yo = (usuarioSesion && String(a.u).toLowerCase() === usuarioSesion.toLowerCase())
+      ? '<span class="yo">Sesión actual</span>' : '';
+    return '<li><b>' + esc(a.u) + '</b>' + yo +
+      '<span class="acciones"><button type="button" class="btn ghost" data-admin-quitar="' + esc(a.u) + '">Quitar</button></span></li>';
+  }).join("");
+}
+function persistirAdmins(nueva) {
+  if (!CONFIG.urlAppsScript) { guardarAdminsLocal(nueva); renderAdmins(); return Promise.resolve({ ok: true }); }
+  return enviarServidor({ accion: "guardar_admins", usuario: usuarioSesion, clave: claveSesion, lista: nueva })
+    .then(function (resp) {
+      if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo guardar en el servidor");
+      guardarAdminsLocal(nueva);
+      renderAdmins();
+      return resp;
+    });
+}
+function agregarAdmin() {
+  var u = val("nvo-usuario").trim(), p = val("nvo-clave"), p2 = val("nvo-clave2");
+  if (!/^[A-Za-z0-9._ -]{2,40}$/.test(u)) {
+    msgAdmins("Usuario inválido: de 2 a 40 caracteres (letras, números, punto, guion o espacio).", "err"); return;
+  }
+  if (String(p).length < 4) { msgAdmins("La contraseña debe tener al menos 4 caracteres.", "err"); return; }
+  if (p !== p2) { msgAdmins("Las contraseñas no coinciden.", "err"); return; }
+  if (adminsCache.some(function (a) { return String(a.u).toLowerCase() === u.toLowerCase(); })) {
+    msgAdmins("Ya existe un administrador con ese usuario.", "err"); return;
+  }
+  hashCred(u, p).then(function (h) {
+    return persistirAdmins(adminsCache.concat([{ u: u, p: h }]));
+  }).then(function () {
+    ["nvo-usuario", "nvo-clave", "nvo-clave2"].forEach(function (id) { setVal(id, ""); });
+    msgAdmins("Administrador «" + u + "» agregado: ya puede entrar con ese usuario y contraseña.", "ok");
+    toast("Administrador agregado", "ok");
+  })["catch"](function (e) { msgAdmins("No se pudo guardar: " + (e && e.message ? e.message : e), "err"); });
+}
+function quitarAdmin(u) {
+  if (!adminOK) return;
+  if (usuarioSesion && String(u).toLowerCase() === usuarioSesion.toLowerCase()) {
+    msgAdmins("No puede quitar su propio usuario. Pida a otro administrador, o solo cambie su contraseña.", "err");
+    return;
+  }
+  if (!confirm("¿Quitar al administrador «" + u + "»?\nPerderá el acceso al panel.")) return;
+  persistirAdmins(adminsCache.filter(function (a) { return String(a.u).toLowerCase() !== String(u).toLowerCase(); }))
+    .then(function () {
+      msgAdmins("Administrador «" + u + "» quitado.", "ok");
+      toast("Administrador quitado", "warn");
+    })["catch"](function (e) { msgAdmins("No se pudo quitar: " + (e && e.message ? e.message : e), "err"); });
+}
+function cambiarMiClave() {
+  var p = val("mia-clave"), p2 = val("mia-clave2");
+  if (String(p).length < 4) { msgAdmins("La nueva contraseña debe tener al menos 4 caracteres.", "err"); return; }
+  if (p !== p2) { msgAdmins("Las contraseñas no coinciden.", "err"); return; }
+  hashCred(usuarioSesion, p).then(function (h) {
+    if (usuarioSesion) {
+      var i = -1;
+      adminsCache.forEach(function (a, k) { if (String(a.u).toLowerCase() === usuarioSesion.toLowerCase()) i = k; });
+      if (i < 0) { throw new Error("Su usuario ya no está en la lista. Pida ayuda a otro administrador."); }
+      var nueva = adminsCache.slice();
+      nueva[i] = { u: nueva[i].u, p: h };
+      return persistirAdmins(nueva).then(function () {
+        claveSesion = h;
+        msgAdmins("Contraseña de «" + usuarioSesion + "» actualizada.", "ok");
+        toast("Contraseña actualizada", "ok");
+      });
+    }
+    /* contraseña maestra (sin usuario) */
+    if (CONFIG.urlAppsScript) {
+      return enviarServidor({ accion: "guardar_config", usuario: "", clave: claveSesion, clave_master_hash: h })
+        .then(function (resp) {
+          if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo guardar");
+          claveSesion = h;
+          msgAdmins("Contraseña maestra actualizada.", "ok");
+          toast("Contraseña maestra actualizada", "ok");
+        });
+    }
+    try { localStorage.setItem(CLAVE_MASTER, h); } catch (e) {}
+    claveSesion = h;
+    msgAdmins("Contraseña maestra actualizada en este equipo.", "ok");
+    toast("Contraseña maestra actualizada", "ok");
+  })["catch"](function (e) { msgAdmins("No se pudo cambiar: " + (e && e.message ? e.message : e), "err"); });
+}
+
+/* ====================== APARIENCIA (temas de color) ======================= */
+var TEMA_DEFECTO = "azul";
+var TEMAS = [
+  { id: "azul", nombre: "Azul institucional", brand: "#1e3a8a", b2: "#1d4ed8", end: "#0f766e", sect: "#fbfdff", bg: "#f1f5f9" },
+  { id: "verde", nombre: "Verde esmeralda", brand: "#065f46", b2: "#059669", end: "#0d9488", sect: "#f3faf6", bg: "#eef6f2" },
+  { id: "turquesa", nombre: "Turquesa y gris azulado", brand: "#115e59", b2: "#0d9488", end: "#1e3a8a", sect: "#f3fafc", bg: "#eef6f8" },
+  { id: "vino", nombre: "Vino y crema", brand: "#7f1d1d", b2: "#b91c1c", end: "#b45309", sect: "#fdfaf7", bg: "#f7f3f0" }
+];
+function temaActual() {
+  return document.documentElement.getAttribute("data-tema") || TEMA_DEFECTO;
+}
+function aplicarTema(id, guardarLocal) {
+  var t = TEMAS.some(function (x) { return x.id === id; }) ? id : TEMA_DEFECTO;
+  document.documentElement.setAttribute("data-tema", t);
+  if (guardarLocal !== false) { try { localStorage.setItem("matricula2027.tema", t); } catch (e) {} }
+  marcarTemaSel(t);
+  return t;
+}
+function marcarTemaSel(id) {
+  var cards = document.querySelectorAll("#temas-cuentas .tema-card");
+  Array.prototype.forEach.call(cards, function (c) {
+    c.classList.toggle("on", c.getAttribute("data-tema-id") === id);
+  });
+}
+function pintarTemas() {
+  $("temas-cuentas").innerHTML = TEMAS.map(function (t) {
+    return '<button type="button" class="tema-card" data-tema-id="' + t.id + '">' +
+      '<span class="prev" style="background:linear-gradient(135deg,' + t.brand + ' 0%,' + t.b2 + ' 60%,' + t.end + ' 140%)">' +
+      'Encabezado · ' + esc(t.nombre) + '</span>' +
+      '<span class="pie"><span class="banda" style="background:' + t.sect + '"></span>' +
+      '<span class="banda" style="background:' + t.brand + '"></span>Fondos de secciones y acentos</span>' +
+      '</button>';
+  }).join("");
+  marcarTemaSel(temaActual());
+}
+function abrirTema() {
+  if (!adminOK) { mostrarLogin(); return; }
+  pintarTemas();
+  setMsg("tema-msg", "Tema aplicado: «" + (TEMAS.filter(function (t) { return t.id === temaActual(); })[0] || {}).nombre + "».", "");
+  $("tema-back").classList.remove("hidden");
+}
+function ocultarTema() { $("tema-back").classList.add("hidden"); }
+function guardarTemaServidor() {
+  var t = temaActual();
+  if (!CONFIG.urlAppsScript) {
+    setMsg("tema-msg", "Sin sitio de guardado configurado: el tema solo se aplicó en este equipo. Use «Copiar línea para el HTML» para fijarlo en el archivo.", "warn");
+    return;
+  }
+  var b = $("btn-tema-guardar");
+  b.disabled = true; b.textContent = "Guardando…";
+  enviarServidor({ accion: "guardar_config", usuario: usuarioSesion, clave: claveSesion, tema: t })
+    .then(function (resp) {
+      b.disabled = false; b.textContent = "Guardar para todos (servidor)";
+      if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo guardar");
+      setMsg("tema-msg", "Tema «" + t + "» guardado: todos los equipos que abran la boleta verán estos colores.", "ok");
+      toast("Tema guardado en el servidor", "ok");
+    })
+    ["catch"](function (e) {
+      b.disabled = false; b.textContent = "Guardar para todos (servidor)";
+      setMsg("tema-msg", "No se pudo guardar: " + (e && e.message ? e.message : e), "err");
+    });
+}
+
+/* --------------------------- Eventos --------------------------- */
+document.addEventListener("click", function (e) {
+  var tab = e.target.closest ? e.target.closest("[data-tab]") : null;
+  if (tab) { mostrarTab(tab.getAttribute("data-tab")); return; }
+
+  var act = e.target.closest ? e.target.closest("[data-act]") : null;
+  if (act) {
+    var f = act.getAttribute("data-folio"), a = act.getAttribute("data-act");
+    if (a === "editar") editar(f);
+    else if (a === "ver") detalle(f);
+    else if (a === "borrar") borrar(f);
+    return;
+  }
+});
+
+/* Cambio de estado desde la tabla administrativa. */
+document.addEventListener("change", function (e) {
+  var t = e.target;
+  if (t && t.classList && t.classList.contains("estado-sel")) cambiarEstado(t.getAttribute("data-folio"), t.value);
+});
+
+$("form").addEventListener("submit", function (e) { e.preventDefault(); guardar(); });
+$("btn-guardar-nuevo").addEventListener("click", function () { guardar(); });
+$("btn-limpiar").addEventListener("click", function () {
+  if (confirm("¿Limpiar la boleta? Se perderán los datos no guardados.")) { limpiar(); toast("Boleta limpia", "warn"); }
+});
+$("btn-cancelar-edicion").addEventListener("click", function () { limpiar(); toast("Edición cancelada", "warn"); });
+$("btn-imprimir").addEventListener("click", function () { window.print(); });
+$("btn-calc-edad").addEventListener("click", function () {
+  var r = edadAl15022027(val("f-fecha-nac"));
+  if (!r) { toast("Indique una fecha de nacimiento válida y anterior al 15/02/2027", "warn"); return; }
+  setVal("f-edad-a", r.a); setVal("f-edad-m", r.m); setVal("f-edad-d", r.d);
+  toast("Edad calculada: " + r.a + " año(s), " + r.m + " mes(es), " + r.d + " día(s)", "ok");
+});
+$("buscar").addEventListener("input", renderTabla);
+$("filtro-estado").addEventListener("change", renderTabla);
+$("filtro-modalidad").addEventListener("change", renderTabla);
+$("btn-xlsx").addEventListener("click", function () { exportarXlsx(filasVisibles(), "TODOS"); });
+$("btn-csv").addEventListener("click", function () { exportarCSV(filasVisibles(), "MATRICULA_2027_TODOS.csv"); });
+$("btn-json").addEventListener("click", exportarJSON);
+$("btn-json2").addEventListener("click", exportarJSON);
+$("btn-importar").addEventListener("click", function () { $("inp-json").click(); });
+$("inp-json").addEventListener("change", function () {
+  if (this.files && this.files[0]) importarJSON(this.files[0]);
+  this.value = "";
+});
+$("btn-borrar-todo").addEventListener("click", function () {
+  if (!REC.length) { toast("No hay registros locales en este equipo", "warn"); return; }
+  if (!confirm("¿Eliminar TODOS los registros locales (" + REC.length + ")? Los registros del servidor NO se borran.")) return;
+  if (!confirm("Última confirmación: se borrarán definitivamente " + REC.length + " registro(s) locales.")) return;
+  REC = []; guardarLocal(); render(); toast("Registros locales eliminados", "warn");
+});
+
+/* -------- Controles del panel administrativo -------- */
+$("btn-admin").addEventListener("click", abrirAdmin);
+$("btn-refrescar").addEventListener("click", function () {
+  if (!adminOK) { mostrarLogin(); return; }
+  if (!CONFIG.urlAppsScript) { abrirInstalacion(); toast("Configure primero el sitio de guardado", "warn"); return; }
+  descargarServidor().then(function () {
+    render();
+    sincronizarCarpeta();
+    setTxt("admin-estado", "Actualizado · " + SRV.length + " registro(s) en la hoja");
+    toast("Lista actualizada desde el servidor", "ok");
+  }).catch(function (err) { toast("No se pudo actualizar: " + (err && err.message ? err.message : err), "err"); });
+});
+$("btn-salir").addEventListener("click", salirAdmin);
+$("btn-config").addEventListener("click", abrirConfig);
+$("btn-puente").addEventListener("click", abrirPuente);
+$("btn-puente-probar").addEventListener("click", probarPuente);
+$("btn-puente-guardar").addEventListener("click", guardarPuente);
+$("btn-puente-cerrar").addEventListener("click", function () { $("puente-back").classList.add("hidden"); });
+$("puente-token").addEventListener("keydown", function (e) { if (e.key === "Enter") probarPuente(); });
+$("puente-ruta").addEventListener("keydown", function (e) { if (e.key === "Enter") guardarPuente(); });
+$("btn-pub-seleccionar").addEventListener("click", pubSeleccionar);
+$("btn-pub-actualizar").addEventListener("click", function () { pubActualizar(true); });
+$("btn-fs").addEventListener("click", abrirFs);
+$("btn-fs-seleccionar").addEventListener("click", fsSeleccionar);
+$("btn-fs-guardar").addEventListener("click", function () { fsGuardarAhora(true); });
+$("btn-fs-quitar").addEventListener("click", fsQuitar);
+$("btn-fs-cerrar").addEventListener("click", function () { $("fs-back").classList.add("hidden"); });
+$("fs-auto").addEventListener("change", function () {
+  fsAutoSet(this.checked);
+  if (this.checked) sincronizarCarpeta();
+});
+$("btn-inst").addEventListener("click", abrirInstalacion);
+$("btn-inst-probar").addEventListener("click", probarYGuardar);
+$("btn-inst-cerrar").addEventListener("click", function () { $("inst-back").classList.add("hidden"); });
+$("inst-url").addEventListener("keydown", function (e) { if (e.key === "Enter") probarYGuardar(); });
+$("btn-inst-copiar").addEventListener("click", function () {
+  var c = $("codigo-gs") ? $("codigo-gs").textContent : "";
+  copiarTexto(c).then(function (ok) {
+    toast(ok ? "Código .gs copiado: péguelo en Apps Script" : "No se pudo copiar. Use «Descargar código .gs».", ok ? "ok" : "err");
+  });
+});
+$("btn-inst-descargar").addEventListener("click", function () {
+  var c = $("codigo-gs") ? $("codigo-gs").textContent : "";
+  descargar("Codigo Apps Script - Registro Matricula 2027.gs", c, "text/plain;charset=utf-8");
+  toast("Código .gs descargado", "ok");
+});
+$("btn-inst-copiar-linea").addEventListener("click", function () {
+  copiarTexto('urlAppsScript: "' + CONFIG.urlAppsScript + '",').then(function (ok) {
+    toast(ok ? "Línea copiada: péguela en el HTML (CONFIG.urlAppsScript)" : "No se pudo copiar", ok ? "ok" : "err");
+  });
+});
+$("btn-cfg-guardar").addEventListener("click", guardarConfig);
+$("btn-cfg-cancel").addEventListener("click", function () { $("cfg-back").classList.add("hidden"); });
+$("btn-det-cerrar").addEventListener("click", ocultarDetalle);
+$("btn-det-imprimir").addEventListener("click", function () {
+  document.body.classList.add("solo-overlay");
+  window.print();
+  setTimeout(function () { document.body.classList.remove("solo-overlay"); }, 800);
+});
+$("btn-login").addEventListener("click", function () { entrarAdmin(val("login-clave")); });
+$("btn-login-cancel").addEventListener("click", function () { ocultarLogin(); });
+$("login-clave").addEventListener("keydown", function (e) { if (e.key === "Enter") entrarAdmin(val("login-clave")); });
+$("login-usuario").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") { if (val("login-clave")) entrarAdmin(val("login-clave")); else $("login-clave").focus(); }
+});
+
+/* -------- Administradores y apariencia -------- */
+$("btn-admins").addEventListener("click", abrirAdmins);
+$("btn-admins-cerrar").addEventListener("click", ocultarAdmins);
+$("btn-admin-agregar").addEventListener("click", agregarAdmin);
+$("btn-admin-mia").addEventListener("click", cambiarMiClave);
+$("btn-tema").addEventListener("click", abrirTema);
+$("btn-tema-cerrar").addEventListener("click", ocultarTema);
+$("btn-tema-guardar").addEventListener("click", guardarTemaServidor);
+$("btn-tema-linea").addEventListener("click", function () {
+  copiarTexto('TEMA_DEFECTO = "' + temaActual() + '";').then(function (ok) {
+    toast(ok ? "Línea copiada: péguela en el HTML (TEMA_DEFECTO)" : "No se pudo copiar", ok ? "ok" : "err");
+  });
+});
+document.addEventListener("click", function (e) {
+  if (!e.target.closest) return;
+  var q = e.target.closest("[data-admin-quitar]");
+  if (q) { quitarAdmin(q.getAttribute("data-admin-quitar")); return; }
+  var card = e.target.closest("[data-tema-id]");
+  if (card) { aplicarTema(card.getAttribute("data-tema-id")); setMsg("tema-msg", "Tema aplicado: «" + card.getAttribute("data-tema-id") + "».", ""); }
+});
+
+/* -------- Acuse de envío -------- */
+$("btn-imprimir-acuse").addEventListener("click", function () { window.print(); });
+$("btn-nueva").addEventListener("click", function () { limpiar(); mostrarTab("form"); });
+$("img-encabezado").addEventListener("error", function () {
+  this.style.display = "none";
+  $("cintillo-alt").style.display = "block";
+});
+
+/* --------------------------- Arranque --------------------------- */
+/* URL de guardado guardada previamente en este navegador. */
+var _urlGuardada = leerUrlGuardada();
+if (_urlGuardada) CONFIG.urlAppsScript = _urlGuardada;
+
+/* Tema de colores: primero el guardado en este equipo; si no hay, el del
+   servidor (que ven todos); y si no, TEMA_DEFECTO. */
+var _temaLocal = "";
+try { _temaLocal = localStorage.getItem("matricula2027.tema") || ""; } catch (e) {}
+document.documentElement.setAttribute("data-tema", _temaLocal || TEMA_DEFECTO);
+if (CONFIG.urlAppsScript && !_temaLocal) {
+  jsonp({ action: "tema" })
+    .then(function (r) { if (r && r.ok && r.tema) aplicarTema(r.tema, false); })
+    ["catch"](function () {});
+}
+
+pintarPersonas();
+cargarLocal();
+limpiar();
+render();
+if (location.hash === "#admin") setTimeout(mostrarLogin, 120);
+</script>
+</body>
+</html>
