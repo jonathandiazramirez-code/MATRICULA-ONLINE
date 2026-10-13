@@ -78,6 +78,7 @@
   input.bad,select.bad{border-color:var(--danger);background:var(--danger-50)}
   .radios{display:flex;gap:14px;flex-wrap:wrap;padding-top:6px}
   .radios label{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;cursor:pointer}
+  .radios.bad-radios{border:1px solid var(--danger);background:var(--danger-50);border-radius:9px;padding:8px 10px 10px}
   .row-inline{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
   .small{font-size:12px;color:var(--muted)}
 
@@ -236,6 +237,7 @@
     fieldset{background:#fff;border:1px solid #000}
     .wrap{max-width:100%}
     input,select,textarea{border:none!important;box-shadow:none!important;padding:4px 2px}
+    #f-consent-retiro{width:100%!important;min-height:70px!important;resize:vertical!important;word-wrap:break-word!important;white-space:normal!important;overflow:visible!important;line-height:1.35!important;font-size:12px!important;padding:5px 7px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;box-sizing:border-box!important}
     /* Impresión del detalle: solo la ventana superpuesta */
     body.solo-overlay .wrap,body.solo-overlay .toast-box{display:none!important}
     body.solo-overlay .overlay{position:static;inset:auto;background:none;backdrop-filter:none;padding:0;display:block}
@@ -426,6 +428,56 @@
         <p class="small" style="margin-top:8px">Al enviar la boleta, el sistema avisa por correo a los destinatarios
           asignados por el administrador de la escuela y, si marca la casilla, le envía a usted el acuse con el número de folio.</p>
         <input type="text" id="f-empresa" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      </fieldset>
+
+      <fieldset>
+        <legend>5 · Consentimiento informado</legend>
+        <p class="small" style="margin:0 0 12px">
+          De conformidad con el documento <b>«Consentimiento Informado»</b> de la Escuela Barrio Los Ángeles,
+          complete las siguientes autorizaciones. Son <b>obligatorias</b> para registrar la matrícula del menor
+          a su cargo.
+        </p>
+
+        <div style="margin-bottom:14px">
+          <label class="f">Autorización de uso de fotografía, voz e imagen del estudiante <span class="req">*</span></label>
+          <p class="small" style="margin:0 0 6px">
+            Autoriza a la Escuela a hacer uso y exposición de fotografía, imagen, video o voz del estudiante en las
+            actividades curriculares y extracurriculares, y su publicación en la página web y redes sociales
+            (Facebook, Instagram, YouTube) del Ministerio de Educación Pública y de la institución, sin fines de lucro.
+          </p>
+          <div class="radios" id="consent-imagen-box">
+            <label><input type="radio" name="consent_imagen" value="Sí autorizo"> Sí autorizo</label>
+            <label><input type="radio" name="consent_imagen" value="No autorizo"> No autorizo</label>
+          </div>
+        </div>
+
+        <div>
+          <label class="f">Boleta de responsabilidad · traslado en horarios de entrada y salida <span class="req">*</span></label>
+          <p class="small" style="margin:0 0 6px">
+            Indique cómo se trasladará el o la estudiante de la institución al hogar y viceversa. Asumo la
+            responsabilidad que la decisión pueda generar al menor ante cualquier incidente o situación de riesgo.
+          </p>
+          <div class="radios" id="consent-traslado-box">
+            <label><input type="radio" name="consent_traslado" value="Sin compañía"> Se traslada sin compañía de ningún adulto</label>
+            <label><input type="radio" name="consent_traslado" value="En buseta"> Se traslada en buseta</label>
+            <label><input type="radio" name="consent_traslado" value="No se traslada solo"> NO se traslada solo (lo retira una persona autorizada)</label>
+          </div>
+          <div class="grid g2" style="margin-top:10px">
+            <div>
+              <label class="f">Nombre de la buseta (si se traslada en buseta)</label>
+              <input type="text" id="f-consent-buseta" placeholder="Buseta de…">
+            </div>
+            <div>
+              <label class="f">Personas autorizadas para retirar (nombre, cédula, teléfono, parentesco)</label>
+              <textarea id="f-consent-retiro" rows="3" wrap="soft" placeholder="Si no se traslada solo"></textarea>
+            </div>
+          </div>
+          <p class="small" style="margin-top:6px">
+            Si se presenta alguien no anotado ni autorizado, no se le entregará el menor. Ante una circunstancia de
+            fuerza mayor en la que otra persona deba retirarlo, escriba a
+            <b>esc.barriolosangeles.sancarlos@mep.go.cr</b> autorizando a la persona que lo retira.
+          </p>
+        </div>
       </fieldset>
 
       <div class="credito">Aplicación y registro elaborados por el <b>Ing. Jonathan Díaz Ramírez</b></div>
@@ -926,6 +978,8 @@ const COLUMNAS = [
   'Encargado (a) - Nacionalidad', 'Encargado (a) - Dirección residencia',
   'Firma funcionario/a de matrícula', 'Firma del padre, madre o encargado legal', 'Observaciones',
   'Autorización de datos',
+  'Consentimiento · uso de imagen/foto/voz', 'Consentimiento · traslado',
+  'Consentimiento · buseta', 'Consentimiento · personas autorizadas a retirar',
   'Correo electrónico', 'Enviar acuse', 'Fecha de envío', 'Origen',
   'ID envío'
 ];
@@ -939,6 +993,7 @@ const CLAVES = [
   'enc_ap1', 'enc_ap2', 'enc_nombre', 'enc_cedula', 'enc_tel', 'enc_ocup', 'enc_nac', 'enc_dir',
   'firma_func', 'firma_enc', 'obs',
   'autorizacion',
+  'consent_imagen', 'consent_traslado', 'consent_buseta', 'consent_retiro',
   'correo', 'acuse', 'fecha_envio', 'origen',
   'intento_id'
 ];
@@ -1522,6 +1577,62 @@ function permisoDe(h, conceder) {
     return h.requestPermission({ mode: "readwrite" });   /* gesto del usuario */
   });
 }
+/* ---- Firmas como archivos de imagen en la carpeta del Excel ----
+   Cada registro con firma genera, junto al .xlsx, un archivo nombrado con el
+   folio de la boleta:
+     <folio>_encargado.png  (firma del padre, madre o encargado legal)
+     <folio>_funcionario.png (firma del funcionario/a de matrícula)
+   Solo se guardan las firmas que son imagen ("[img]data:…"); las escritas a
+   mano como texto ("[firma]Nombre") no producen archivo. */
+function firmaImagenDataUrl(valor) {
+  var v = String(valor || "");
+  if (v.indexOf("[img]") === 0) return v.slice(5);
+  return "";
+}
+function dataUrlABytes(dataUrl) {
+  /* Convierte "data:image/png;base64,….…" en un Uint8Array listo para
+     escribir en un archivo con la File System Access API. */
+  var coma = dataUrl.indexOf(",");
+  if (coma < 0) return null;
+  var meta = dataUrl.slice(0, coma);
+  if (meta.indexOf("base64") < 0) return null;
+  var b64 = dataUrl.slice(coma + 1);
+  try {
+    var bin = atob(b64);
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return arr;
+  } catch (e) { return null; }
+}
+function escribirFirmas(h, regs) {
+  /* Escribe los archivos de firma en la carpeta. Devuelve cuántos se crearon.
+     Un fallo al escribir una firma nunca aborta el guardado del Excel. */
+  var pendientes = [];
+  regs.forEach(function (r) {
+    var folio = String(r.folio || "").trim();
+    if (!folio) return;
+    var seguro = folio.replace(/[^\w.\-]+/g, "_");   /* nombre de archivo válido */
+    var pares = [
+      { campo: r.firma_enc, sufijo: "_encargado" },
+      { campo: r.firma_func_img, sufijo: "_funcionario" }
+    ];
+    pares.forEach(function (p) {
+      var url = firmaImagenDataUrl(p.campo);
+      if (!url) return;
+      var bytes = dataUrlABytes(url);
+      if (!bytes) return;
+      var nombre = seguro + p.sufijo + ".png";
+      pendientes.push(
+        h.getFileHandle(nombre, { create: true })
+          .then(function (fh) { return fh.createWritable(); })
+          .then(function (w) { return w.write(bytes).then(function () { return w.close(); }); })
+          ["catch"](function (e) { /* ignora: el Excel ya quedó guardado */ })
+      );
+    });
+  });
+  return Promise.all(pendientes).then(function () { return pendientes.length; })
+    ["catch"](function () { return 0; });
+}
 /* Escribe TODOS los registros (local + servidor) en la carpeta elegida. */
 function escribirCarpeta(conceder) {
   return fsRestaurar().then(function (h) {
@@ -1535,9 +1646,11 @@ function escribirCarpeta(conceder) {
         return h.getFileHandle(FS_ARCHIVO, { create: true })
           .then(function (fh) { return fh.createWritable(); })
           .then(function (w) {
-            return w.write(bytes).then(function () { return w.close(); }).then(function () {
-              return { ok: true, total: regs.length, carpeta: h.name };
-            });
+            return w.write(bytes).then(function () { return w.close(); });
+          })
+          .then(function () { return escribirFirmas(h, regs); })
+          .then(function (nFirmas) {
+            return { ok: true, total: regs.length, carpeta: h.name, firmas: nFirmas };
           });
       });
     });
@@ -1551,8 +1664,9 @@ function fsGuardarAhora(manual) {
   return escribirCarpeta(!!manual).then(function (r) {
     if (r.ok) {
       fsAvisoPermiso = false;
-      fsEstado("Archivo actualizado: " + FS_ARCHIVO + " · " + r.total + " registro(s) · carpeta «" + r.carpeta + "»", "ok");
-      if (manual) toast("Excel guardado en la carpeta: " + r.total + " registro(s)", "ok");
+      var extraFirmas = r.firmas ? " · " + r.firmas + " imagen(es) de firma" : "";
+      fsEstado("Archivo actualizado: " + FS_ARCHIVO + " · " + r.total + " registro(s)" + extraFirmas + " · carpeta «" + r.carpeta + "»", "ok");
+      if (manual) toast("Excel guardado en la carpeta: " + r.total + " registro(s)" + (r.firmas ? " y " + r.firmas + " imagen(es) de firma" : ""), "ok");
     } else if (r.sinCarpeta) {
       fsEstado("Sin carpeta seleccionada: pulse «Seleccionar carpeta…»", "err");
       if (manual) toast("Primero seleccione la carpeta de destino", "warn");
@@ -1685,33 +1799,80 @@ var FIRMAS = [
   { lienzo: "firma-canvas2", img: "firma-img2", txt: "firma-texto2", limpiar: "btn-firma-limpiar2", archivo: "firma-archivo2" }
 ];
 
+function firmaCtxEscalado(c) {
+  /* Contexto con una transformación que hace que las coordenadas que le
+     pasemos (en píxeles CSS, iguales a getBoundingClientRect) se dibujen
+     exactamente sobre el recuadro visible, sin importar el devicePixelRatio
+     del móvil. Es la clave para que la firma "se adapte" al tamaño de la caja. */
+  var g = c.getContext("2d");
+  var r = c.getBoundingClientRect();
+  var ancho = r.width || c.clientWidth || 440;
+  var alto = r.height || c.clientHeight || 140;
+  g.setTransform(c.width / ancho, 0, 0, c.height / alto, 0, 0);
+  return g;
+}
+function firmaLienzoTieneTrazo(c) {
+  /* Detecta trazo OSCURO real (el del usuario es #0f172a); ignora el texto
+     guía gris del placeholder para no guardarlo como firma por accidente. */
+  if (!c) return false;
+  try {
+    var g = c.getContext("2d");
+    var d = g.getImageData(0, 0, c.width, c.height).data;
+    for (var k = 0; k < d.length; k += 16) {
+      if (d[k + 3] > 40 && d[k] < 90 && d[k + 1] < 90) return true;
+    }
+  } catch (e) { return false; }
+  return false;
+}
 function firmaPintarPlaceholder(s) {
   var c = $(s.lienzo);
   if (!c) return;
   var g = c.getContext("2d");
+  g.setTransform(1, 0, 0, 1, 0, 0);
   g.clearRect(0, 0, c.width, c.height);
+  var r = c.getBoundingClientRect();
+  var ancho = r.width || c.clientWidth || 440;
+  var alto = r.height || c.clientHeight || 140;
+  g.setTransform(c.width / ancho, 0, 0, c.height / alto, 0, 0);
   g.fillStyle = "#94a3b8";
   g.font = "15px sans-serif";
   g.textAlign = "center";
-  g.fillText("Firme aquí con el mouse o el dedo", c.width / 2, c.height / 2 + 5);
+  g.textBaseline = "middle";
+  g.fillText("Firme aquí con el mouse o el dedo", ancho / 2, alto / 2);
 }
 function firmaAjustarLienzo(s) {
   var c = $(s.lienzo);
   if (!c) return;
-  var datos = null;
-  try { datos = c.toDataURL("image/png"); } catch (e) { }
   var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
-  var anchoCss = c.clientWidth || 440;
-  c.width = Math.round(anchoCss * dpr);
-  c.height = Math.round(140 * dpr);
+  var r = c.getBoundingClientRect();
+  var anchoCss = Math.max(160, Math.round(r.width || c.clientWidth || 440));
+  var altoCss = Math.max(100, Math.round(r.height || c.clientHeight || 140));
+  var wObj = Math.round(anchoCss * dpr);
+  var hObj = Math.round(altoCss * dpr);
+  /* Si el tamaño ya coincide con la caja VISIBLE actual, no hacemos nada:
+     así el trazo no se borra en cada pointerdown ni en cada resize. Esto es
+     la clave para que la firma "se adapte" al recuadro en el móvil. */
+  if (c.width === wObj && c.height === hObj) return;
+  var tenia = firmaLienzoTieneTrazo(c);
+  var datos = null;
+  if (tenia) { try { datos = c.toDataURL("image/png"); } catch (e) { } }
+  c.width = wObj;
+  c.height = hObj;
   var g = c.getContext("2d");
-  g.scale(dpr, dpr);
+  g.setTransform(1, 0, 0, 1, 0, 0);
   g.lineCap = "round";
   g.lineJoin = "round";
   g.lineWidth = 2;
   g.strokeStyle = "#0f172a";
-  if (datos) { var i = new Image(); i.onload = function () { g.drawImage(i, 0, 0, anchoCss, 140); }; i.src = datos; }
-  else firmaPintarPlaceholder(s);
+  if (datos) {
+    var i = new Image();
+    i.onload = function () {
+      var g2 = c.getContext("2d");
+      g2.setTransform(1, 0, 0, 1, 0, 0);
+      g2.drawImage(i, 0, 0, wObj, hObj);
+    };
+    i.src = datos;
+  } else firmaPintarPlaceholder(s);
 }
 function firmaInicializar() {
   FIRMAS.forEach(function (s) {
@@ -1719,16 +1880,41 @@ function firmaInicializar() {
     if (!c) return;
     firmaAjustarLienzo(s);
     var dibujando = false, vistazo = false;
+    /* Conversión de la posición del puntero/dedo a píxeles REALES del lienzo
+       (backing store) usando el rectángulo visible actual. Se dibuja con
+       transformación IDENTIDAD, por lo que la firma encaja EXACTO dentro del
+       recuadro en cualquier pantalla —PC, tablet o celular— sin importar el
+       devicePixelRatio ni si el lienzo se midió estando oculto. El grosor se
+       calcula respecto al DPR para que el trazo se vea uniforme (ni gigante
+       ni invisible) en el móvil. */
     function pos(e) {
       var r = c.getBoundingClientRect();
-      return { x: (e.clientX - r.left) * (c.width / r.width), y: (e.clientY - r.top) * (c.height / r.height) };
+      return {
+        x: (e.clientX - r.left) * (c.width / (r.width || 1)),
+        y: (e.clientY - r.top) * (c.height / (r.height || 1))
+      };
+    }
+    function trazo() {
+      var g = c.getContext("2d");
+      var r = c.getBoundingClientRect();
+      var k = c.width / (r.width || 1);          /* ≈ devicePixelRatio real del lienzo */
+      g.setTransform(1, 0, 0, 1, 0, 0);
+      g.lineCap = "round"; g.lineJoin = "round";
+      g.lineWidth = Math.max(1.5, 2 * k);         /* grosor constante en pantalla */
+      g.strokeStyle = "#0f172a";
+      return g;
     }
     c.addEventListener("pointerdown", function (e) {
       e.preventDefault();
       try { c.setPointerCapture(e.pointerId); } catch (err) { }
       dibujando = true;
-      if (!vistazo) { c.getContext("2d").clearRect(0, 0, c.width, c.height); vistazo = true; }
-      var p = pos(e), g = c.getContext("2d");
+      if (!vistazo) {
+        var gi = c.getContext("2d");
+        gi.setTransform(1, 0, 0, 1, 0, 0);
+        gi.clearRect(0, 0, c.width, c.height);
+        vistazo = true;
+      }
+      var p = pos(e), g = trazo();
       g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(p.x + 0.1, p.y + 0.1); g.stroke();
       if ($(s.img)) $(s.img).classList.add("hidden");
       if ($(s.txt)) $(s.txt).value = "";
@@ -1736,7 +1922,7 @@ function firmaInicializar() {
     c.addEventListener("pointermove", function (e) {
       if (!dibujando) return;
       e.preventDefault();
-      var p = pos(e), g = c.getContext("2d");
+      var p = pos(e), g = trazo();
       g.lineTo(p.x, p.y); g.stroke();
     });
     ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) {
@@ -1798,7 +1984,10 @@ function firmaValor(i) {
   if (vista && vista.src && !vista.classList.contains("hidden")) return "[img]" + vista.src;
   var c = $(s.lienzo);
   if (c && c.width && firmaTieneTrazo(i)) {
-    try { return "[firma]" + c.toDataURL("image/png"); } catch (e) { }
+    /* Una firma DIBUJADA también es una imagen: se guarda como "[img]…" para
+       que se muestre como imagen (no como texto base64) y se pueda guardar como
+       archivo en la carpeta del Excel, igual que una imagen subida. */
+    try { return "[img]" + c.toDataURL("image/png"); } catch (e) { }
   }
   return "";
 }
@@ -1873,6 +2062,13 @@ function marcar(id, malo) {
   if (!e) return;
   if (malo) e.classList.add("bad"); else e.classList.remove("bad");
 }
+/* Resalta el contenedor de un grupo de radios cuando falta elegir una opción
+   (los radios en sí no aceptan el borde .bad de los campos de texto). */
+function marcarRadio(idBox, malo) {
+  var e = $(idBox);
+  if (!e) return;
+  if (malo) e.classList.add("bad-radios"); else e.classList.remove("bad-radios");
+}
 function cedulaOk(v) {
   if (!v) return true;
   var d = v.replace(/[^\d]/g, "");
@@ -1919,6 +2115,23 @@ function validar() {
   if (!$("f-autorizacion").checked) { $("f-autorizacion").classList.add("bad"); fallos.push("f-autorizacion"); }
   else $("f-autorizacion").classList.remove("bad");
 
+  /* Consentimiento informado (obligatorio):
+     - Autorización de uso de imagen/foto/voz: debe marcarse Sí o No.
+     - Traslado: debe elegirse una opción; si es "En buseta" se pide el nombre
+       de la buseta; si es "No se traslada solo" se piden las personas autorizadas. */
+  var ci = (document.querySelector('input[name="consent_imagen"]:checked') || {}).value || "";
+  marcarRadio("consent-imagen-box", !ci);
+  if (!ci) fallos.push("consent_imagen");
+  var ct = (document.querySelector('input[name="consent_traslado"]:checked') || {}).value || "";
+  marcarRadio("consent-traslado-box", !ct);
+  if (!ct) fallos.push("consent_traslado");
+  var busMalo = ct === "En buseta" && !val("f-consent-buseta");
+  marcar("f-consent-buseta", busMalo);
+  if (busMalo) fallos.push("f-consent-buseta");
+  var retMalo = ct === "No se traslada solo" && !val("f-consent-retiro");
+  marcar("f-consent-retiro", retMalo);
+  if (retMalo) fallos.push("f-consent-retiro");
+
   /* Anti-automatización: campo trampa y tiempo mínimo de llenado. */
   if (val("f-empresa")) return ["f-empresa"];
   if (Date.now() - t0 < CONFIG.minSegundos * 1000) {
@@ -1944,6 +2157,14 @@ function recolectar() {
     vacunas: (document.querySelector('input[name="vacunas"]:checked') || {}).value || "",
     firma_func: ($("f-firma-func").checked || !!firmaValor(1)) ? "Sí" : "No",
     firma_enc: firmaValor(0),
+    /* Imagen real de la firma del funcionario (solo en este equipo). Se guarda
+       aparte para NO llenar la columna firma_func del Excel/servidor con base64.
+       firmaValor(1) devuelve "[img]data:…" (subida o dibujada) o "[firma]texto". */
+    firma_func_img: firmaValor(1),
+    consent_imagen: (document.querySelector('input[name="consent_imagen"]:checked') || {}).value || "",
+    consent_traslado: (document.querySelector('input[name="consent_traslado"]:checked') || {}).value || "",
+    consent_buseta: val("f-consent-buseta"),
+    consent_retiro: val("f-consent-retiro"),
     obs: val("f-obs"),
     correo: val("f-correo"),
     acuse: $("f-acuse").checked ? "Sí" : "No",
@@ -1977,11 +2198,25 @@ function cargar(r) {
   var ff = String(r.firma_func || "");
   $("f-firma-func").checked = (ff !== "" && ff !== "No");
   firmaCargar(0, r.firma_enc);
-  firmaCargar(1, (ff.indexOf("[firma]") === 0) ? ff : "");
+  /* Imagen de la firma del funcionario: primero la guardada aparte
+     (firma_func_img); si no está, se admite el valor antiguo incrustado en
+     firma_func ("[firma]…" o "[img]…") de boletas de versiones previas. */
+  var ffImg = String(r.firma_func_img || "");
+  if (!ffImg && (ff.indexOf("[firma]") === 0 || ff.indexOf("[img]") === 0)) ffImg = ff;
+  firmaCargar(1, ffImg);
   setVal("f-obs", r.obs);
   setVal("f-correo", r.correo || ""); setVal("f-correo2", r.correo || "");
   $("f-acuse").checked = (r.acuse || "Sí") === "Sí";
   $("f-autorizacion").checked = (r.autorizacion || "Sí") === "Sí";
+  /* Consentimiento informado: radios + campos condicionales. */
+  var ci = document.querySelector('input[name="consent_imagen"][value="' + esc(String(r.consent_imagen || "")) + '"]');
+  if (ci) ci.checked = true;
+  var ct = document.querySelector('input[name="consent_traslado"][value="' + esc(String(r.consent_traslado || "")) + '"]');
+  if (ct) ct.checked = true;
+  setVal("f-consent-buseta", r.consent_buseta || "");
+  setVal("f-consent-retiro", r.consent_retiro || "");
+  marcarRadio("consent-imagen-box", false);
+  marcarRadio("consent-traslado-box", false);
 }
 function limpiar() {
   $("form").reset();
@@ -1992,6 +2227,10 @@ function limpiar() {
   $("f-acuse").checked = true;
   ["f-ap1", "f-ap2", "f-nombre", "f-cedula", "f-correo", "f-correo2"].forEach(function (id) { marcar(id, false); });
   $("f-autorizacion").classList.remove("bad");
+  marcarRadio("consent-imagen-box", false);
+  marcarRadio("consent-traslado-box", false);
+  marcar("f-consent-buseta", false);
+  marcar("f-consent-retiro", false);
   firmaLimpiarTodo();
   editando = null;
   t0 = Date.now();
@@ -2150,7 +2389,7 @@ function renderTabla() {
       '<td class="mono">' + esc(r.cedula || "—") + '</td>' +
       '<td>' + esc(rep.nombre) +
       '<div data-firma-enc="1" data-valor="' + esc(r.firma_enc || "") + '"></div>' +
-      '<div data-firma-func="1" data-valor="' + esc(r.firma_func || "") + '"></div></td>' +
+      '<div data-firma-func="1" data-valor="' + esc(r.firma_func_img || r.firma_func || "") + '"></div></td>' +
       '<td>' + esc(r.correo || "—") + '</td>' +
       '<td>' + badgeOrigen(r.origen) + '</td>' +
       '<td class="mono">' + esc(r.fecha_registro || "—") + '</td>' +
@@ -2453,6 +2692,10 @@ function csvCols() {
   c.push({ k: "firma_enc", l: "Firma del padre, madre o encargado legal", w: 18 });
   c.push({ k: "obs", l: "Observaciones", w: 34 });
   c.push({ k: "autorizacion", l: "Autorización de datos", w: 15 });
+  c.push({ k: "consent_imagen", l: "Consentimiento · uso de imagen/foto/voz", w: 20 });
+  c.push({ k: "consent_traslado", l: "Consentimiento · traslado", w: 20 });
+  c.push({ k: "consent_buseta", l: "Consentimiento · buseta", w: 18 });
+  c.push({ k: "consent_retiro", l: "Consentimiento · personas autorizadas a retirar", w: 30 });
   c.push({ k: "correo", l: "Correo electrónico", w: 26 });
   c.push({ k: "acuse", l: "Enviar acuse", w: 12 });
   c.push({ k: "fecha_envio", l: "Fecha de envío", t: "fecha", w: 16 });
@@ -2817,6 +3060,13 @@ function mostrarTab(nombre) {
   var tbF = $("tab-form"), tbH = $("tab-help");
   if (tbF) tbF.classList.toggle("on", nombre === "form" || nombre === "ok");
   if (nombre === "list") render();
+  /* Al mostrar el formulario (o la boleta) el lienzo de firma ya está visible:
+     se reajusta al ancho REAL de la caja. Clave en el celular, donde al cargar
+     la página el formulario está oculto y el lienzo se medía con un ancho de
+     respaldo; así la firma encaja de nuevo en el recuadro. */
+  if (nombre === "form" || nombre === "ok") {
+    try { FIRMAS.forEach(firmaAjustarLienzo); } catch (e) { }
+  }
 }
 
 /* ======================================================================
@@ -3021,7 +3271,7 @@ function detalle(folio) {
     (r.fecha_envio ? ' &nbsp; <span class="f">Enviado:</span> ' + esc(r.fecha_envio) : '') + '</p>';
   $("det-cuerpo").innerHTML = html;
   firmaPintarVista($("det-firma-enc"), r.firma_enc);
-  firmaPintarVista($("det-firma-func"), r.firma_func);
+  firmaPintarVista($("det-firma-func"), r.firma_func_img || r.firma_func);
   $("det-back").classList.remove("hidden");
 }
 function ocultarDetalle() { $("det-back").classList.add("hidden"); }
@@ -3741,6 +3991,6 @@ cargarLocal();
 limpiar();
 render();
 if (location.hash === "#admin") setTimeout(mostrarLogin, 120);
+</script
+<script>/* Ajuste automático de altura para el textarea de personas autorizadas */ (function(){ var ta=document.getElementById("f-consent-retiro"); if(!ta)return; function ajustar(){ ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,300)+"px"; } ta.addEventListener("input",ajustar); ajustar(); window.addEventListener("beforeprint",ajustar); window.addEventListener("afterprint",ajustar); })();
 </script>
-</body>
-</html>
