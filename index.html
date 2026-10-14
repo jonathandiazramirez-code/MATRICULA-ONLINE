@@ -229,22 +229,44 @@
     header.app h1{font-size:18px}
   }
 
-  @media print{
-    body{background:#fff;padding:0}
-    nav.tabs,.actions,.toolbar,.stats,.toast-box,header.app .meta,footer.app .no-print,.credito.no-print,button{display:none!important}
-    header.app{background:#fff;color:#000;box-shadow:none;border:1px solid #000}
-    .panel{border:1px solid #000;box-shadow:none;break-inside:avoid}
-    fieldset{background:#fff;border:1px solid #000}
+  @page{margin:10mm 8mm}
+@media print{
+    body{background:#fff;padding:0;font-size:11px;line-height:1.3}
+    .no-print,nav.tabs,.actions,.toolbar,.stats,.toast-box,header.app .meta,footer.app .no-print,.credito.no-print,button,input[type=hidden]{display:none!important}
+    header.app{background:#fff!important;color:#000!important;box-shadow:none!important;border:1px solid #333;padding:6px 8px!important;margin-bottom:4px!important;border-radius:0}
+    .cintillo{background:none;border:none;padding:0;margin-bottom:4px;text-align:center}
+    .cintillo img{max-width:220px;max-height:50px;width:auto;height:auto;display:inline-block}
+    .cintillo .cintillo-alt{display:none!important}
+    header.app h1{font-size:13px;font-weight:700;color:#000;margin:2px 0 0;letter-spacing:0}
+    header.app .sub{font-size:9px;color:#333;margin-top:1px}
+    .panel{border:none;box-shadow:none;padding:4px 2px!important;margin-bottom:4px!important;border-radius:0;background:#fff}
+    .panel h2{font-size:12px;margin-bottom:1px}
+    .panel .hint{font-size:9px;margin-bottom:4px}
+    fieldset{background:#fff;border:1px solid #333;padding:5px 6px 6px!important;margin-bottom:5px!important;border-radius:4px;break-inside:avoid;page-break-inside:avoid}
+    legend{font-size:9.5px;font-weight:700;padding:0 3px}
+    .grid{gap:3px}
+    .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    label.f{font-size:8.5px;margin-bottom:1px;letter-spacing:.2px;color:#333}
+    input[type=text],input[type=date],input[type=number],select,textarea{border:1px solid #aaa!important;box-shadow:none!important;padding:2px 3px;font-size:10px;background:#fff;border-radius:3px;font-family:inherit;color:#000}
+    input:focus,select:focus,textarea:focus{box-shadow:none!important;border-color:#666!important}
+    .radios{gap:6px;padding-top:2px}
+    .radios label{font-size:10px;gap:4px}
+    .small{font-size:9px}
+    p{font-size:10px;line-height:1.3;margin-bottom:3px}
     .wrap{max-width:100%}
-    input,select,textarea{border:none!important;box-shadow:none!important;padding:4px 2px}
-    #f-consent-retiro{width:100%!important;min-height:70px!important;resize:vertical!important;word-wrap:break-word!important;white-space:normal!important;overflow:visible!important;line-height:1.35!important;font-size:12px!important;padding:5px 7px!important;border:1px solid #94a3b8!important;border-radius:6px!important;background:#fff!important;box-sizing:border-box!important}
-    /* Impresión del detalle: solo la ventana superpuesta */
+    .credito{font-size:9px;margin-top:4px;color:#555}
+    canvas{max-width:180px!important;max-height:50px!important}
+    .vista-firma{max-height:40px;max-width:150px;padding:1px}
+    .folio-caja{font-size:14px;padding:4px 8px;margin:4px 0}
+    #f-consent-retiro{width:100%!important;min-height:50px!important;resize:none!important;word-wrap:break-word!important;white-space:normal!important;overflow:visible!important;line-height:1.3!important;font-size:10px!important;padding:3px 4px!important;border:1px solid #aaa!important;border-radius:3px!important;background:#fff!important;box-sizing:border-box!important}
     body.solo-overlay .wrap,body.solo-overlay .toast-box{display:none!important}
     body.solo-overlay .overlay{position:static;inset:auto;background:none;backdrop-filter:none;padding:0;display:block}
-    body.solo-overlay .overlay-box{max-width:100%;box-shadow:none;max-height:none;overflow:visible}
+    body.solo-overlay .overlay-box{max-width:100%;box-shadow:none;max-height:none;overflow:visible;padding:0}
     body.solo-overlay .overlay .actions,body.solo-overlay .credito{display:none!important}
-    body.solo-overlay .det-grid div{font-size:12px}
-  }
+    body.solo-overlay .det-grid div{font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -335,12 +357,20 @@
               <option value="">— Seleccione —</option>
               <option value="Materno">Materno</option>
               <option value="Transición">Transición</option>
-              <option value="Otro (indicar grado)">Otro (indicar grado)</option>
+              <option value="Primaria">Primaria</option>
             </select>
           </div>
           <div>
             <label class="f">Grado</label>
-            <input type="text" id="f-grado" placeholder="Ej. 1°, 2°, Materno…">
+            <select id="f-grado">
+              <option value="">- Seleccione -</option>
+              <option value="Primero">Primero</option>
+              <option value="Segundo">Segundo</option>
+              <option value="Tercero">Tercero</option>
+              <option value="Cuarto">Cuarto</option>
+              <option value="Quinto">Quinto</option>
+              <option value="Sexto">Sexto</option>
+            </select>
           </div>
           <div>
             <label class="f">Sección / Aula</label>
@@ -483,6 +513,7 @@
       <div class="credito">Aplicación y registro elaborados por el <b>Ing. Jonathan Díaz Ramírez</b></div>
 
       <div class="actions" style="margin-top:14px">
+        <button type="button" class="btn primary" id="btn-guardar-registro">Guardar registro</button>
         <button type="submit" class="btn primary" id="btn-guardar">Enviar matrícula</button>
         <button type="button" class="btn green hidden" id="btn-guardar-nuevo">Guardar y crear otro</button>
         <button type="button" class="btn ghost" id="btn-limpiar">Limpiar boleta</button>
@@ -554,7 +585,7 @@
         <option value="">Todas las modalidades</option>
         <option value="Materno">Materno</option>
         <option value="Transición">Transición</option>
-        <option value="Otro (indicar grado)">Otro (indicar grado)</option>
+        <option value="Primaria">Primaria</option>
       </select>
       <button class="btn red" id="btn-borrar-todo">Borrar registros locales</button>
     </div>
@@ -3843,6 +3874,7 @@ document.addEventListener("change", function (e) {
 });
 
 $("form").addEventListener("submit", function (e) { e.preventDefault(); guardar(); });
+$("btn-guardar-registro").addEventListener("click", function () { guardar(); });
 $("btn-guardar-nuevo").addEventListener("click", function () { guardar(); });
 $("btn-limpiar").addEventListener("click", function () {
   if (confirm("¿Limpiar la boleta? Se perderán los datos no guardados.")) { limpiar(); toast("Boleta limpia", "warn"); }
@@ -3991,6 +4023,20 @@ cargarLocal();
 limpiar();
 render();
 if (location.hash === "#admin") setTimeout(mostrarLogin, 120);
-</script
-<script>/* Ajuste automático de altura para el textarea de personas autorizadas */ (function(){ var ta=document.getElementById("f-consent-retiro"); if(!ta)return; function ajustar(){ ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,300)+"px"; } ta.addEventListener("input",ajustar); ajustar(); window.addEventListener("beforeprint",ajustar); window.addEventListener("afterprint",ajustar); })();
+
+/* Ajuste automatico de altura para el textarea de personas autorizadas */
+(function(){
+  var ta = document.getElementById("f-consent-retiro");
+  if (!ta) return;
+  function ajustar(){
+    ta.style.height = "auto";
+    ta.style.height = Math.min(ta.scrollHeight, 300) + "px";
+  }
+  ta.addEventListener("input", ajustar);
+  ajustar();
+  window.addEventListener("beforeprint", ajustar);
+  window.addEventListener("afterprint", ajustar);
+})();
 </script>
+</body>
+</html>
