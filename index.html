@@ -394,8 +394,7 @@
           <label class="row-inline" style="font-size:14px;font-weight:600">
             <input type="checkbox" id="f-firma-func"> Firma registrada (funcionario/a de matrícula)
           </label>
-          <p class="small" style="margin:0">Firma del padre, madre o encargado legal: dibuje, suba una imagen
-            o escriba el nombre en el recuadro.</p>
+
         </div>
         <div class="grid g2">
           <div>
@@ -587,7 +586,7 @@
         <option value="Transición">Transición</option>
         <option value="Primaria">Primaria</option>
       </select>
-      <button class="btn red" id="btn-borrar-todo">Borrar registros locales</button>
+      <button class="btn red" id="btn-borrar-todo">Borrar todos los registros</button>
     </div>
 
     <div class="tbl-wrap">
@@ -1270,8 +1269,8 @@ function registrar(datos) {
     sh.appendRow(CLAVES.map(function (k) { return fila[k]; }));
 
     const cfg = leerConfig();
-    const correos = enviarCorreos(fila, cfg);
-    return { ok: true, folio: folio, correos: correos, fecha: fila.fecha_envio };
+    const resCorreos = enviarCorreos(fila, cfg);
+    return { ok: true, folio: folio, correos: resCorreos.enviados, errores: resCorreos.errores, fecha: fila.fecha_envio };
   } finally {
     lock.releaseLock();
   }
@@ -1324,12 +1323,17 @@ function guardarConfig(datos) {
   const pares = [];
 
   if (datos.correos !== undefined || datos.correos_admin !== undefined || datos.notificar_padre !== undefined) {
-    const correos = Array.isArray(datos.correos)
-      ? datos.correos.join(', ')
-      : String(datos.correos_admin || '');
+    let correosValor;
+    if (datos.correos !== undefined) {
+      correosValor = Array.isArray(datos.correos)
+        ? datos.correos.join(', ')
+        : String(datos.correos);
+    } else if (datos.correos_admin !== undefined) {
+      correosValor = String(datos.correos_admin);
+    }
     const padre = (datos.acuse_padre !== undefined ? datos.acuse_padre : datos.notificar_padre);
     const valorPadre = (padre === false || String(padre).toUpperCase() === 'NO' || padre === 'No') ? 'NO' : 'SI';
-    pares.push(['correos_admin', correos]);
+    if (correosValor !== undefined) pares.push(['correos_admin', correosValor]);
     pares.push(['notificar_padre', valorPadre]);
   }
   if (datos.tema !== undefined) {
@@ -1386,6 +1390,8 @@ function listaCorreos(texto) {
 function enviarCorreos(fila, cfg) {
   const destinatarios = listaCorreos(cfg.correos_admin);
   const enviados = [];
+  const errores = [];
+  /* 1) Aviso a la escuela / funcionarios */
   if (destinatarios.length) {
     try {
       MailApp.sendEmail({
@@ -1395,11 +1401,18 @@ function enviarCorreos(fila, cfg) {
         name: CONFIG.remitente
       });
       enviados.push.apply(enviados, destinatarios);
-    } catch (e) { /* el registro ya quedó guardado aunque falle el correo */ }
+    } catch (e) {
+      errores.push('Administrativos: ' + String(e && e.message ? e.message : e));
+    }
   }
-  const avisoPadre = String(cfg.notificar_padre || CONFIG.notificar_padre).toUpperCase() !== 'NO';
+  /* 2) Acuse al padre/madre/encargado.
+     Se envía si: (a) la config global no lo desactiva (notificar_padre != 'NO')
+     Y (b) el padre marcó "Enviar el acuse de recibo a mi correo" (fila.acuse === 'Sí')
+     Y (c) hay un correo válido en el formulario. */
+  const avisoPadreGlobal = String(cfg.notificar_padre || CONFIG.notificar_padre).toUpperCase() !== 'NO';
+  const acusePadreRegistro = String(fila.acuse || '').toUpperCase() === 'SÍ' || String(fila.acuse || '').toUpperCase() === 'SI';
   const correoPadre = listaCorreos(fila.correo)[0];
-  if (avisoPadre && correoPadre) {
+  if (avisoPadreGlobal && acusePadreRegistro && correoPadre) {
     try {
       MailApp.sendEmail({
         to: correoPadre,
@@ -1408,9 +1421,12 @@ function enviarCorreos(fila, cfg) {
         name: CONFIG.remitente
       });
       enviados.push(correoPadre);
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      errores.push('Padre: ' + String(e && e.message ? e.message : e));
+    }
   }
-  return enviados;
+  /* Devolvemos ambos para que el frontend pueda mostrar qué llegó y qué falló. */
+  return { enviados: enviados, errores: errores };
 }
 function esc(s) {
   return String(s === undefined || s === null ? '' : s)
@@ -1503,7 +1519,7 @@ var t0 = Date.now();          /* hora en que se abrió el formulario */
    urlAppsScript: pegue la URL del App web (/exec) publicada con Google
    Apps Script. Mientras esté vacía, la app funciona en MODO LOCAL.     */
 var CONFIG = {
-  urlAppsScript: "",
+  urlAppsScript: "https://script.google.com/macros/s/AKfycbxzEqQMtmgsQ7k_lDtc8nnmo2rxCQcDJMp6e4Fq2EBy0MrtctNkO3kQ0v7Xe4f_LKLkyA/exec",
   claveAdmin: "MAT2027",
   minSegundos: 4
 };
@@ -2593,10 +2609,22 @@ async function guardar() {
       for (var i = 0; i < REC.length; i++) if (REC[i].folio === r.folio) { ya = i; break; }
       if (ya >= 0) REC[ya] = r; else REC.push(r);
       guardarLocal(); render();
-      var aviso = (resp.correos && resp.correos.length)
-        ? "Se envió el aviso de nueva matrícula a:<br><b>" + esc(resp.correos.join(", ")) + "</b>"
-        : "La escuela recibió su solicitud.";
-      if (r.correo && r.acuse === "Sí") aviso += "<br>Acuse enviado a <b>" + esc(r.correo) + "</b>.";
+      var partes = [];
+      if (resp.correos && resp.correos.length) {
+        partes.push("Se envió el aviso de nueva matrícula a:<br><b>" + esc(resp.correos.join(", ")) + "</b>");
+      } else {
+        partes.push("La escuela recibió su solicitud (sin destinatarios de correo configurados).");
+      }
+      if (resp.errores && resp.errores.length) {
+        partes.push("<br><b>No se pudo enviar a:</b><br>" + esc(resp.errores.join("<br>")) +
+          "<br>Revisa que las direcciones sean válidas y que tengas autorización de Gmail para enviar.");
+      }
+      if (r.correo && r.acuse === "Sí" && (!resp.correos || resp.correos.indexOf(r.correo) < 0)) {
+        partes.push("<br>Acuse pendiente: el correo del padre no tiene un destino válido o el servidor no lo envió.");
+      } else if (r.correo && r.acuse === "Sí" && resp.correos && resp.correos.indexOf(r.correo) >= 0) {
+        partes.push("<br>Acuse enviado a <b>" + esc(r.correo) + "</b>.");
+      }
+      var aviso = partes.join("");
       mostrarOk(r, aviso);
       intentoId = "";
       limpiar();
@@ -3900,10 +3928,32 @@ $("inp-json").addEventListener("change", function () {
   this.value = "";
 });
 $("btn-borrar-todo").addEventListener("click", function () {
-  if (!REC.length) { toast("No hay registros locales en este equipo", "warn"); return; }
-  if (!confirm("¿Eliminar TODOS los registros locales (" + REC.length + ")? Los registros del servidor NO se borran.")) return;
-  if (!confirm("Última confirmación: se borrarán definitivamente " + REC.length + " registro(s) locales.")) return;
-  REC = []; guardarLocal(); render(); toast("Registros locales eliminados", "warn");
+  var total = REC.length + SRV.length;
+  if (!total) { toast("No hay registros para eliminar", "warn"); return; }
+  if (!confirm("¿Eliminar TODOS los registros (" + total + ")? Esta acción no se puede deshacer.")) return;
+  if (!confirm("Última confirmación: se eliminarán " + REC.length + " local(es) y " + SRV.length + " registro(s) del servidor.")) return;
+
+  /* Borrar registros locales */
+  REC = [];
+  guardarLocal();
+
+  /* Anular registros del servidor uno por uno */
+  var pendientes = SRV.slice();
+  SRV = [];
+  render();
+
+  function procesarSiguiente() {
+    if (!pendientes.length) {
+      toast("Todos los registros fueron eliminados/anulados", "warn");
+      return;
+    }
+    var folio = pendientes.shift().folio;
+    enviarServidor({ accion: "actualizar", usuario: usuarioSesion, clave: claveSesion, folio: folio, cambios: { estado: "Anulada" } })
+      .then(function () { procesarSiguiente(); })
+      .catch(function () { procesarSiguiente(); });
+  }
+  if (pendientes.length) procesarSiguiente();
+  else toast("Registros locales eliminados", "warn");
 });
 
 /* -------- Controles del panel administrativo -------- */
