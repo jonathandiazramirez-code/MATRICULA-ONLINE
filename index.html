@@ -1463,7 +1463,7 @@ function htmlAdmin(r) {
     filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
     filaCorreo('Estado', esc(r.estado)) +
     filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado) + (r.seccion ? ' · ' + esc(r.seccion) : '')) +
-    filaCorreo('Estudiante', esc(nombreCompleto(r))) +
+    filaCorreo('Estudiante', nombreCompleto(r).replace(/<[^>]*>/g, '')) +
     filaCorreo('Cédula / Nacimiento', esc(r.cedula) + ' · ' + esc(r.fecha_nac) + ' en ' + esc(r.lugar_nac)) +
     filaCorreo('Dirección', esc(r.direccion)) +
     filaCorreo('Vacunas', esc(r.vacunas)) +
@@ -1486,7 +1486,7 @@ function htmlPadre(r) {
     '<p style="text-align:center;margin:16px 0"><span style="display:inline-block;background:#eff6ff;border:1px solid #93c5fd;' +
     'color:#1e3a8a;font-size:22px;font-weight:bold;padding:10px 22px;border-radius:8px">' + esc(r.folio) + '</span></p>' +
     '<table style="width:100%;border-collapse:collapse">' +
-    filaCorreo('Estudiante', esc(nombreCompleto(r))) +
+    filaCorreo('Estudiante', nombreCompleto(r).replace(/<[^>]*>/g, '')) +
     filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado)) +
     filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
     filaCorreo('Estado', esc(r.estado)) +
