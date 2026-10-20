@@ -42,10 +42,10 @@ NO recibirá sus boletas**. Antes de subir el archivo:
 ### URL guardada (se actualiza automáticamente)
 
 <!--URL-APPS-SCRIPT-INICIO-->
-**URL guardada actualmente:** `https://script.google.com/macros/s/AKfycbxzEqQMtmgsQ7k_lDtc8nnmo2rxCQcDJMp6e4Fq2EBy0MrtctNkO3kQ0v7Xe4f_LKLkyA/exec`
+**URL guardada actualmente:** `https://script.google.com/macros/s/AKfycbxrNumnDtvP8j-jUe1iEKWZgeDeRtXAhwGu9z1Gy8H6TfWR_6zcj_LFoIZqqFS_kwP7xg/exec`
 
 ```js
-urlAppsScript: "https://script.google.com/macros/s/AKfycbxzEqQMtmgsQ7k_lDtc8nnmo2rxCQcDJMp6e4Fq2EBy0MrtctNkO3kQ0v7Xe4f_LKLkyA/exec",
+urlAppsScript: "https://script.google.com/macros/s/AKfycbxrNumnDtvP8j-jUe1iEKWZgeDeRtXAhwGu9z1Gy8H6TfWR_6zcj_LFoIZqqFS_kwP7xg/exec",
 ```
 <!--URL-APPS-SCRIPT-FIN-->
 
@@ -126,6 +126,31 @@ Cada vez que modifique la boleta o cualquier texto:
 - **Panel administrativo**: los registros "En línea" se ven con el botón *Refrescar* en cualquier
   equipo; los registros capturados en modo local quedan en el navegador donde se hicieron
   (exporte respaldos .json desde el panel).
+
+---
+
+## Solución de problemas
+
+**El login administrativo dice «No se pudo conectar con el servidor»** — *caso real resuelto (Edge, oct. 2026)*.
+Causa: el navegador tenía guardada en su almacenamiento local una dirección antigua (clave
+`matricula2027.urlAppsScript`, escrita por la *Instalación asistida*, por una implementación vieja de
+Apps Script o por la dirección del puente `127.0.0.1:8787`). Esa URL guardada **sustituye a la de la
+página** en cada arranque; si está caducada o el servicio no corre, el login falla aunque el servidor
+real esté bien.
+
+- **Solución**: elimine los **datos del sitio** de la página de matrícula en ese navegador
+  (Cookies + almacenamiento local). En Edge: `⋯ ▸ Configuración ▸ Privacidad, búsqueda y servicios ▸
+  Borrar datos de navegación ▸ Cookies y datos de sitios web`. O desde la consola (F12):
+
+  ```js
+  localStorage.removeItem("matricula2027.urlAppsScript"); location.reload();
+  ```
+
+- **Cada navegador guarda sus datos por separado** (Chrome, Edge, Firefox): si falla en uno,
+  repite el procedimiento en el navegador afectado.
+- Al borrar los datos, `Registro Matricula 2027.html` vuelve a **modo local** (la contraseña
+  maestra se valida en el propio equipo, sin conexión). Si ese equipo debe consultar la hoja en la
+  nube, vuelva a guardar la URL `/exec` desde *Instalación asistida*.
 
 ---
 
