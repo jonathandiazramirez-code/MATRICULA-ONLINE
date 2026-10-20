@@ -1563,7 +1563,7 @@ var t0 = Date.now();          /* hora en que se abrió el formulario */
    urlAppsScript: pegue la URL del App web (/exec) publicada con Google
    Apps Script. Mientras esté vacía, la app funciona en MODO LOCAL.     */
 var CONFIG = {
-  urlAppsScript: "https://script.google.com/macros/s/AKfycbwJLHJpBC19vKNAp8cW9HD-Od3zW8EuQw1ARoIN1-RyUoWb9cX2l3b4pfwBlwPq6MrMWw/exec",
+  urlAppsScript: "https://script.google.com/macros/s/AKfycbxrNumnDtvP8j-jUe1iEKWZgeDeRtXAhwGu9z1Gy8H6TfWR_6zcj_LFoIZqqFS_kwP7xg/exec",
   claveAdmin: "MAT2027",
   minSegundos: 4
 };
@@ -3317,8 +3317,48 @@ function abrirAdmin() {
 function errorLogin(msg) { setTxt("login-error", msg); $("login-error").classList.remove("hidden"); }
 
 function entrarAdmin(clave) {
-  /* Acceso sin contraseña: el panel administrativo está abierto para todos */
-  ocultarLogin(); irPanelAdmin();
+  var usuario = val("login-usuario").trim();
+  clave = String(clave || "").trim();
+  if (!clave) { errorLogin("Escriba la contraseña"); return; }
+  if (usuario && !/^[A-Za-z0-9._ -]{2,40}$/.test(usuario)) {
+    errorLogin("El usuario debe tener de 2 a 40 caracteres (letras, números, punto, guion o espacio)");
+    return;
+  }
+  var b = $("btn-login");
+  b.disabled = true; b.textContent = "Verificando…";
+
+  hashCred(usuario, clave).then(function (cred) {
+    if (!CONFIG.urlAppsScript) {
+      /* ---- modo local: administradores de este equipo o contraseña maestra ---- */
+      var ok;
+      if (!usuario) {
+        var m = masterLocal();
+        ok = m ? (cred === m) : (clave === CONFIG.claveAdmin);
+      } else {
+        ok = leerAdminsLocal().some(function (a) {
+          return String(a.u).toLowerCase() === usuario.toLowerCase() && String(a.p) === cred;
+        });
+      }
+      if (!ok) throw new Error(usuario ? "Usuario o contraseña incorrectos" : "Contraseña incorrecta");
+      adminsCache = leerAdminsLocal();
+      guardarSesion(usuario, cred);
+      b.disabled = false; b.textContent = "Entrar";
+      ocultarLogin(); irPanelAdmin();
+    } else {
+      /* ---- en línea: el servidor (Apps Script) valida contra la hoja CONFIG ---- */
+      return jsonp({ action: "lista", usuario: usuario, clave: cred }).then(function (resp) {
+        b.disabled = false; b.textContent = "Entrar";
+        if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "Usuario o contraseña incorrectos");
+        SRV = resp.registros || [];
+        adminsCache = Array.isArray(resp.admins) ? resp.admins : [];
+        guardarSesion(usuario, cred);
+        ocultarLogin(); irPanelAdmin();
+      });
+    }
+  })["catch"](function (err) {
+    b.disabled = false; b.textContent = "Entrar";
+    errorLogin(err && err.message ? err.message : "No se pudo verificar");
+  });
 }
 function guardarSesion(usuario, cred) {
   usuarioSesion = usuario || "";
@@ -3375,6 +3415,7 @@ function ocultarDetalle() { $("det-back").classList.add("hidden"); }
 
 /* --------------------------- Configuración de correos --------------------------- */
 function abrirConfig() {
+  if (!adminOK) { mostrarLogin(); return; }
   var correos = "", padre = "Sí";
   try {
     correos = localStorage.getItem("matricula2027.correos") || "";
@@ -3436,6 +3477,7 @@ function pintarEstadoPuente(cfg, prefijo) {
   setMsg("puente-estado", prefijo + " · " + partes.join(" · "), prefijo.indexOf("✓") === 0 ? "ok" : "err");
 }
 function abrirPuente() {
+  if (!adminOK) { mostrarLogin(); return; }
   var p = leerPuente();
   setVal("puente-puerto", p.puerto);
   setVal("puente-token", p.token);
@@ -4116,7 +4158,7 @@ firmaInicializar();
 cargarLocal();
 limpiar();
 render();
-adminOK = true;
+if (location.hash === "#admin") setTimeout(mostrarLogin, 120);
 
 /* Ajuste automatico de altura para el textarea de personas autorizadas */
 (function(){
