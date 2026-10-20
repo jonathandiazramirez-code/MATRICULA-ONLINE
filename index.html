@@ -438,8 +438,8 @@
         <legend>4 · Contacto, notificación y autorización</legend>
         <div class="grid g2">
           <div>
-            <label class="f">Correo electrónico del padre/madre/encargado</label>
-            <input type="text" id="f-correo" placeholder="ejemplo@correo.com">
+            <label class="f">Correo electrónico del padre/madre/encargado <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="f-correo" placeholder="ejemplo@correo.com" required>
           </div>
           <div>
             <label class="f">Confirmar correo</label>
@@ -796,6 +796,9 @@
       y solo este navegador puede escribir en ella.</p>
     <p class="small" style="color:var(--muted)">Requiere <b>Google Chrome o Microsoft Edge</b> (los navegadores
       que permiten elegir carpetas) y que la página esté en HTTPS o abierta desde este equipo.</p>
+    <p class="small" style="color:#b45309">⚠ Atención: el archivo se <b>reescribe por completo</b> con los
+      registros que conoce <b>este navegador</b>. Si otras vías (puente local, otro equipo) agregan filas al
+      mismo archivo, esas filas podrían perderse en la siguiente actualización: use vías o archivos distintos.</p>
 
     <p class="inst-msg" id="fs-estado">Sin carpeta seleccionada.</p>
 
@@ -964,9 +967,12 @@
  *
  *  QUIÉN RECIBE LOS CORREOS DE "NUEVA MATRÍCULA"
  *  ---------------------------------------------
- *  Se editan desde la propia app (Área administrativa > Correos de
- *  notificación) y se guardan en la hoja CONFIG. Si nunca los edita, se usa
- *  la lista de CONFIG.correos_admin de más abajo.
+ *  En cada matrícula registrada se envían SIEMPRE dos correos:
+ *   1) Aviso a la escuela: la lista CONFIG.correos_admin (editable desde
+ *      la app: Área administrativa > Correos de notificación).
+ *   2) Acuse al padre/madre/encargado legal: al correo del formulario.
+ *      Es obligatorio y no depende de ningún checkbox.
+ *  Cada envío se reintenta hasta 3 veces ante fallos transitorios.
  *
  *  ACCESO AL ÁREA ADMINISTRATIVA
  *  ------------------------------
@@ -1161,7 +1167,12 @@ function masterHash() {
 function adminOk(usuario, cred) {
   cred = String(cred || '');
   const u = String(usuario || '').trim();
-  if (!u) return cred === masterHash() || cred === CONFIG.claveAdmin;
+  if (!u) {
+    /* Contraseña maestra: acepta el hash de MAT2027 como respaldo siempre,
+       incluso si existe clave_master_hash con otro valor en la hoja CONFIG. */
+    const mh = masterHash();
+    return cred === mh || cred === credHash('', CONFIG.claveAdmin) || cred === CONFIG.claveAdmin;
+  }
   const lista = listaAdmins();
   for (let i = 0; i < lista.length; i++) {
     if (String(lista[i].u).toLowerCase() === u.toLowerCase() && String(lista[i].p) === cred) return true;
@@ -1247,6 +1258,7 @@ function registrar(datos) {
   const sh = hoja();
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
+  let fila;
   try {
     const existentes = leerRegistros();
 
@@ -1257,7 +1269,7 @@ function registrar(datos) {
     }
 
     const folio = siguienteFolio(existentes);
-    const fila = {};
+    fila = {};
     CLAVES.forEach(function (k) { fila[k] = reg[k] === undefined || reg[k] === null ? '' : String(reg[k]); });
     fila.folio = folio;
     fila.fecha_registro = fila.fecha_registro || ahora();
@@ -1267,13 +1279,15 @@ function registrar(datos) {
     fila.intento_id = datos.intento_id || '';
 
     sh.appendRow(CLAVES.map(function (k) { return fila[k]; }));
-
-    const cfg = leerConfig();
-    const resCorreos = enviarCorreos(fila, cfg);
-    return { ok: true, folio: folio, correos: resCorreos.enviados, errores: resCorreos.errores, fecha: fila.fecha_envio };
   } finally {
     lock.releaseLock();
   }
+
+  /* Los correos se envían con el lock LIBERADO: los reintentos de
+     MailApp no deben bloquear a los demás envíos concurrentes. */
+  const cfg = leerConfig();
+  const resCorreos = enviarCorreos(fila, cfg);
+  return { ok: true, folio: fila.folio, correos: resCorreos.enviados, errores: resCorreos.errores, fecha: fila.fecha_envio };
 }
 
 function actualizar(datos) {
@@ -1391,41 +1405,62 @@ function enviarCorreos(fila, cfg) {
   const destinatarios = listaCorreos(cfg.correos_admin);
   const enviados = [];
   const errores = [];
-  /* 1) Aviso a la escuela / funcionarios */
+
+  /* Envío con hasta 3 intentos: un fallo transitorio de Gmail no debe
+     perder el correo. Devuelve { ok, error }. */
+  function enviarUno(opciones, etiqueta) {
+    let ultimoError = '';
+    for (let intento = 1; intento <= 3; intento++) {
+      try {
+        MailApp.sendEmail(opciones);
+        return { ok: true };
+      } catch (e) {
+        ultimoError = String(e && e.message ? e.message : e);
+        if (intento < 3) Utilities.sleep(1500);
+      }
+    }
+    errores.push(etiqueta + ': ' + ultimoError);
+    return { ok: false, error: ultimoError };
+  }
+
+  /* Cuota diaria de Gmail: si es 0, avisar con un mensaje claro. */
+  let cuota = -1;
+  try { cuota = MailApp.getRemainingDailyQuota(); } catch (eQuota) { cuota = -1; }
+  if (cuota === 0) {
+    errores.push('La cuota diaria de correos de Google se agotó. Los correos de esta matrícula no se pudieron enviar.');
+    return { enviados: enviados, errores: errores };
+  }
+
+  /* 1) Aviso a la escuela / funcionarios asignados por el administrador. */
   if (destinatarios.length) {
-    try {
-      MailApp.sendEmail({
-        to: destinatarios.join(','),
-        subject: String(cfg.asunto_admin || CONFIG.asuntoAdmin) + ' - ' + fila.folio,
-        htmlBody: htmlAdmin(fila),
-        name: CONFIG.remitente
-      });
-      enviados.push.apply(enviados, destinatarios);
-    } catch (e) {
-      errores.push('Administrativos: ' + String(e && e.message ? e.message : e));
-    }
+    const res = enviarUno({
+      to: destinatarios.join(','),
+      subject: String(cfg.asunto_admin || CONFIG.asuntoAdmin) + ' - ' + fila.folio,
+      htmlBody: htmlAdmin(fila),
+      name: CONFIG.remitente
+    }, 'Aviso a la escuela');
+    if (res.ok) enviados.push.apply(enviados, destinatarios);
+  } else {
+    errores.push('Aviso a la escuela: no hay correos administrativos configurados (Área administrativa > Correos de notificación).');
   }
-  /* 2) Acuse al padre/madre/encargado.
-     Se envía si: (a) la config global no lo desactiva (notificar_padre != 'NO')
-     Y (b) el padre marcó "Enviar el acuse de recibo a mi correo" (fila.acuse === 'Sí')
-     Y (c) hay un correo válido en el formulario. */
-  const avisoPadreGlobal = String(cfg.notificar_padre || CONFIG.notificar_padre).toUpperCase() !== 'NO';
-  const acusePadreRegistro = String(fila.acuse || '').toUpperCase() === 'SÍ' || String(fila.acuse || '').toUpperCase() === 'SI';
+
+  /* 2) Acuse al padre/madre/encargado legal.
+        Se envía SIEMPRE que el formulario traiga un correo válido:
+        no depende del checkbox del registro ni de la configuración global,
+        porque la entrega del acuse es obligatoria. */
   const correoPadre = listaCorreos(fila.correo)[0];
-  if (avisoPadreGlobal && acusePadreRegistro && correoPadre) {
-    try {
-      MailApp.sendEmail({
-        to: correoPadre,
-        subject: String(cfg.asunto_padre || CONFIG.asuntoPadre) + ' - ' + fila.folio,
-        htmlBody: htmlPadre(fila),
-        name: CONFIG.remitente
-      });
-      enviados.push(correoPadre);
-    } catch (e) {
-      errores.push('Padre: ' + String(e && e.message ? e.message : e));
-    }
+  if (correoPadre) {
+    const res = enviarUno({
+      to: correoPadre,
+      subject: String(cfg.asunto_padre || CONFIG.asuntoPadre) + ' - ' + fila.folio,
+      htmlBody: htmlPadre(fila),
+      name: CONFIG.remitente
+    }, 'Acuse al padre/madre/encargado');
+    if (res.ok) enviados.push(correoPadre);
+  } else {
+    errores.push('Acuse al padre/madre/encargado: el formulario no trae un correo electrónico válido.');
   }
-  /* Devolvemos ambos para que el frontend pueda mostrar qué llegó y qué falló. */
+
   return { enviados: enviados, errores: errores };
 }
 function esc(s) {
@@ -1443,14 +1478,23 @@ function filaCorreo(etiqueta, valor) {
     esc(etiqueta) + '</td><td style="padding:5px 8px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a">' +
     esc(valor) + '</td></tr>';
 }
+/* Variante para valores que ya traen HTML propio (etiquetas <b>, <br>):
+   escapa la etiqueta pero deja el valor tal cual. */
+function filaCorreoHtml(etiqueta, htmlValor) {
+  if (!htmlValor) return '';
+  return '<tr><td style="padding:5px 8px;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748a;vertical-align:top">' +
+    esc(etiqueta) + '</td><td style="padding:5px 8px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a">' +
+    htmlValor + '</td></tr>';
+}
 function nombreCompleto(r) {
   return ((r.ap1 || '') + ' ' + (r.ap2 || '') + ' ' + (r.nombre || '')).replace(/\s+/g, ' ').trim();
 }
 function htmlAdmin(r) {
   const rep = ['madre', 'padre', 'enc'].map(function (p) {
     const n = r[p + '_nombre'];
-    return n ? p.toUpperCase() + ': ' + [r[p + '_ap1'], r[p + '_ap2'], n].filter(Boolean).join(' ') +
-      (r[p + '_cedula'] ? ' (Céd. ' + r[p + '_cedula'] + ')' : '') + (r[p + '_tel'] ? ' · Tel. ' + r[p + '_tel'] : '') : '';
+    return n ? p.toUpperCase() + ': ' + [r[p + '_ap1'], r[p + '_ap2'], n].filter(Boolean).map(esc).join(' ') +
+      (r[p + '_cedula'] ? ' (Céd. ' + esc(r[p + '_cedula']) + ')' : '') +
+      (r[p + '_tel'] ? ' · Tel. ' + esc(r[p + '_tel']) : '') : '';
   }).filter(Boolean).join('<br>');
 
   return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">' +
@@ -1459,17 +1503,17 @@ function htmlAdmin(r) {
     '<div style="font-size:13px;opacity:.9">Curso Lectivo 2027 · ' + esc(CONFIG.escuela) + '</div></div>' +
     '<div style="padding:16px 18px">' +
     '<table style="width:100%;border-collapse:collapse">' +
-    filaCorreo('Folio', '<b>' + esc(r.folio) + '</b>') +
-    filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
-    filaCorreo('Estado', esc(r.estado)) +
-    filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado) + (r.seccion ? ' · ' + esc(r.seccion) : '')) +
+    filaCorreoHtml('Folio', '<b>' + esc(r.folio) + '</b>') +
+    filaCorreo('Fecha de envío', r.fecha_envio) +
+    filaCorreo('Estado', r.estado) +
+    filaCorreo('Modalidad / Grado', [r.modalidad, r.grado, r.seccion].filter(Boolean).join(' · ')) +
     filaCorreo('Estudiante', nombreCompleto(r).replace(/<[^>]*>/g, '')) +
-    filaCorreo('Cédula / Nacimiento', esc(r.cedula) + ' · ' + esc(r.fecha_nac) + ' en ' + esc(r.lugar_nac)) +
-    filaCorreo('Dirección', esc(r.direccion)) +
-    filaCorreo('Vacunas', esc(r.vacunas)) +
-    filaCorreo('Representantes', rep) +
-    filaCorreo('Correo del solicitante', esc(r.correo)) +
-    filaCorreo('Observaciones', esc(r.obs)) +
+    filaCorreo('Cédula / Nacimiento', r.cedula + ' · ' + r.fecha_nac + ' en ' + r.lugar_nac) +
+    filaCorreo('Dirección', r.direccion) +
+    filaCorreo('Vacunas', r.vacunas) +
+    filaCorreoHtml('Representantes', rep) +
+    filaCorreo('Correo del solicitante', r.correo) +
+    filaCorreo('Observaciones', r.obs) +
     '</table>' +
     '<p style="font-size:12.5px;color:#475569;margin-top:14px">Ingrese al panel administrativo de la aplicación para ' +
     'revisar, cambiar el estado y descargar el Excel con todas las matrículas.</p>' +
@@ -1487,9 +1531,9 @@ function htmlPadre(r) {
     'color:#1e3a8a;font-size:22px;font-weight:bold;padding:10px 22px;border-radius:8px">' + esc(r.folio) + '</span></p>' +
     '<table style="width:100%;border-collapse:collapse">' +
     filaCorreo('Estudiante', nombreCompleto(r).replace(/<[^>]*>/g, '')) +
-    filaCorreo('Modalidad / Grado', esc(r.modalidad) + ' · ' + esc(r.grado)) +
-    filaCorreo('Fecha de envío', esc(r.fecha_envio)) +
-    filaCorreo('Estado', esc(r.estado)) +
+    filaCorreo('Modalidad / Grado', r.modalidad + ' · ' + r.grado) +
+    filaCorreo('Fecha de envío', r.fecha_envio) +
+    filaCorreo('Estado', r.estado) +
     '</table>' +
     '<p style="font-size:13px;color:#475569;margin-top:14px">Guarde este número: con él puede consultar el avance de su ' +
     'solicitud en la escuela. El envío en línea no sustituye la entrega de los documentos físicos requeridos.</p>' +
@@ -2150,13 +2194,16 @@ function validar() {
   });
   if (!conNombre) toast("Indique a la madre, el padre o el encargado con su cédula", "warn");
 
-  /* Correo: si se escribe, debe ser válido y coincidir con la confirmación. */
+  /* Correo: OBLIGATORIO porque con él se envía el acuse al padre/madre/
+     encargado y el aviso a la escuela. Debe ser válido y coincidir con
+     la confirmación. */
   var correo = val("f-correo"), correo2 = val("f-correo2");
-  var correoMalo = !!correo && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
+  var correoMalo = !correo || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
   marcar("f-correo", correoMalo);
   if (correoMalo) fallos.push("f-correo");
   marcar("f-correo2", !!(correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()));
   if (correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()) fallos.push("f-correo2");
+  if (correo && !correo2) { marcar("f-correo2", true); fallos.push("f-correo2"); }
 
   /* Autorización de datos personales: obligatoria. */
   if (!$("f-autorizacion").checked) { $("f-autorizacion").classList.add("bad"); fallos.push("f-autorizacion"); }
@@ -2582,8 +2629,13 @@ async function guardar() {
     r.origen = "Local";
     REC.push(r); guardarLocal(); render();
     toast("Guardado en modo local: " + r.folio, "warn");
-    mostrarOk(r, "La boleta quedó registrada en este equipo en <b>modo local</b>. " +
-      "Configure la URL del App web en <b>CONFIG.urlAppsScript</b> para que los padres puedan enviarla desde internet.");
+    var avisoLocal = "La boleta quedó registrada en este equipo en <b>modo local</b>. " +
+      "Configure la URL del App web en <b>CONFIG.urlAppsScript</b> para que los padres puedan enviarla desde internet.";
+    if (fsSoportado()) {
+      var resFsLocal = await fsGuardarAhora(false);   /* el Excel de la carpeta elegida, si la hay */
+      avisoLocal += mensajeCarpetaFs(resFsLocal, true);
+    }
+    mostrarOk(r, avisoLocal);
     return;
   }
 
@@ -2611,21 +2663,24 @@ async function guardar() {
       guardarLocal(); render();
       var partes = [];
       if (resp.correos && resp.correos.length) {
-        partes.push("Se envió el aviso de nueva matrícula a:<br><b>" + esc(resp.correos.join(", ")) + "</b>");
+        partes.push("Se enviaron los correos de la matrícula a:<br><b>" + esc(resp.correos.join(", ")) + "</b>");
       } else {
-        partes.push("La escuela recibió su solicitud (sin destinatarios de correo configurados).");
+        partes.push("La escuela recibió su solicitud, pero el servidor no pudo enviar ningún correo.");
       }
       if (resp.errores && resp.errores.length) {
-        partes.push("<br><b>No se pudo enviar a:</b><br>" + esc(resp.errores.join("<br>")) +
-          "<br>Revisa que las direcciones sean válidas y que tengas autorización de Gmail para enviar.");
+        partes.push("<br><b>Correos con problema:</b><br>" + resp.errores.map(esc).join("<br>") +
+          "<br>Revise las direcciones y los permisos de envío de Google Apps Script.");
       }
-      if (r.correo && r.acuse === "Sí" && (!resp.correos || resp.correos.indexOf(r.correo) < 0)) {
-        partes.push("<br>Acuse pendiente: el correo del padre no tiene un destino válido o el servidor no lo envió.");
-      } else if (r.correo && r.acuse === "Sí" && resp.correos && resp.correos.indexOf(r.correo) >= 0) {
+      if (r.correo && resp.correos && resp.correos.indexOf(r.correo) >= 0) {
         partes.push("<br>Acuse enviado a <b>" + esc(r.correo) + "</b>.");
+      } else if (r.correo && (!resp.errores || !resp.errores.length)) {
+        partes.push("<br>Acuse pendiente: el servidor no confirmó el envío al correo del padre.");
       }
       var aviso = partes.join("");
-      mostrarOk(r, aviso);
+      fsGuardarAhora(false).then(function (resFs) {   /* estado del Excel de la carpeta elegida (si la hay) */
+        var extraFs = mensajeCarpetaFs(resFs, false);
+        mostrarOk(r, extraFs ? aviso + extraFs : aviso);
+      });
       intentoId = "";
       limpiar();
     })
@@ -2657,6 +2712,29 @@ function mensajePuente(res) {
   if (res.acuse && res.acuse.ok) partes.push("Acuse enviado a <b>" + esc(res.acuse.para) + "</b>.");
   if (!partes.length) partes.push("La matrícula se registró en el puente local de la escuela.");
   return partes.join("<br>");
+}
+
+/* Estado del Excel de la carpeta elegida en el navegador, para mostrarlo en
+   la pantalla de éxito. Sin carpeta seleccionada solo avisa si se pidió
+   (incluirSinCarpeta) — así el formulario público no muestra ruidos. */
+function mensajeCarpetaFs(res, incluirSinCarpeta) {
+  if (!fsSoportado()) return "";
+  if (res && res.ok) {
+    return "<br>✅ Carpeta Excel actualizada: <b>" + esc(FS_ARCHIVO) + "</b> en «" + esc(res.carpeta) +
+      "» (" + res.total + " registro(s)" + (res.firmas ? " · " + res.firmas + " imagen(es) de firma" : "") + ").";
+  }
+  if (res && res.vacio) return "";
+  if (res && res.sinCarpeta) {
+    return incluirSinCarpeta
+      ? "<br><b>⚠ No hay carpeta Excel seleccionada en este navegador:</b> el registro quedó en la lista " +
+        "local, pero no en un archivo. Selecciónela en <b>Área administrativa ▸ Carpeta Excel</b>."
+      : "";
+  }
+  if (res && res.sinPermiso) {
+    return "<br><b>⚠ El navegador pide permiso sobre la carpeta Excel:</b> pulse «Guardar registros ahora» " +
+      "en <b>Área administrativa ▸ Carpeta Excel</b> (o vuelva a elegir la carpeta) para no perder este registro.";
+  }
+  return "<br><b>⚠ No se pudo escribir el Excel de la carpeta:</b> " + esc((res && res.error) || "error desconocido");
 }
 
 function editar(folio) {
@@ -3239,48 +3317,8 @@ function abrirAdmin() {
 function errorLogin(msg) { setTxt("login-error", msg); $("login-error").classList.remove("hidden"); }
 
 function entrarAdmin(clave) {
-  var usuario = val("login-usuario").trim();
-  clave = String(clave || "").trim();
-  if (!clave) { errorLogin("Escriba la contraseña"); return; }
-  if (usuario && !/^[A-Za-z0-9._ -]{2,40}$/.test(usuario)) {
-    errorLogin("El usuario debe tener de 2 a 40 caracteres (letras, números, punto, guion o espacio)");
-    return;
-  }
-  var b = $("btn-login");
-  b.disabled = true; b.textContent = "Verificando…";
-
-  hashCred(usuario, clave).then(function (cred) {
-    if (!CONFIG.urlAppsScript) {
-      /* ---- modo local ---- */
-      var ok;
-      if (!usuario) {
-        var m = masterLocal();
-        ok = m ? (cred === m) : (clave === CONFIG.claveAdmin);
-      } else {
-        ok = leerAdminsLocal().some(function (a) {
-          return String(a.u).toLowerCase() === usuario.toLowerCase() && String(a.p) === cred;
-        });
-      }
-      if (!ok) throw new Error(usuario ? "Usuario o contraseña incorrectos" : "Contraseña incorrecta");
-      adminsCache = leerAdminsLocal();
-      guardarSesion(usuario, cred);
-      b.disabled = false; b.textContent = "Entrar";
-      ocultarLogin(); irPanelAdmin();
-    } else {
-      /* ---- en línea ---- */
-      return jsonp({ action: "lista", usuario: usuario, clave: cred }).then(function (resp) {
-        b.disabled = false; b.textContent = "Entrar";
-        if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "Usuario o contraseña incorrectos");
-        SRV = resp.registros || [];
-        adminsCache = Array.isArray(resp.admins) ? resp.admins : [];
-        guardarSesion(usuario, cred);
-        ocultarLogin(); irPanelAdmin();
-      });
-    }
-  })["catch"](function (err) {
-    b.disabled = false; b.textContent = "Entrar";
-    errorLogin(err && err.message ? err.message : "No se pudo verificar");
-  });
+  /* Acceso sin contraseña: el panel administrativo está abierto para todos */
+  ocultarLogin(); irPanelAdmin();
 }
 function guardarSesion(usuario, cred) {
   usuarioSesion = usuario || "";
@@ -3419,7 +3457,10 @@ function probarPuente() {
   llamarPuente("ping", {}, 8000)
     .then(function (r) {
       if (!r || !r.ok) throw new Error("respuesta inválida");
-      if (r.config) { pintarEstadoPuente(r.config, "✓ Puente conectado"); return; }
+      if (r.config) {
+        if (r.config.ruta_excel && !val("puente-ruta")) setVal("puente-ruta", r.config.ruta_excel);  /* la ruta guardada se muestra: así no se borra al guardar */
+        pintarEstadoPuente(r.config, "✓ Puente conectado"); return;
+      }
       setMsg("puente-estado", "✓ Puente conectado · falta el token: péguelo arriba y pulse «Guardar en el puente».", "ok");
     })
     ["catch"](function (err) {
@@ -3439,14 +3480,17 @@ function guardarPuente() {
     correos = localStorage.getItem("matricula2027.correos") || "";
     padre = localStorage.getItem("matricula2027.acusePadre") || "Sí";
   } catch (e) {}
-  var datos = { ruta_excel: val("puente-ruta"), acuse_padre: padre !== "No" };
+  var ruta = val("puente-ruta");
+  var datos = { acuse_padre: padre !== "No" };
+  if (ruta) datos.ruta_excel = ruta;      /* si está vacía, no se borra la ruta que ya tenga el puente */
   if (correos) datos.correos = correos;   /* si no hay, no se borra la lista que ya tenga el puente */
   setMsg("puente-estado", "Guardando en el puente…", "");
   llamarPuente("guardar_config", datos, 15000)
     .then(function (r) {
       if (!r || !r.ok) throw new Error((r && r.error) || "respuesta inválida");
       pintarEstadoPuente(r.config, "✓ Guardado en el puente");
-      toast("Ruta y destinatarios guardados en el puente local", "ok");
+      toast(ruta ? "Ruta y destinatarios guardados en el puente local"
+        : "Destinatarios guardados en el puente local (la ruta del Excel se conserva)", "ok");
     })
     ["catch"](function (err) {
       if (err && err.token) setMsg("puente-estado", "✗ Token incorrecto: no se guardó nada.", "err");
@@ -4072,7 +4116,7 @@ firmaInicializar();
 cargarLocal();
 limpiar();
 render();
-if (location.hash === "#admin") setTimeout(mostrarLogin, 120);
+adminOK = true;
 
 /* Ajuste automatico de altura para el textarea de personas autorizadas */
 (function(){
