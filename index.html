@@ -80,6 +80,8 @@
   .radios label{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;cursor:pointer}
   .radios.bad-radios{border:1px solid var(--danger);background:var(--danger-50);border-radius:9px;padding:8px 10px 10px}
   .row-inline{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .solo-print{display:none}
+  @media screen{.grid:has(> .solo-print) > div:not(.solo-print){grid-column:span 2}}
   .small{font-size:12px;color:var(--muted)}
 
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
@@ -241,6 +243,7 @@
     header.app .sub{font-size:9px;color:#333;margin-top:1px}
     .panel{border:none;box-shadow:none;padding:4px 2px!important;margin-bottom:4px!important;border-radius:0;background:#fff}
     .panel h2{font-size:12px;margin-bottom:1px}
+    .solo-print{display:block!important}
     .panel .hint{font-size:9px;margin-bottom:4px}
     fieldset{background:#fff;border:1px solid #333;padding:5px 6px 6px!important;margin-bottom:5px!important;border-radius:4px;break-inside:avoid;page-break-inside:avoid}
     legend{font-size:9.5px;font-weight:700;padding:0 3px}
@@ -332,9 +335,9 @@
           </div>
         </div>
         <div class="grid g4" style="margin-top:12px">
-          <div><label class="f">Edad cumplida al 15/02/2027 · Años</label><input type="number" min="0" max="25" id="f-edad-a"></div>
-          <div><label class="f">Edad cumplida al 15/02/2027 · Meses</label><input type="number" min="0" max="11" id="f-edad-m"></div>
-          <div><label class="f">Edad cumplida al 15/02/2027 · Días</label><input type="number" min="0" max="31" id="f-edad-d"></div>
+          <div class="solo-print"><label class="f">Edad cumplida al 15/02/2027 · Años</label><input type="number" min="0" max="25" id="f-edad-a"></div>
+          <div class="solo-print"><label class="f">Edad cumplida al 15/02/2027 · Meses</label><input type="number" min="0" max="11" id="f-edad-m"></div>
+          <div class="solo-print"><label class="f">Edad cumplida al 15/02/2027 · Días</label><input type="number" min="0" max="31" id="f-edad-d"></div>
           <div>
             <label class="f">Vacunas</label>
             <div class="radios">
@@ -342,9 +345,6 @@
               <label><input type="radio" name="vacunas" value="Al día" checked> Al día</label>
             </div>
           </div>
-        </div>
-        <div class="actions" style="margin-top:8px">
-          <button type="button" class="btn sm ghost" id="btn-calc-edad">Calcular edad al 15/02/2027 desde la fecha de nacimiento</button>
         </div>
       </fieldset>
 
@@ -390,7 +390,7 @@
 
       <fieldset>
         <legend>Firmas</legend>
-        <div class="grid g2" style="margin-bottom:6px">
+        <div class="grid g2 solo-print" style="margin-bottom:6px">
           <label class="row-inline" style="font-size:14px;font-weight:600">
             <input type="checkbox" id="f-firma-func"> Firma registrada (funcionario/a de matrícula)
           </label>
@@ -429,7 +429,7 @@
         <p class="small" style="margin-top:8px">La firma se guarda con la boleta y aparece en el detalle, la
           exportación a Excel y el acuse. Tampoco es obligatoria.</p>
         <div style="margin-top:12px">
-          <label class="f">Observaciones (opcional)</label>
+          <label class="f">Observaciones</label>
           <textarea id="f-obs" rows="2"></textarea>
         </div>
       </fieldset>
@@ -448,7 +448,7 @@
         </div>
         <div class="grid g2" style="margin-top:12px">
           <label class="row-inline" style="font-size:14px;font-weight:600">
-            <input type="checkbox" id="f-acuse" checked> Enviar el acuse de recibo a mi correo
+            <input type="checkbox" id="f-acuse" checked> Dirección de Correo a enviar
           </label>
           <label class="row-inline" style="font-size:14px;font-weight:600">
             <input type="checkbox" id="f-autorizacion"> Autorizo el uso de mis datos personales para el proceso de matrícula <span class="req">*</span>
@@ -489,7 +489,7 @@
           <div class="radios" id="consent-traslado-box">
             <label><input type="radio" name="consent_traslado" value="Sin compañía"> Se traslada sin compañía de ningún adulto</label>
             <label><input type="radio" name="consent_traslado" value="En buseta"> Se traslada en buseta</label>
-            <label><input type="radio" name="consent_traslado" value="No se traslada solo"> NO se traslada solo (lo retira una persona autorizada)</label>
+            <label><input type="radio" name="consent_traslado" value="No se traslada solo"> Retiro del Alumno por persona autorizada</label>
           </div>
           <div class="grid g2" style="margin-top:10px">
             <div>
@@ -919,6 +919,15 @@
     <p class="small">Cambie el color de fondo del <b>encabezado</b> y de las <b>secciones</b> de la boleta.
       Se aplica de inmediato a toda la aplicación.</p>
     <div class="temas" id="temas-cuentas"></div>
+
+    <h3 style="margin-top:18px">Color de cada sección de la boleta</h3>
+    <p class="small">Elija un fondo distinto para cada sección del formulario. Se aplica de inmediato en este equipo;
+      «Guardar para todos (servidor)» también guarda estos colores.</p>
+    <div id="sec-colores"></div>
+    <div class="actions" style="margin-top:8px">
+      <button class="btn ghost" id="btn-sec-todas">Restablecer colores de sección</button>
+    </div>
+
     <p class="inst-msg" id="tema-msg">Tema aplicado en este equipo.</p>
     <div class="actions" style="margin-top:12px">
       <button class="btn green" id="btn-tema-guardar">Guardar para todos (servidor)</button>
@@ -1214,7 +1223,8 @@ function doGet(e) {
     }
     /* tema: colores de la boleta; no pide contraseña (lo ven todos) */
     if (p.action === 'tema') {
-      return json({ ok: true, tema: String(leerConfig().tema || 'azul').trim() || 'azul' }, cb);
+      const cfgT = leerConfig();
+      return json({ ok: true, tema: String(cfgT.tema || 'azul').trim() || 'azul', secciones: String(cfgT.secciones || '') }, cb);
     }
     if (!autorizado(p)) return json({ ok: false, error: 'Usuario o contraseña incorrectos' }, cb);
     if (p.action === 'config') {
@@ -1353,6 +1363,18 @@ function guardarConfig(datos) {
   if (datos.tema !== undefined) {
     const t = String(datos.tema || '').trim().toLowerCase();
     pares.push(['tema', /^(azul|verde|turquesa|vino)$/.test(t) ? t : 'azul']);
+  }
+  if (datos.secciones !== undefined) {
+    const s = String(datos.secciones || '').trim();
+    if (s) {
+      try {
+        const objSec = JSON.parse(s);
+        if (!objSec || typeof objSec !== 'object' || Array.isArray(objSec)) return { ok: false, error: 'Colores de sección no válidos' };
+      } catch (e) {
+        return { ok: false, error: 'Colores de sección no válidos' };
+      }
+    }
+    pares.push(['secciones', s]);
   }
   if (datos.clave_master_hash !== undefined) {
     const h = String(datos.clave_master_hash || '');
@@ -3941,6 +3963,7 @@ function pintarTemas() {
 function abrirTema() {
   if (!adminOK) { mostrarLogin(); return; }
   pintarTemas();
+  pintarSecColores();
   setMsg("tema-msg", "Tema aplicado: «" + (TEMAS.filter(function (t) { return t.id === temaActual(); })[0] || {}).nombre + "».", "");
   $("tema-back").classList.remove("hidden");
 }
@@ -3953,17 +3976,75 @@ function guardarTemaServidor() {
   }
   var b = $("btn-tema-guardar");
   b.disabled = true; b.textContent = "Guardando…";
-  enviarServidor({ accion: "guardar_config", usuario: usuarioSesion, clave: claveSesion, tema: t })
+  enviarServidor({ accion: "guardar_config", usuario: usuarioSesion, clave: claveSesion, tema: t, secciones: JSON.stringify(leerSecciones()) })
     .then(function (resp) {
       b.disabled = false; b.textContent = "Guardar para todos (servidor)";
       if (!resp || resp.ok !== true) throw new Error((resp && resp.error) || "No se pudo guardar");
-      setMsg("tema-msg", "Tema «" + t + "» guardado: todos los equipos que abran la boleta verán estos colores.", "ok");
+      setMsg("tema-msg", "Tema «" + t + "» y colores de sección guardados: todos los equipos que abran la boleta verán estos colores.", "ok");
       toast("Tema guardado en el servidor", "ok");
     })
     ["catch"](function (e) {
       b.disabled = false; b.textContent = "Guardar para todos (servidor)";
       setMsg("tema-msg", "No se pudo guardar: " + (e && e.message ? e.message : e), "err");
     });
+}
+
+/* --------------------- Colores por sección (boleta) -------------------- */
+var SEC_KEY = "matricula2027.secciones";
+function leerSecciones() {
+  try { return JSON.parse(localStorage.getItem(SEC_KEY) || "{}") || {}; } catch (e) { return {}; }
+}
+function guardarSeccionesLocal(obj) {
+  try {
+    if (obj && Object.keys(obj).length) localStorage.setItem(SEC_KEY, JSON.stringify(obj));
+    else localStorage.removeItem(SEC_KEY);
+  } catch (e) {}
+}
+function aplicarSecciones(obj) {
+  var fs = document.querySelectorAll("#form > fieldset");
+  Array.prototype.forEach.call(fs, function (f, i) {
+    var c = obj && obj["sec-" + i];
+    if (c) f.style.background = c;
+    else f.style.removeProperty("background");
+  });
+}
+function colorEfectivo(f) {
+  var m = String(getComputedStyle(f).backgroundColor).match(/\d+/g);
+  if (!m || m.length < 3) return "#ffffff";
+  return "#" + m.slice(0, 3).map(function (n) { return ("0" + parseInt(n, 10).toString(16)).slice(-2); }).join("");
+}
+function pintarSecColores() {
+  var obj = leerSecciones();
+  var fs = document.querySelectorAll("#form > fieldset");
+  $("sec-colores").innerHTML = Array.prototype.map.call(fs, function (f, i) {
+    var nombre = ((f.querySelector("legend") || {}).textContent || ("Sección " + (i + 1))).trim();
+    var valor = obj["sec-" + i] || colorEfectivo(f);
+    return '<div class="row-inline" style="justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border)">' +
+      '<span style="font-size:13px;font-weight:600">' + esc(nombre) + '</span>' +
+      '<span class="row-inline" style="gap:8px">' +
+      '<input type="color" value="' + valor + '" data-sec="' + i + '" style="width:46px;height:30px;border:1px solid var(--border);border-radius:6px;padding:1px;background:#fff">' +
+      '<button type="button" class="btn sm ghost" data-sec-quitar="' + i + '">Quitar</button>' +
+      '</span></div>';
+  }).join("");
+}
+function seccionCambiada(i, color) {
+  var obj = leerSecciones();
+  obj["sec-" + i] = color;
+  guardarSeccionesLocal(obj);
+  aplicarSecciones(obj);
+}
+function seccionQuitar(i) {
+  var obj = leerSecciones();
+  delete obj["sec-" + i];
+  guardarSeccionesLocal(obj);
+  aplicarSecciones(obj);
+  pintarSecColores();
+}
+function seccionesQuitarTodas() {
+  guardarSeccionesLocal({});
+  aplicarSecciones({});
+  pintarSecColores();
+  setMsg("tema-msg", "Colores de sección restablecidos al color del tema actual.", "");
 }
 
 /* --------------------------- Eventos --------------------------- */
@@ -3984,7 +4065,9 @@ document.addEventListener("click", function (e) {
 /* Cambio de estado desde la tabla administrativa. */
 document.addEventListener("change", function (e) {
   var t = e.target;
-  if (t && t.classList && t.classList.contains("estado-sel")) cambiarEstado(t.getAttribute("data-folio"), t.value);
+  if (!t) return;
+  if (t.classList && t.classList.contains("estado-sel")) { cambiarEstado(t.getAttribute("data-folio"), t.value); return; }
+  if (t.matches && t.matches('input[type="color"][data-sec]')) seccionCambiada(parseInt(t.getAttribute("data-sec"), 10), t.value);
 });
 
 $("form").addEventListener("submit", function (e) { e.preventDefault(); guardar(); });
@@ -3995,12 +4078,18 @@ $("btn-limpiar").addEventListener("click", function () {
 });
 $("btn-cancelar-edicion").addEventListener("click", function () { limpiar(); toast("Edición cancelada", "warn"); });
 $("btn-imprimir").addEventListener("click", function () { window.print(); });
-$("btn-calc-edad").addEventListener("click", function () {
+/* Edad al 15/02/2027 automática: se recalcula sola cada vez que cambia la
+   fecha de nacimiento (sin botón). Si la fecha está vacía o no es válida,
+   las celdas de edad quedan en blanco. */
+function calcEdadAuto() {
   var r = edadAl15022027(val("f-fecha-nac"));
-  if (!r) { toast("Indique una fecha de nacimiento válida y anterior al 15/02/2027", "warn"); return; }
-  setVal("f-edad-a", r.a); setVal("f-edad-m", r.m); setVal("f-edad-d", r.d);
-  toast("Edad calculada: " + r.a + " año(s), " + r.m + " mes(es), " + r.d + " día(s)", "ok");
-});
+  if (r) {
+    setVal("f-edad-a", r.a); setVal("f-edad-m", r.m); setVal("f-edad-d", r.d);
+  } else {
+    setVal("f-edad-a", ""); setVal("f-edad-m", ""); setVal("f-edad-d", "");
+  }
+}
+["input", "change"].forEach(function (ev) { $("f-fecha-nac").addEventListener(ev, calcEdadAuto); });
 $("buscar").addEventListener("input", renderTabla);
 $("filtro-estado").addEventListener("change", renderTabla);
 $("filtro-modalidad").addEventListener("change", renderTabla);
@@ -4115,6 +4204,7 @@ $("btn-admin-agregar").addEventListener("click", agregarAdmin);
 $("btn-admin-mia").addEventListener("click", cambiarMiClave);
 $("btn-tema").addEventListener("click", abrirTema);
 $("btn-tema-cerrar").addEventListener("click", ocultarTema);
+$("btn-sec-todas").addEventListener("click", seccionesQuitarTodas);
 $("btn-tema-guardar").addEventListener("click", guardarTemaServidor);
 $("btn-tema-linea").addEventListener("click", function () {
   copiarTexto('TEMA_DEFECTO = "' + temaActual() + '";').then(function (ok) {
@@ -4125,6 +4215,8 @@ document.addEventListener("click", function (e) {
   if (!e.target.closest) return;
   var q = e.target.closest("[data-admin-quitar]");
   if (q) { quitarAdmin(q.getAttribute("data-admin-quitar")); return; }
+  var sq = e.target.closest("[data-sec-quitar]");
+  if (sq) { seccionQuitar(parseInt(sq.getAttribute("data-sec-quitar"), 10)); return; }
   var card = e.target.closest("[data-tema-id]");
   if (card) { aplicarTema(card.getAttribute("data-tema-id")); setMsg("tema-msg", "Tema aplicado: «" + card.getAttribute("data-tema-id") + "».", ""); }
 });
@@ -4144,12 +4236,18 @@ if (_urlGuardada) CONFIG.urlAppsScript = _urlGuardada;
 
 /* Tema de colores: primero el guardado en este equipo; si no hay, el del
    servidor (que ven todos); y si no, TEMA_DEFECTO. */
-var _temaLocal = "";
+var _temaLocal = "", _secLocal = "";
 try { _temaLocal = localStorage.getItem("matricula2027.tema") || ""; } catch (e) {}
+try { _secLocal = localStorage.getItem("matricula2027.secciones") || ""; } catch (e) {}
 document.documentElement.setAttribute("data-tema", _temaLocal || TEMA_DEFECTO);
-if (CONFIG.urlAppsScript && !_temaLocal) {
+if (_secLocal) { try { aplicarSecciones(leerSecciones()); } catch (e) {} }
+if (CONFIG.urlAppsScript && (!_temaLocal || !_secLocal)) {
   jsonp({ action: "tema" })
-    .then(function (r) { if (r && r.ok && r.tema) aplicarTema(r.tema, false); })
+    .then(function (r) {
+      if (!r || !r.ok) return;
+      if (r.tema && !_temaLocal) aplicarTema(r.tema, false);
+      if (r.secciones && !_secLocal) { try { aplicarSecciones(JSON.parse(r.secciones)); } catch (e) {} }
+    })
     ["catch"](function () {});
 }
 
