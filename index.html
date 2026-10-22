@@ -426,8 +426,7 @@
             </div>
           </div>
         </div>
-        <p class="small" style="margin-top:8px">La firma se guarda con la boleta y aparece en el detalle, la
-          exportación a Excel y el acuse. Tampoco es obligatoria.</p>
+
         <div style="margin-top:12px">
           <label class="f">Observaciones</label>
           <textarea id="f-obs" rows="2"></textarea>
@@ -2555,13 +2554,11 @@ async function guardar() {
     r.estado = previo.estado || "Recibida";
     r.fecha_envio = previo.fecha_envio || "";
 
-    if (esLocal(editando)) {
-      /* Registro local: se reemplaza en este equipo. */
-      r.origen = previo.origen || "Local";
-      for (var i = 0; i < REC.length; i++) if (REC[i].folio === editando) { REC[i] = r; break; }
-      guardarLocal(); render(); sincronizarCarpeta();
-      toast("Registro actualizado: " + r.folio, "ok");
-    } else if (CONFIG.urlAppsScript && adminOK) {
+    var enServidor = false;
+    for (var s = 0; s < SRV.length; s++) if (SRV[s].folio === editando) { enServidor = true; break; }
+    if (previo.origen === "En línea") enServidor = true;
+
+    if (enServidor && CONFIG.urlAppsScript && adminOK) {
       /* Registro en línea: se envían las columnas editadas a la hoja de la
          escuela con la acción «actualizar» (el servidor conserva el folio). */
       r.origen = previo.origen || "En línea";
@@ -2586,6 +2583,12 @@ async function guardar() {
         return;   /* permanece en edición para no perder los cambios */
       }
       btnE.disabled = false; btnE.textContent = "Enviar matrícula";
+    } else if (esLocal(editando)) {
+      /* Registro local: se reemplaza en este equipo. */
+      r.origen = previo.origen || "Local";
+      for (var i = 0; i < REC.length; i++) if (REC[i].folio === editando) { REC[i] = r; break; }
+      guardarLocal(); render(); sincronizarCarpeta();
+      toast("Registro actualizado: " + r.folio, "ok");
     } else {
       /* Sin servidor configurado: se guarda como copia local. */
       r.origen = "Local";
