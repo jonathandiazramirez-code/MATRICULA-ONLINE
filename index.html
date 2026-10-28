@@ -297,6 +297,7 @@
   <nav class="tabs">
     <button id="tab-form" class="on" data-tab="form">Nueva boleta / Registro</button>
     <button id="tab-help" data-tab="help">Ayuda y publicación</button>
+    <button id="tab-dev" data-tab="dev">Desarrollador</button>
     <button id="btn-admin" class="btn-ventana" title="Ventana aparte y protegida con contraseña">Área administrativa</button>
   </nav>
 
@@ -548,16 +549,10 @@
         <p class="hint" id="admin-estado">Conectando con la base de datos…</p>
       </div>
       <div class="actions">
-        <button class="btn primary" id="btn-inst" title="Configurar dónde se guardan los registros">Instalación asistida</button>
         <button class="btn" id="btn-refrescar">Refrescar</button>
         <button class="btn green" id="btn-xlsx">Exportar a Excel (.xlsx)</button>
         <button class="btn" id="btn-fs" title="Carpeta donde se guarda automáticamente el Excel con todos los registros">Carpeta Excel</button>
-        <button class="btn" id="btn-csv">CSV</button>
         <button class="btn" id="btn-json">Respaldo JSON</button>
-        <button class="btn" id="btn-config">Correos de notificación</button>
-        <button class="btn" id="btn-puente" title="Ruta del archivo Excel y notificaciones con Outlook">Excel y Outlook</button>
-        <button class="btn" id="btn-admins">Administradores</button>
-        <button class="btn" id="btn-tema">Apariencia y colores</button>
         <button class="btn red" id="btn-salir">Salir</button>
       </div>
     </div>
@@ -602,6 +597,38 @@
     </div>
   </section>
 
+  <!-- ================= ÁREA DESARROLLADOR ================= -->
+  <section id="view-dev" class="panel hidden">
+    <div class="admin-bar">
+      <div>
+        <h2>Área de Desarrollador · Configuración</h2>
+        <p class="hint">Herramientas de integración, datos y personalización visual.</p>
+      </div>
+      <div class="actions">
+        <button class="btn red" id="btn-salir-dev">Salir</button>
+      </div>
+    </div>
+    <div class="grid g2">
+      <fieldset style="background: var(--surface);">
+        <legend>Integración y Datos</legend>
+        <div class="actions" style="flex-direction: column; gap: 10px; margin-top: 10px;">
+          <button class="btn primary" id="btn-inst" title="Configurar dónde se guardan los registros" style="width: 100%; justify-content: center;">Instalación asistida</button>
+          <button class="btn" id="btn-puente" title="Ruta del archivo Excel y notificaciones con Outlook" style="width: 100%; justify-content: center;">Excel y Outlook (Puente)</button>
+          <button class="btn" id="btn-csv" style="width: 100%; justify-content: center;">Exportar registros a CSV</button>
+        </div>
+      </fieldset>
+      <fieldset style="background: var(--surface);">
+        <legend>Configuración y Apariencia</legend>
+        <div class="actions" style="flex-direction: column; gap: 10px; margin-top: 10px;">
+          <button class="btn" id="btn-config" style="width: 100%; justify-content: center;">Correos de notificación</button>
+          <button class="btn" id="btn-admins" style="width: 100%; justify-content: center;">Administradores</button>
+          <button class="btn" id="btn-tema" style="width: 100%; justify-content: center;">Apariencia y colores</button>
+        </div>
+      </fieldset>
+    </div>
+    <div class="credito" style="margin-top:20px">Registro de Matrícula 2027 · Ing. Jonathan Díaz Ramírez</div>
+  </section>
+
   <!-- ================= AYUDA ================= -->
   <section id="view-help" class="panel hidden">
     <h2>Ayuda, publicación y créditos</h2>
@@ -644,15 +671,8 @@
         Allí el administrador puede:</p>
       <ul style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
         <li>Ver todos los registros (en línea y locales), buscar y filtrar por estado o modalidad.</li>
-        <li><b>Administradores:</b> agregar o quitar personas con acceso y cambiar contraseñas (se guardan cifradas,
-          en SHA-256; el texto original no se almacena).</li>
-        <li><b>Apariencia y colores:</b> cambiar el fondo del encabezado y de las secciones entre 4 temas
-          (azul, verde, turquesa, vino) y compartirlos con todos los equipos.</li>
-        <li><b>Instalación asistida:</b> pegar el sitio de guardado (URL /exec), que la app verifique la
-          conexión, le diga qué falta y le deje copiar el código .gs en un clic.</li>
         <li>Cambiar el estado: Recibida, En revisión, Aprobada, Observada o Anulada.</li>
-        <li>Descargar el <b>Excel</b> (50 columnas, con filtros), CSV o respaldo JSON.</li>
-        <li>Definir los <b>correos de notificación</b> que reciben el aviso de nueva matrícula.</li>
+        <li>Descargar el <b>Excel</b> (50 columnas, con filtros), o respaldo JSON.</li>
         <li><b>Carpeta Excel:</b> elegir la carpeta de este equipo donde se guardará y actualizará
           automáticamente <b>MATRICULA_2027.xlsx</b> con el mismo formato de la exportación
           (Chrome/Edge; funciona también en la página publicada).</li>
@@ -660,23 +680,20 @@
     </fieldset>
 
     <fieldset>
-      <legend>Puente local: Excel en una ruta + Outlook</legend>
-      <p class="small" style="margin-bottom:8px">Para que cada <b>Enviar matrícula</b> quede <b>automática y directamente</b>
-        en un archivo Excel de la escuela y la escuela reciba el aviso por <b>Microsoft Outlook</b>, use el puente local:</p>
-      <ol style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
-        <li>En la PC con Excel y Outlook, ejecute <b>«Iniciar puente matricula.bat»</b> y déjelo abierto
-          (para arrancarlo con Windows: Win+R ▸ <b>shell:startup</b> y copie ahí el acceso directo).</li>
-        <li>Área administrativa ▸ <b>Excel y Outlook</b>: pegue el <b>token</b> del puente, escriba la <b>ruta del
-          archivo Excel</b> (por ejemplo <span class="mono">C:\Escuela\MATRICULA_2027.xlsx</span> o una carpeta de red
-          <span class="mono">\\servidor\…</span>) y pulse <b>Guardar en el puente</b>.</li>
-        <li>En <b>Correos de notificación</b> defina los destinatarios (usuarios asignados por el administrador);
-          se sincronizan con el puente al guardar.</li>
-        <li>Al enviar una boleta: la fila se agrega al Excel (se crea con las 50 columnas si no existe) y Outlook envía
-          el aviso de nueva matrícula. El panel muestra el resultado (ruta y destinatarios).</li>
-      </ol>
-      <p class="small" style="color:var(--muted);margin-top:8px"><b>Nota:</b> el puente solo funciona en la PC donde corre
-        el script. Las boletas que otras familias envíen desde internet (con la URL de Google Apps Script) quedan en la
-        hoja de Google y se descargan como Excel desde el panel; el puente atiende los envíos hechos en la propia escuela.</p>
+      <legend>Área de Desarrollador</legend>
+      <p class="small" style="margin-bottom:8px">Botón <b>Desarrollador</b>: abre una ventana aparte protegida con
+        la misma contraseña administrativa. Allí el personal técnico puede:</p>
+      <ul style="font-size:13.5px;line-height:1.9;padding-left:20px;color:#334155">
+        <li><b>Administradores:</b> agregar o quitar personas con acceso y cambiar contraseñas (se guardan cifradas,
+          en SHA-256; el texto original no se almacena).</li>
+        <li><b>Apariencia y colores:</b> cambiar el fondo del encabezado y de las secciones entre 4 temas
+          (azul, verde, turquesa, vino) y compartirlos con todos los equipos.</li>
+        <li><b>Instalación asistida:</b> pegar el sitio de guardado (URL /exec), que la app verifique la
+          conexión, le diga qué falta y le deje copiar el código .gs en un clic.</li>
+        <li><b>Correos de notificación:</b> definir los correos que reciben el aviso de nueva matrícula.</li>
+        <li><b>CSV:</b> exportar los registros en formato de texto plano.</li>
+        <li><b>Puente local (Excel + Outlook):</b> configurar la conexión para guardar automáticamente en un Excel local y enviar avisos por Outlook.</li>
+      </ul>
     </fieldset>
 
     <fieldset>
@@ -1577,6 +1594,7 @@ var SRV = [];                 /* registros del servidor (Google Sheet) */
 var editando = null;          /* folio del registro en edición local */
 var TOTAL_EDAD = "15 de febrero del 2027";
 var adminOK = false;          /* sesión administrativa abierta */
+var destinoAdmin = "list";    /* pestaña destino al iniciar sesión */
 var intentoId = "";           /* id único del envío: evita duplicados */
 var t0 = Date.now();          /* hora en que se abrió el formulario */
 
@@ -3215,7 +3233,7 @@ function importarJSON(archivo) {
 
 /* --------------------------- Pestañas --------------------------- */
 function mostrarTab(nombre) {
-  ["form", "list", "help", "ok"].forEach(function (t) {
+  ["form", "list", "help", "ok", "dev"].forEach(function (t) {
     var v = $("view-" + t); if (v) v.classList.toggle("hidden", t !== nombre);
     var tb = $("tab-" + t); if (tb) tb.classList.toggle("on", t === nombre);
   });
@@ -3334,6 +3352,7 @@ function mostrarLogin() {
 function ocultarLogin() { $("login-back").classList.add("hidden"); }
 
 function abrirAdmin() {
+  destinoAdmin = "list";
   if (adminOK) { irPanelAdmin(); return; }
   var w = null;
   try { w = window.open(urlConHash("#admin"), "MAT2027-admin"); } catch (e) { w = null; }
@@ -3401,7 +3420,7 @@ function actualizarEstadoAdmin() {
 function irPanelAdmin() {
   adminOK = true;
   document.body.classList.add("es-admin");
-  mostrarTab("list");
+  mostrarTab(destinoAdmin || "list");
   actualizarEstadoAdmin();
   render();
 }
@@ -4053,7 +4072,16 @@ function seccionesQuitarTodas() {
 /* --------------------------- Eventos --------------------------- */
 document.addEventListener("click", function (e) {
   var tab = e.target.closest ? e.target.closest("[data-tab]") : null;
-  if (tab) { mostrarTab(tab.getAttribute("data-tab")); return; }
+  if (tab) {
+    var t = tab.getAttribute("data-tab");
+    if ((t === "dev" || t === "list") && !adminOK) {
+      destinoAdmin = t;
+      mostrarLogin();
+      return;
+    }
+    mostrarTab(t);
+    return;
+  }
 
   var act = e.target.closest ? e.target.closest("[data-act]") : null;
   if (act) {
@@ -4134,7 +4162,7 @@ $("btn-borrar-todo").addEventListener("click", function () {
   else toast("Registros locales eliminados", "warn");
 });
 
-/* -------- Controles del panel administrativo -------- */
+/* -------- Controles del panel administrativo y desarrollador -------- */
 $("btn-admin").addEventListener("click", abrirAdmin);
 $("btn-refrescar").addEventListener("click", function () {
   if (!adminOK) { mostrarLogin(); return; }
@@ -4147,6 +4175,7 @@ $("btn-refrescar").addEventListener("click", function () {
   }).catch(function (err) { toast("No se pudo actualizar: " + (err && err.message ? err.message : err), "err"); });
 });
 $("btn-salir").addEventListener("click", salirAdmin);
+if ($("btn-salir-dev")) $("btn-salir-dev").addEventListener("click", salirAdmin);
 $("btn-config").addEventListener("click", abrirConfig);
 $("btn-puente").addEventListener("click", abrirPuente);
 $("btn-puente-probar").addEventListener("click", probarPuente);
