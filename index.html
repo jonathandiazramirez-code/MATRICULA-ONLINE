@@ -438,8 +438,8 @@
         <legend>4 · Contacto, notificación y autorización</legend>
         <div class="grid g2">
           <div>
-            <label class="f">Correo electrónico del padre/madre/encargado <span style="color:var(--danger)">*</span></label>
-            <input type="text" id="f-correo" placeholder="ejemplo@correo.com" required>
+            <label class="f">Correo electrónico del padre/madre/encargado</label>
+            <input type="text" id="f-correo" placeholder="ejemplo@correo.com">
           </div>
           <div>
             <label class="f">Confirmar correo</label>
@@ -2233,16 +2233,24 @@ function validar() {
   });
   if (!conNombre) toast("Indique a la madre, el padre o el encargado con su cédula", "warn");
 
-  /* Correo: OBLIGATORIO porque con él se envía el acuse al padre/madre/
-     encargado y el aviso a la escuela. Debe ser válido y coincidir con
-     la confirmación. */
+  /* Correo: OPCIONAL. Si se proporciona, debe ser válido y coincidir con
+     la confirmación. Se usa para enviar el acuse al padre/madre/encargado. */
   var correo = val("f-correo"), correo2 = val("f-correo2");
-  var correoMalo = !correo || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
-  marcar("f-correo", correoMalo);
-  if (correoMalo) fallos.push("f-correo");
-  marcar("f-correo2", !!(correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()));
-  if (correo && correo2 && correo.toLowerCase() !== correo2.toLowerCase()) fallos.push("f-correo2");
-  if (correo && !correo2) { marcar("f-correo2", true); fallos.push("f-correo2"); }
+  if (correo) {
+    var correoMalo = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo);
+    marcar("f-correo", correoMalo);
+    if (correoMalo) fallos.push("f-correo");
+    if (correo2) {
+      marcar("f-correo2", correo.toLowerCase() !== correo2.toLowerCase());
+      if (correo.toLowerCase() !== correo2.toLowerCase()) fallos.push("f-correo2");
+    } else {
+      marcar("f-correo2", true);
+      fallos.push("f-correo2");
+    }
+  } else {
+    marcar("f-correo", false);
+    marcar("f-correo2", false);
+  }
 
   /* Autorización de datos personales: obligatoria. */
   if (!$("f-autorizacion").checked) { $("f-autorizacion").classList.add("bad"); fallos.push("f-autorizacion"); }
