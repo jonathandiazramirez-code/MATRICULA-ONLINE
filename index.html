@@ -2217,14 +2217,15 @@ function validar() {
   marcar("f-cedula", celMalo);
   if (celMalo && cel) fallos.push("f-cedula");
 
-  /* Cédula del representante: obligatoria cuando se captura su nombre. */
+  /* Cédula del representante: NO obligatoria.
+     Si se captura, se valida que tenga formato de 9 a 10 dígitos. */
   var conNombre = false;
   ["madre", "padre", "enc"].forEach(function (p) {
     var n = val("f-" + p + "-nombre");
     var c = val("f-" + p + "-cedula");
     if (n) {
       conNombre = true;
-      var ok = !!c && cedulaOk(c);
+      var ok = !c || cedulaOk(c);
       marcar("f-" + p + "-cedula", !ok);
       if (!ok) fallos.push("f-" + p + "-cedula");
     } else {
